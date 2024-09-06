@@ -1,2 +1,7 @@
 [07-Mar-2024 03:36:37 Europe/Berlin] PHP Parse error:  syntax error, unexpected token "[", expecting "(" in C:\xampp\htdocs\ABCD2\www\htdocs\central\settings\opac\conf_opac_menu.php on line 144
 [07-Mar-2024 03:37:24 Europe/Berlin] PHP Parse error:  syntax error, unexpected token "[", expecting "(" in C:\xampp\htdocs\ABCD2\www\htdocs\central\settings\opac\conf_opac_menu.php on line 144
+[06-Sep-2024 02:46:35 Europe/Berlin] PHP Warning:  Undefined array key "HTTP_ACCEPT_LANGUAGE" in C:\xampp\htdocs\ABCD2\www\htdocs\central\config_opac.php on line 33
+[06-Sep-2024 02:46:35 Europe/Berlin] PHP Deprecated:  substr(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\ABCD2\www\htdocs\central\config_opac.php on line 33
+[06-Sep-2024 02:46:35 Europe/Berlin] PHP Warning:  Undefined array key "HTTP_ACCEPT_LANGUAGE" in C:\xampp\htdocs\ABCD2\www\htdocs\central\config_opac.php on line 33
+[06-Sep-2024 02:46:35 Europe/Berlin] PHP Deprecated:  substr(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\ABCD2\www\htdocs\central\config_opac.php on line 33
+[06-Sep-2024 02:46:35 Europe/Berlin] PHP Warning:  Undefined array key "front_dne" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\includes\leer_bases.php on line 21
