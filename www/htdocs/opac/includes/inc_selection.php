@@ -173,12 +173,12 @@ $items_por_reservar="";
 foreach ($list as $value){
 	$value=trim($value);
 	if ($value!="")	{
-		$x=explode('_',$value);
+		$x=explode('_=',$value);
 		$seleccion[$x[1]][$x[2]]=$x[2];
         if (!isset($xml_base[$x[1]])){
-        	$xml_base[$x[1]]="c_".$x[1]."_".$x[2];
+        	$xml_base[$x[1]]="c_=".$x[1]."_=".$x[2];
         }else{
-        	$xml_base[$x[1]].="|c_".$x[1]."_".$x[2];
+        	$xml_base[$x[1]].="|c_=".$x[1]."_=".$x[2];
         }
 	}
 }
