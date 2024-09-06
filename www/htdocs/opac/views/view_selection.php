@@ -33,7 +33,7 @@ if (isset($_REQUEST["db_path"])){
 	foreach ($list as $value){
 		$value=trim($value);
 		if ($value!="")	{
-			$x=explode('_',$value);
+			$x=explode('_=',$value);
 			$sel_db[$x[1]]=$x[1];
 		}
 	}

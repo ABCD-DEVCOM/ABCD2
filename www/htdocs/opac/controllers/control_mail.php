@@ -37,7 +37,7 @@ $items_por_reservar="";
 foreach ($list as $value){
 	$value=trim($value);
 	if ($value!="")	{
-		$x=explode('_',$value);
+		$x=explode('_=',$value);
 		$seleccion[$x[1]][]=$x[2];
 	}
 }

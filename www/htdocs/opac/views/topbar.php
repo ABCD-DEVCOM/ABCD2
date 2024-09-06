@@ -12,11 +12,13 @@
 if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
 ?>
       <ul id="menu-wrapper"  class="nav nav-pills">
- 
-        <li class="nav-item">
-          <a href="javascript:document.inicio_menu.submit()" class="nav-link text-dark custom-top-link" aria-current="page"><?php echo $msgstr["front_inicio"] ?></a></li>
-           <?php
+          <li class="nav-item">
+            <a href="javascript:clearAndRedirect('<?php echo $link_logo ?>')" class="nav-link text-dark custom-top-link" aria-current="page">
+              <?php echo $msgstr["front_inicio"] ?>
+            </a>
+          </li>
 
+           <?php
                 if (file_exists($db_path . "opac_conf/" . $lang . "/menu.info")) {
                     $fp = file($db_path . "opac_conf/" . $lang . "/menu.info");
                     foreach ($fp as $value) {

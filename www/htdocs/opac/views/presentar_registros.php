@@ -146,7 +146,7 @@ $ff_pft="'
     <div class=\"card-title\">
 		<div class=\"d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center\">
 		<div class=\"form-check\">
-        	<input class=\"form-check-input\" type=\"checkbox\" name=\"c_',mstname,'_'f(mfn,1,0)'\" id=\"c_'mstname'_'f(mfn,1,0)'\"  onclick=\"javascript:Seleccionar(this)\">
+        	<input class=\"form-check-input\" type=\"checkbox\" name=\"c_=',mstname,'_='f(mfn,1,0)'\" id=\"c_='mstname'_='f(mfn,1,0)'\"  onclick=\"javascript:Seleccionar(this)\">
         	<label class=\"text-muted\"><small>Selecionar 'mfn(0)'</small></label>
 		</div>
     <div class=\"btn-group\">
@@ -204,8 +204,8 @@ $ff_pft.="'<script>
 						<?php if (!isset($control_entrada) or $control_entrada==1){ ?>
 							<div id="cookie_div" class="card text-bg-light container fixed-bottom">
 								<div class="card-body">
-									<a class="btn btn-success" href="javascript:showCookie('ABCD')" title="<?php echo $msgstr["front_mostrar_rsel"]?>"><?php echo $msgstr["front_mostrar_rsel"]?></a>
-									<a class="btn btn-light" href="javascript:delCookie()"  title="<?php echo $msgstr["front_quitar_rsel"]?>"><?php echo $msgstr["front_quitar_rsel"]?></a>
+									<a class="btn btn-success" href="javascript:showCookie('ABCD')" title="<?php echo $msgstr["mostrar_rsel"]?>"><?php echo $msgstr["mostrar_rsel"]?></a>
+									<a class="btn btn-light" href="javascript:delCookie()"  title="<?php echo $msgstr["quitar_rsel"]?>"><?php echo $msgstr["quitar_rsel"]?></a>
 								</div>
 							</div>
 						<?php } ?>
