@@ -542,10 +542,11 @@ function SendToXML(seleccion){
 
 function SendToISO(){
 		document.regresar.action="components/sendtoiso.php"
+		document.regresar.cookie = cookie
 		document.regresar.submit()
 		document.regresar.action="buscar_integrada.php"
 		document.regresar.target=""
-		document.regresar.cookie = cookie
+
 	}
 
 function EnviarCorreo() {

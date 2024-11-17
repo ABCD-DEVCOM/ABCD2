@@ -1,4 +1,6 @@
 <?php
+$startpage="N";
+
 $mostrar_libre="N";
 $_REQUEST["submenu"]="N";
 include("../central/config_opac.php");

@@ -20,15 +20,10 @@ foreach ($_REQUEST as $var=>$value){
 		<textarea  class="form-control" rows="3" cols="60" name="comentario"></textarea>
 	</div>
 
-	<div class="g-3 py-2">
+	<div class="g-2 py-2">
 		<div class="col-auto">
 			<input class="btn btn-success" type="submit" value="<?php echo $msgstr["front_send"]?> ">
 		</div>
 
-		<?php if ($accion=="mail_one"){ ?>
-		<div class="col-auto">
-			<input class="btn btn-light" type="button" value="<?php echo $msgstr["front_back"];?>" onclick="document.regresar.submit()">
-		</div>
-		<?php } ?>
 	</div>
 </form>

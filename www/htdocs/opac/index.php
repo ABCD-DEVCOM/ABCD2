@@ -22,19 +22,23 @@ if (file_exists("opac_dbpath.dat")){
 
 $primeraPagina="Y";
 
+
 if (isset($_REQUEST["primeravez"]) and $_REQUEST["primeravez"]=="Y"){ ?>
 <script>
 	document.cookie = 'ABCD=;';
 </script>
+
 <?php 
 }
+
+
 include("head.php");
 
-//foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
 
 if (isset($_REQUEST["cookie"])) {
 	include("views/view_selection.php");
 }  elseif ((isset($_REQUEST["indice"])) and  $_REQUEST["indice"]==="yes" ){
+	$startpage="N";
 	include("views/alfabetico.php");
 } else {
 	include("views/content_home.php");
