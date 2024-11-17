@@ -26,6 +26,8 @@
  * == END LICENSE ==
 */
 
+if ((isset($desde_opac)) and ($desde_opac=="Y")) include 'functions.php';
+
 
 if (isset($arrHttp["usuario"])){
 // se presenta la  informaci?n del usuario
