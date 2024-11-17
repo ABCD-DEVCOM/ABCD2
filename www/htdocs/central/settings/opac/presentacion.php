@@ -18,7 +18,7 @@ table tr td.preview{ vertical-align: top; }
 tr td img { text-align: end; }
 
 /* HIDE RADIO */
-[type=radio] { 
+label.config [type=radio] { 
   position: absolute;
   opacity: 0;
   width: 0;
@@ -26,12 +26,12 @@ tr td img { text-align: end; }
 }
 
 /* IMAGE STYLES */
-[type=radio] + img {
+label.config [type=radio] + img {
   cursor: pointer;
 }
 
 /* CHECKED STYLES */
-[type=radio]:checked + img {
+label.config [type=radio]:checked + img {
   outline: 2px solid blue;
 }
 
@@ -102,6 +102,7 @@ if (file_exists($opac_global_style_def)) {
     $opac_gstyle_def = parse_ini_file($opac_global_style_def,true); 
     if (isset($opac_gstyle_def['NUM_PAGES'])) $npages=$opac_gstyle_def['NUM_PAGES'];
     if (isset($opac_gstyle_def['SIDEBAR'])) $sidebar=$opac_gstyle_def['SIDEBAR'];
+    if (isset($opac_gstyle_def['hideSIDEBAR'])) $hide_sidebar=$opac_gstyle_def['hideSIDEBAR'];
     if (isset($opac_gstyle_def['TOPBAR'])) $topbar=$opac_gstyle_def['TOPBAR'];
     if (isset($opac_gstyle_def['CONTAINER']))$container=$opac_gstyle_def['CONTAINER'];
 }
@@ -393,6 +394,17 @@ if (file_exists($opac_global_style_def)) {
 		<tr>
 			<th  valign="top"><?php echo $msgstr["cfg_NUM_PAGES"];?></th>
 			<td valign="top"><input type="number" name="cfg_NUM_PAGES"  min="1" max="30" value="<?php echo $npages;?>">
+        </td>
+		</tr>
+
+		<tr>
+			<th  valign="top"><?php echo $msgstr["cfg_hideSIDEBAR"];?></th>
+			<td valign="top">
+    			<?php if (!isset($hide_sidebar)) $hide_sidebar="default";?>
+    			<label><input type="radio" name="cfg_hideSIDEBAR" value="Y" <?php if (isset($hide_sidebar) and $hide_sidebar=="Y") echo " checked"?>> Y</label>
+    			<label><input type="radio" name="cfg_hideSIDEBAR" value="N"  <?php if (isset($hide_sidebar) and $hide_sidebar=="N") echo " checked"?>> N</label>
+
+
         </td>
 		</tr>
 

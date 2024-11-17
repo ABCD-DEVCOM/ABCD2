@@ -48,9 +48,14 @@ $IndicePorColeccion="Y";  //Separate indices are maintained for the terms of the
 
 
 $opac_global_def = $db_path."/opac_conf/opac.def";
-$opac_global_style_def = $db_path."/opac_conf/global_style.def";
 $opac_gdef = parse_ini_file($opac_global_def,true); 
 $charset=$opac_gdef['charset'];
+$shortIcon=$opac_gdef['shortIcon'];
+
+$opac_global_style_def = $db_path."/opac_conf/global_style.def";
+$opac_gstyle = parse_ini_file($opac_global_style_def,true); 
+$hideSIDEBAR=$opac_gstyle['hideSIDEBAR'];
+
 
 $db_path=trim(urldecode($db_path));
 $ix=explode('/',$db_path);

@@ -243,12 +243,12 @@ function BuscarIntegrada(base, modo, Opcion, Expresion, Coleccion, titulo_c, res
 
 
 
-<form name="regresar" action="buscar_integrada.php" method="post">
-	<?php 
-	foreach ($_REQUEST as $key=>$value){
-		echo '<input type=hidden name="'.$key.'" value="'.$value.'">';
-	} ?>
-</form>
+	<form AQUIEE name="regresar" action="buscar_integrada.php" method="GET">
+		<?php 
+		foreach ($_REQUEST as $key=>$value){
+			echo "<input type='hidden' name='".$key."' value='".$value."'>\r\n";
+		} ?>
+	</form>
 
 
 <form name="indiceAlfa" method="post" action="alfabetico.php">

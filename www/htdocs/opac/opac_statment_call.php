@@ -2,15 +2,14 @@
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
 include("../central/config_opac.php");
 
+$startpage="N";
+
 if (isset($_REQUEST["Opcion"])) $_REQUEST["Opcion_Original"]=$_REQUEST["Opcion"];
 
-
 $indice_alfa="N";
-$sidebar="N";
-
-
 
 include($Web_Dir."/head.php");
+
 chdir($CentralPath."circulation");
 
 $desde_opac="Y";
@@ -112,6 +111,18 @@ if (substr(trim($ec_output),0,2)=="**" or strlen($ec_output)<100){
 ?>
 </form>
 
+<script>
+function CancelReserve(Mfn){
+	document.anular.Mfn.value=Mfn
+	document.anular.submit()
+}
+function Renovar() {
+	alert ((np);
+	marca="N"
+	
+}
+</script>
+
 <form name="renovar" action="<?php echo $CentralHttp;?>/central/circulation/renovar_ex.php" method="post" onsubmit="javascript:return false">
 	<input type="hidden" name="searchExpr">
 	<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"]?>">
@@ -123,13 +134,13 @@ if (substr(trim($ec_output),0,2)=="**" or strlen($ec_output)<100){
 </form>
 
 <form name="anular" method="post" action=reservar_anular_ABCD.php>
-	<input type="hidden" name=Mfn>
-	<input type="hidden" name=usuario value="<?php echo $arrHttp["usuario"]?>">
-	<input type="hidden" name=vienede value="<?php if (isset($arrHttp["vienede"])) echo $arrHttp["vienede"]?>">
-	<input type="hidden" name=db_path value="<?php echo $db_path?>">
-	<input type="hidden" name=lang value="<?php echo $arrHttp["lang"]?>">
-	<input type="hidden" name=Web_Dir value="<?php echo $Web_Dir?>">
-	<input type="hidden" name=OpacHttp value="<?php echo $OpacHttp?>">
+	<input type="hidden" name="Mfn">
+	<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"]?>">
+	<input type="hidden" name="vienede" value="<?php if (isset($arrHttp["vienede"])) echo $arrHttp["vienede"]?>">
+	<input type="hidden" name="db_path" value="<?php echo $db_path?>">
+	<input type="hidden" name="lang" value="<?php echo $arrHttp["lang"]?>">
+	<input type="hidden" name="Web_Dir" value="<?php echo $Web_Dir?>">
+	<input type="hidden" name="OpacHttp" value="<?php echo $OpacHttp?>">
 </form>
 
 </table>
@@ -152,82 +163,9 @@ if (isset($arrHttp["error"])){
 }
 
 ?>
-  <br><br><br><br>
 
 
 <?php
 chdir($Web_Dir);
 include($Web_Dir."/views/footer.php");
 ?>
-
-<script>
-function CancelReserve(Mfn){
-	document.anular.Mfn.value=Mfn
-	document.anular.submit()
-}
-function Renovar() {
-	//document.renovar.action="renovar_ex.php"
-	marca="N"
-	switch (np){     // número de préstamos del usuario
-		case 1:
-			if (document.ecta.chkPr_1.checked){
-				document.renovar.searchExpr.value=document.ecta.chkPr_1.id
-				atraso=document.ecta.chkPr_1.value
-				politica=document.ecta.politica.value
-				marca="S"
-			}
-			break
-		default:
-			for (i=1;i<=np;i++){
-				Ctrl=eval("document.ecta.chkPr_"+i)
-				if (Ctrl.checked){
-					marca="S"
-					document.renovar.searchExpr.value=Ctrl.id
-					atraso=Ctrl.value
-					politica=document.ecta.politica[i-1].value
-					break
-				}
-			}
-	}
-	fecha_d="<?php echo date("Ymd")?>"
-	if (marca=="S"){
-		p=politica.split('|')
-		if (p[6]=="0"){     // the object does not accept renovations
-			alert("<?php echo $msgstr["front_noitrenew"] ?>")
-			return
-		}
-		if (atraso!=0){
-			if (p[13]!="Y"){
-				alert("<?php echo $msgstr["front_loanoverdued"]?>")
-				return
-			}
-		}
-		if (Trim(p[15])!=""){
-			if (fecha_d>p[15]){
-				alert("<?php echo $msgstr["front_limituserdate"]?>"+": "+p[15])
-				return
-			}
-		}
-		if (Trim(p[16])!=""){
-			if (fecha_d>p[16]){
-				alert("<?php echo $msgstr["front_limitobjectdate"]?>"+": "+p[16])
-				return
-			}
-		}
-		if (nMultas!=0){
-			alert("**<?php echo $msgstr["front_norenew"]?>")
-			return
-		}
-		document.renovar.submit()
-		var division = document.getElementById("overlay");
-		division.style.display="block"
-		var division = document.getElementById("popup");
-		division.style.display="block"
-		var enlace = document.getElementById("enlace");
-		enlace.href="javascript:void(0)"
-
-	}else{
-		alert("<?php echo $msgstr["front_markloan"]?>")
-	}
-}
-</script>

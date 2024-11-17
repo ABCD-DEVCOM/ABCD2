@@ -5,11 +5,15 @@
 
 ***********************************************/
 
+
+
 if (isset($_REQUEST["db_path"])) $_REQUEST["db_path"]=urldecode($_REQUEST["db_path"]);
 include("../central/config_opac.php");
 include($Web_Dir.'views/presentar_registros.php');
 include($Web_Dir.'views/nav_pages.php');
+
 include($Web_Dir.'head.php');
+
 $select_formato="";
 
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
@@ -21,6 +25,7 @@ if (isset($_REQUEST["Formato"])) {
 		if (substr($_REQUEST["Formato"],strlen($_REQUEST["Formato"])-4)==".pft") $_REQUEST["Formato"]=substr($_REQUEST["Formato"],0,strlen($_REQUEST["Formato"])-4);
 	}
 }
+
 function SelectFormato($base,$db_path,$msgstr){
 	global $lang;
 	$PFT="";

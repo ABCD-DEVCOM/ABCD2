@@ -1,9 +1,9 @@
-OpacHttp=http://localhost:9090/opac/
-logo=assets/img/logoabcd.png
-shortIcon=/assets/images/favicons/favicon.png
-link_logo=/opac
 TituloPagina=ABCD - OPAC
 footer=2023 - ABCD OPAC
+OpacHttp=http://localhost:9090/opac/
+logo=assets/img/logoabcd.png
+link_logo=/opac
+shortIcon=http://localhost:9090/assets/images/favicons/favicon.png
 ONLINESTATMENT=Y
 WEBRENOVATION=Y
 WEBRESERVATION=Y

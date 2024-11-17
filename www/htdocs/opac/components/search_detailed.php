@@ -1,4 +1,7 @@
 <?php
+
+$startpage="N";
+
 //foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
 if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado")
 	if (isset($_REQUEST["base"])) unset($_REQUEST["base"]);

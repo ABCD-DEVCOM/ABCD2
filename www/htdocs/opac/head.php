@@ -1,12 +1,10 @@
 <?php
 include realpath(__DIR__ . '/../central/config_opac.php');
-
 include $Web_Dir.'functions.php';
 
 session_start(); 
 
 //include ("get_ip_address.php");
-
 
 header('Content-Type: text/html; charset=".$meta_encoding."');
 header("Cache-Control: no cache");
@@ -17,44 +15,40 @@ $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
 $ActualDir=getcwd();
 $meta_encoding=$meta_encoding;
 ?>
+
 <!doctype html>
 <html lang="<?php echo $lang; ?>">
 
 <head>
- <!-- Meta Tags para SEO -->
-  <title><?php echo $TituloPagina; ?></title>
-  <meta name="description" content="<?php echo $Site_Description;?>">
-  <meta name="keywords" content="<?php echo $Site_Keywords;?>" />
-  <meta http-equiv="content-type" content="text/html; charset=<?php echo $meta_encoding ?>" />
-  <meta name="author" content="<?php echo $TituloEncabezado;?>">
-  <meta name="language" content="<?php echo $lang; ?>">
+	<!-- Meta Tags para SEO -->
+	<title><?php echo $TituloPagina; ?></title>
+	<meta name="description" content="<?php echo $Site_Description;?>">
+	<meta name="keywords" content="<?php echo $Site_Keywords;?>" />
+	<meta http-equiv="content-type" content="text/html; charset=<?php echo $meta_encoding ?>" />
+	<meta name="author" content="<?php echo $TituloEncabezado;?>">
+	<meta name="language" content="<?php echo $lang; ?>">
 
-  <!-- Meta Tags para Redes Sociais (Facebook, Twitter, LinkedIn) -->
-  <meta property="og:title" content="<?php echo $TituloPagina; ?>">
-  <meta property="og:description" content="<?php echo $Site_Description;?>">
-  <meta property="og:image" content="<?php echo $link_logo;?>">
-  <meta property="og:url" content="<?php echo $OpacHttp;?>">
-  <meta name="twitter:title" content="<?php echo $TituloPagina; ?>">
-  <meta name="twitter:description" content="<?php echo $Site_Description;?>">
-  <meta name="twitter:image" content="<?php echo $link_logo;?>">
-  <meta name="twitter:card" content="<?php echo $link_logo;?>">
-  <meta name="linkedin:title" content="<?php echo $TituloPagina; ?>">
-  <meta name="linkedin:description" content="<?php echo $Site_Description;?>">
-  <meta name="linkedin:image" content="<?php echo $link_logo;?>">
+	<!-- Meta Tags para Redes Sociais (Facebook, Twitter, LinkedIn) -->
+	<meta property="og:title" content="<?php echo $TituloPagina; ?>">
+	<meta property="og:description" content="<?php echo $Site_Description;?>">
+	<meta property="og:image" content="<?php echo $link_logo;?>">
+	<meta property="og:url" content="<?php echo $OpacHttp;?>">
+	<meta name="twitter:title" content="<?php echo $TituloPagina; ?>">
+	<meta name="twitter:description" content="<?php echo $Site_Description;?>">
+	<meta name="twitter:image" content="<?php echo $link_logo;?>">
+	<meta name="twitter:card" content="<?php echo $link_logo;?>">
+	<meta name="linkedin:title" content="<?php echo $TituloPagina; ?>">
+	<meta name="linkedin:description" content="<?php echo $Site_Description;?>">
+	<meta name="linkedin:image" content="<?php echo $link_logo;?>">
 
-  <!-- Meta Tags para Resultados de Pesquisa (Google, Bing) -->
-  <meta name="robots" content="index, follow">
-  <meta name="googlebot" content="index, follow">
-  
-
-  
-
+	<!-- Meta Tags para Resultados de Pesquisa (Google, Bing) -->
+	<meta name="robots" content="index, follow">
+	<meta name="googlebot" content="index, follow">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-
-	 <!-- Link para o Ícone da Página -->
+	<!-- Link para o Ícone da Página -->
 	<?php if (isset($shortIcon) and $shortIcon != "") { ?>
-		<link rel="icon" type="image/x-icon" href="<?php echo $shortIcon;?>">
+		<link rel="icon"  href="<?php echo $shortIcon;?>">
 	<?php } ?>
 
 		<!--FontAwesome-->
@@ -87,7 +81,6 @@ $meta_encoding=$meta_encoding;
 </head>
 
 <body>
-	
 	<?php include("views/topbar.php");?>
 
 	<div class="container<?php echo $container;?>">
@@ -100,13 +93,19 @@ $meta_encoding=$meta_encoding;
 	<?php } ?>
 	
 	<main>
-			<?php if ($sidebar!="N")  { ?>
+			<?php
+
+			if (!empty($_REQUEST['Sub_Expresion'])) { $EscondeSide="Y"; } else { $EscondeSide="N"; };
+
+			//foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
+
+			if ($sidebar!="N") { ?>
 				<div class="d-flex flex-row col-md-12">
-				<?php include("views/sidebar.php"); ?>
-			<?php } else { ?>
 
+					<?php if ($EscondeSide.$hideSIDEBAR!="YY") include("views/sidebar.php"); ?>
+
+				<?php } else { ?>
 				<div class="row">
-
 			<?php } ?>
 
 				<div id="page" class="container">
