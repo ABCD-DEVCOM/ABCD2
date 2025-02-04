@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20211216 fho4abcd Backbutton & helper by included file. Improve html
+20250204 fho4abcd Improve UTF-8 display
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -13,7 +14,7 @@ if (!isset($_SESSION["permiso"])){
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
-$lang=$_SESSION["lang"];
+include("../common/inc_nodb_lang.php");
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");

@@ -10,6 +10,7 @@
 2022-07-10 fho4abcd Prepare for .par file in database folder+ no password to llamar_wxis.php
 2024-05-19 fho4abcd Added alternative return script. When the standard index.php is forbidden
 2024-06-01 fho4abcd Check captcha
+2025-02-04 fho4abcd Improve UTF-8 display if no databases is selected
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -395,6 +396,10 @@ if (isset($arrHttp["lang"]) and $arrHttp["lang"]!=""){
 
 }else{
 	if (!isset($_SESSION["lang"])) $_SESSION["lang"]=$lang;
+}
+
+if (!isset($arrHttp['base'])) {
+    include("../common/inc_nodb_lang.php");
 }
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
