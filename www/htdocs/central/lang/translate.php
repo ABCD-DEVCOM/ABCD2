@@ -4,6 +4,7 @@
 20210521 fho4abcd Rewritten: use correct encoding for translation
 20121128 fho4abcd Translations with quotes are now shown correct
 20220123 fho4abcd buttons
+20250204 fho4abcd Improve UTF-8 display
 */
 /*
 ** The encoding of the translated messages must match with the entered text
@@ -17,11 +18,9 @@ session_start();
 if (!isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) and !isset($_SESSION["permiso"]["CENTRAL_ALL"])){
 	header("Location: ../common/error_page.php") ;
 }
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
-// unset a possible database:encoding may be different from langauage file
-if (isset($_REQUEST["base"])) $_REQUEST["base"]="";
-
 include("../common/get_post.php");
+// config sets variables from abcd.def, the interesting parameters for this script:
+// $unicode, $charset, $meta_encoding, $lang (from $_REQUEST["lang"])
 include("../config.php");
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -29,35 +28,16 @@ include("../config.php");
 /*
 ** Set defaults
 */
-
-$lang=$_SESSION["lang"];
 $table=$arrHttp["table"];
 $backtoscript="../dbadmin/menu_traducir.php"; // The default return script
 $savescript="javascript:Enviar()"; // The save action
- // The default characterset is of the selected database or system default
-$selcharset=$charset;
-$guessstatus="basesdef";
-// Try to guess from the language code and the actual code as existed at the time this script was written
-// The future is UTF-8, but we have currently some ISO langauges
-$curstat["en"]="ISO-8859-1";
-$curstat["es"]="ISO-8859-1";
-$curstat["fr"]="ISO-8859-1";
-$curstat["pt"]="ISO-8859-1";
-$curstat["am"]="UTF-8";
-if ( isset($curstat[$lang]) ) {
-    $selcharset=$curstat[$lang];
-    $guessstatus="lang";
-}
-// And a manual selected code overrules all guesses.
-if (isset($arrHttp["selcharset"])){
-    $guessstatus="manual";
-    $selcharset=$arrHttp["selcharset"];
-}
-$charset=$selcharset;
+
+include("../common/inc_nodb_lang.php");
+
 // read the language files after setting of the selected characterset
+include("../common/header.php");// The header tells the browser the selected characterset
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
-include("../common/header.php");// The header tells the browser the selected characterset
 $guessed=$msgstr["undefined"];
 if ($guessstatus=="basesdef") $guessed=$msgstr["basesdef"];
 if ($guessstatus=="lang")     $guessed=$msgstr["lang"]." ".$lang;
@@ -125,6 +105,7 @@ if ($table==""){
         </tr>
         </table>
         <input type=hidden name="table" value="<?php echo $table;?>">
+        <input type=hidden name="lang" value="<?php echo $lang;?>">
     </form>
 </div>
 <br>
@@ -179,7 +160,12 @@ if (file_exists($langfile)) {
                     $tabmsg=$tl[1];
                 }
                 if (isset($msgstrarr[$tabkey]["code"])) {
-                    // This is not productione mode: no code conversion of character substitution
+                    // Convert the code to UTF-8 if necessary
+		    if ($selcharset=="UTF-8") {
+                        if (!mb_check_encoding($tabmsg,'UTF-8')) {
+                            $tabmsg=mb_convert_encoding($tabmsg,'UTF-8','ISO-8859-1');
+                        }
+                    }
                     $msgstrarr[$tabkey][$lang]=$tabmsg;
                 } else {
                     // error message if the key is not in the fallback table

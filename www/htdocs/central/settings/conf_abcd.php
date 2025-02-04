@@ -3,6 +3,7 @@
 20210615 fho4abcd Removed opac configuration.Not working and not in line with wiki OPAC-ABCD Configuration Tutorial
 20210615 fho4abcd Improve html, cleanup code, lineends
 20211216 fho4abcd Backbutton by included file
+20250204 fho4abcd Improve UTF-8 display
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -19,6 +20,7 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 $lang=$_SESSION["lang"];
 include("../common/get_post.php");
 include("../config.php");
+include("../common/inc_nodb_lang.php");
 
 // ARCHIVOS DE LENGUAJE
 include("../lang/admin.php");

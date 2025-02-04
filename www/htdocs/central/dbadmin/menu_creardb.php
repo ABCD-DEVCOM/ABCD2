@@ -2,6 +2,7 @@
 /*
 20210921 fho4abcd Button in form + inc_div-helper + sanitize html + remove unused VerificarTipo + translations
 20211216 fho4abcd Backbutton by included file
+20250204 fho4abcd Improve UTF-8 display
 */
 session_start();
 unset($_SESSION["DCIMPORT"]);
@@ -19,7 +20,7 @@ unset($_SESSION["FST"]);
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include ("../config.php");
-$lang=$_SESSION["lang"];
+include("../common/inc_nodb_lang.php");
 
 
 

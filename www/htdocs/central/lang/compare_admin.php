@@ -4,6 +4,7 @@
 20210520 fho4abcd Rewritten: use language table for languages to compare+error detection+show ghost entries+mark empty entries
 20210521 fho4abcd line-ends
 20220123 fho4abcd buttons
+20250204 fho4abcd Improve UTF-8 display
 */
 session_start();
 if (!isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) and !isset($_SESSION["permiso"]["CENTRAL_ALL"])){
@@ -12,8 +13,7 @@ if (!isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) and !isset($_SESSION["permi
 include("../common/get_post.php");
 include("../config.php");
 
-$lang=$_SESSION["lang"];
-$charset="UTF-8";
+include("../common/inc_nodb_lang.php");
 include("../common/header.php");
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
@@ -27,7 +27,7 @@ include "../common/institutional_info.php";
 ?>
 <div class="sectionInfo">
     <div class="breadcrumb">
-        <?php echo $msgstr["compare_trans"].": ".$table ?>
+        <?php echo $msgstr["compare_trans"].": ".$table.", ".$msgstr["lang"].": ".$lang ?>
     </div>
     <div class="actions">
         <?php include "../common/inc_back.php"?>
@@ -52,6 +52,10 @@ foreach ($langtabcontent as $var=>$langline) {
     if ( trim($langline!="")) {
         $ll=explode('=',$langline,2);
         $langkey=trim($ll[0]);
+	// Remove possible BOM mark
+        if(substr($langkey,0,3) == pack("CCC",0xef,0xbb,0xbf)) {
+            $langkey=substr($langkey,3);
+        }
         if ( $langkey!="" and $langkey!="00" and isset($ll[1]) and trim($ll[1]!="") ) {
             $langstr=$ll[1];
             $lang_cod[$langkey]=$langkey;
@@ -107,9 +111,11 @@ foreach ($lang_cod as $var=>$langkey) {
                         $tabmsg=$tl[1];
                     }
                     // Production mode: convert to UTF-8 if necessary
-                    if (!mb_check_encoding($tabmsg,'UTF-8')) {
-                        $tabmsg=mb_convert_encoding($tabmsg,'UTF-8','ISO-8859-1');
-                    }
+		    if ( $charset=="UTF-8") {
+                        if (!mb_check_encoding($tabmsg,'UTF-8')) {
+                            $tabmsg=mb_convert_encoding($tabmsg,'UTF-8','ISO-8859-1');
+                        }
+		    }
                     if (isset($msgstrarr[$tabkey]["code"])) {
                         $msgstrarr[$tabkey][$langkey]=$tabmsg;
                     } else {

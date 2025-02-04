@@ -4,6 +4,7 @@
 20211215 fho4abcd Backbutton & helper by included file
 20220203 fho4abcd Typo + improve folder selection and do not screw up $arrHttp["base"]
 20220630 fho4abcd Back to Home if $arrHttp["base"] not set or lost. Loosing is easy due to the dozens of forms.Improve html
+20250204 fho4abcd Improve UTF-8 display
 */
 /*
  This program is free software; you can redistribute it and/or
@@ -196,6 +197,7 @@ if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
 	header("Location: ../common/error_page.php") ;
 }
 include("../config.php");
+include("../common/inc_nodb_lang.php");
 $_SESSION["root_base"]=$db_path;
 $_SESSION["dir_base"]="";
 if (isset($arrHttp["folder"])){

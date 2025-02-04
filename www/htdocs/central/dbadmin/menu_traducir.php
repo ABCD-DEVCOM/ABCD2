@@ -5,6 +5,7 @@
 20210829 fho4abcd Added missing importdoc compare+replace componente by table
 20211216 fho4abcd Backbutton by included file
 20221030 fho4abcd Added translations for odds, mysite. Use moduleButton for modules
+20250204 fho4abcd Improve UTF-8 display
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -13,7 +14,9 @@ if (!isset($_SESSION["permiso"])){
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include ("../config.php");
-$lang=$_SESSION["lang"];
+
+include("../common/inc_nodb_lang.php");
+
 include("../lang/acquisitions.php");
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
