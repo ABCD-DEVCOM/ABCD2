@@ -4,6 +4,7 @@
 20240523 fho4abcd Changed save parameters
 20240528 fho4abcd Changed save parameter
 20240610 fho4abcd Forbidden characters in description+ increase length of description
+20250206 fho4abcd Add Close button to Save just like delete. Remove confusing database name from breadcrumb
 ** Handles the manipulation of freesearch saved parameters.
 ** Requires "freesearch_save_inc.php" to handle related file manipulation.
 ** Major function:
@@ -53,9 +54,9 @@ function EnviarFormadel(){
 	<div class="breadcrumb">
 		<?php
 		if ($arrHttp["Option"]=="delete") {
-			echo $msgstr["freesearch_del"].": ".$arrHttp["base"];
+			echo $msgstr["freesearch_del"];
 		} else {
-			echo $msgstr["freesearch_save"].": ".$arrHttp["base"];
+			echo $msgstr["freesearch_save"];
 		}
 		?>
 	</div>
@@ -105,7 +106,9 @@ if ($arrHttp["Option"]==""){
 		<td><input type=text name=description maxlength=50 size=50></td>
 	<tr><td></td><td align=center>
 		<a href="javascript:EnviarForma()" class="bt bt-green">
-		 <i class="far fa-save"></i> &nbsp; <?php echo $msgstr["freesearch_save"]?></a></td>
+		<i class="far fa-save"></i> &nbsp; <?php echo $msgstr["freesearch_save"]?></a> &nbsp;
+		<a href="javascript:self.close()" class="bt bt-gray">
+			<i class="far fa-window-close"></i> &nbsp; <?php echo $msgstr["cerrar"]?></a></td>
 	</table>
 	</form>
 <?php

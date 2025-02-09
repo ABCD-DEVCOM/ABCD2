@@ -8,6 +8,7 @@
 2024-05-26 fho4abcd Sort only on fields without subfields, move use parameterset to top.
 2024-05-28 fho4abcd Add reverse sort option
 2024-06-06 fho4abcd Layout+texts. Allow field selection without marking
+2025-02-06 fho4abcd Button Delete parameterset:red
 */
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -419,7 +420,7 @@ function Togglerange() {
 			?>
 			<a href="javascript:SaveSavParams()" class="bt bt-blue">
 				<i class="far fa-save"></i> &nbsp; <?php echo $msgstr["freesearch_save"]?></a>
-			<a href="javascript:DelSavParams()" class="bt bt-blue"> &nbsp;
+			<a href="javascript:DelSavParams()" class="bt bt-red"> &nbsp;
 				<i class="fas fa-trash"></i> &nbsp; <?php echo $msgstr["freesearch_del"]?></a>
 			<?php } ?>
 		</td>
