@@ -217,6 +217,7 @@ inputtype=Input type
 insplname=You must supply the name of the picklist table
 intec=Indexing Tech.
 intro=Introduction
+invalidcombi=Invalid combination
 invalidfilename=Invalid file name
 invalpipe=invalid character | in row
 invinputype=This picklist requires a Text/Textarea input type

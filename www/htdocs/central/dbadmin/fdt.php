@@ -6,7 +6,8 @@
 2024-04-14 fho4abcd Translate function names. Enable Drag&drop + multiselect. Remove unused "moodle". Small updates.
 2024-04-14 fho4abcd Code more equal to fdt_short_a.php + moved "common" code to included files
 2024-04-16 fho4abcd Increase row link font, improve indent
-2024-04-22 fho4abcd Send title to picklist edit 
+2024-04-22 fho4abcd Send title to picklist edit
+2025-02-09 fho4abcd Tests for Simple/Multiple picklist added. Moved displayed errors before the table display
 */
 /*
 ** See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html / https://docs.dhtmlx.com/grid__styling.html for grid details
@@ -114,8 +115,6 @@ function Validate(Opcion){
 	msgwin.document.writeln("<style>BODY{font-size: 8pt;}")
 	msgwin.document.writeln("TD{font-family:arial; font-size:8pt;}")
 	msgwin.document.writeln("</style>")
-	msgwin.document.writeln("<body><table bgcolor=#F5F5F5>")
-	HeadRowsForValidate("row")
 	cols=mygrid.getColumnCount()
 	rows=mygrid.getRowsNum()
 	msg=""
@@ -123,11 +122,12 @@ function Validate(Opcion){
 	mainentry=0
 	displayTag=" <?php echo $msgstr["tag"]?>"+": "
 	displayRow=" <?php echo $msgstr["fdtrow"]?>"+": "
-
+	// Loop over rows to test the content. The table is displayed later
 	for (i=0;i<rows;i++){
 		irow=i+1
 		fila=""
 		in_type=""
+		fld_repeatable="false"
 		pl_type=""
 		pl_name=""
 		pl_prefix=""
@@ -147,7 +147,6 @@ function Validate(Opcion){
 		}
 		Leader=""
 		if (Trim(fila)!=""){
-			msgwin.document.writeln("<tr><td>"+irow+"</td>")
 			cell_colums=""
 			cell_rows=""
 			for (j=1;j<cols;j++){
@@ -176,9 +175,7 @@ function Validate(Opcion){
 						case 5:	// Repeatable
 							if (cell!=""){
 								if (cell==1)
-									cell="true"
-								else
-									cell=""
+									fld_repeatable="true"
 							}
 							break
 						case 6:	//Subfields
@@ -261,8 +258,6 @@ function Validate(Opcion){
 							cell_pattern=cell
 							break
 					}
-					// Display the cell
-					msgwin.document.write("<td bgcolor=white>"+ cell+"&nbsp;</td>")
 				}
 			} // end of loop over columns in the current row
 			// Check of all entries in the current row that require checking
@@ -334,7 +329,15 @@ function Validate(Opcion){
 					msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["sfcounterr"]?>" +"<br>"
 				}
 			}
-		    switch (pl_type){   // se valida la consistencia de los datos del picklist asignado al campo
+			// Tests for input type S(simple) and M(multiple
+			if (in_type=="S" && fld_repeatable=="true"){
+				msg+=displayRowfull+displayTagfull+"R=true + "+displayIn_type+" <?php echo $msgstr["invalidcombi"] ?>" +"<br>"
+			}
+			if (in_type=="M" && fld_repeatable=="false"){
+				msg+=displayRowfull+displayTagfull+"R=false + "+displayIn_type+" <?php echo $msgstr["invalidcombi"] ?>" +"<br>"
+			}
+			// Tests for the picklist info
+			switch (pl_type){   // se valida la consistencia de los datos del picklist asignado al campo
 				case "XT":
 					msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["notimplemented"]?>"+"<br>"
 					break
@@ -379,9 +382,8 @@ function Validate(Opcion){
 			}
 		}
 
-	} // end loop over Rows
+	} // end check loop over Rows
 	
-	msgwin.document.writeln("</table>")
 	if (mainentry>1){
 		msg+="<?php echo $msgstr["errmainentry"]?>"
 	}
@@ -396,6 +398,104 @@ function Validate(Opcion){
 		msgwin.document.writeln("<p><?php echo $msgstr["noerrors"]?>")
 		msgwin.focus()
 	}
+	// Display the table
+	msgwin.document.writeln("<table bgcolor=#F5F5F5>")
+	HeadRowsForValidate("row")
+	for (i=0;i<rows;i++){
+		irow=i+1
+		fila=""
+		in_type=""
+		pl_type=""
+		pl_name=""
+		pl_prefix=""
+		pl_format=""
+		pl_display=""
+		cell=""
+		displayRowfull=displayRow+irow
+
+		for (j=1;j<cols;j++){   // Se verifica que la línea no esté en blanco
+			cell=""
+			if (j!=14) {
+				cell=Trim(mygrid.cells2(i,j).getValue())
+				if(cell=="undefined") cell=""
+				if (cell=="0") cell=""
+				fila+=cell
+			}
+		}
+		if (Trim(fila)!=""){
+			msgwin.document.writeln("<tr><td>"+irow+"</td>")
+			cell_colums=""
+			cell_rows=""
+			for (j=1;j<cols;j++){
+				if (j!=14){// why this exception?
+					cell=Trim(mygrid.cells2(i,j).getValue())
+					if (cell=="undefined") cell=""
+					// Only cases that modify the ceel content are required here
+					switch (j){
+						case 5:	// Repeatable
+							if (cell!=""){
+								if (cell==1)
+									cell="true"
+								else
+									cell=""
+							}
+							break
+						case 8: // Entry type/Input type
+							in_type=cell
+							displayIn_type=""
+							if (cell!=""){
+								cell=input_type[cell]
+								cell=cell+" ("+in_type+")"
+								displayIn_type=cell+" &rarr; "
+							}
+							break
+						case 11:	// Picklist type
+							if (Trim(cell)!="") {
+								pl_type=cell
+								cell=pick_type[cell]
+							}
+							break
+						case 17:	// Extract as
+							cell=""
+							break
+						case 18:	//Help
+							if (cell!=""){
+								if (cell==1)
+									cell="true"
+								else
+									cell=""
+							}
+							break
+						case 20:	// Link FDT
+							if (cell!=""){
+								if (cell==1)
+									cell="true"
+								else
+									cell=""
+							}
+							break
+						case 21:	// Req?
+							if (cell!=""){
+								if (cell==1)
+									cell="true"
+								else
+									cell=""
+							}
+							break
+						case 22:	// Field validation (is a picklist)
+							if (cell!=""){
+								cell=validation[cell]
+								cell=cell+" ("+cell_type+")"
+							}
+							break
+					}
+					// Display the cell
+					msgwin.document.write("<td bgcolor=white>"+ cell+"&nbsp;</td>")
+				}
+			} // end of loop over columns in the current row
+		}
+	} // end loop over Rows
+	msgwin.document.writeln("</table>")
 
 	if (Opcion=="Actualizar"){
 		if (msg=="") {

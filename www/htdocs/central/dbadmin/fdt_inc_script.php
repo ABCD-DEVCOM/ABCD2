@@ -4,6 +4,7 @@
 2024-04-16 fho4abcd Increase row link font, improve indent. Error if no row selected. Smaller picklist window
 2024-04-16 fho4abcd Add function AsignarDbPicklistValues (was removed by accident)
 2024-04-22 fho4abcd Correct pl_type, send also title of field, Add function AsignarTxtPicklistValues (was removed by accident)
+2025-02-09 fho4abcd bgcolor in HeadRowsForValidate set to LightBlue
 */
 /*
 ** Scripts common and equal for fdt processing
@@ -134,16 +135,16 @@ function HeadRowsForValidate(Rows){
 	//Display heading rows for the validation
 	msgwin.document.writeln("<tr>")
 	if (Rows!="") msgwin.document.writeln("<td rowspan=2></td>")// cell for the row number
-	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["type"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["tag"]?></td>")
-	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["title"]?></td><td rowspan=2 align=center bgcolor=white>I</td><td rowspan=2 align=center bgcolor=white>R</td><td rowspan=2 align=center  bgcolor=white><?php echo $msgstr["subfields"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["preliteral"]?></td>")
-	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["inputtype"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["rows"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["cols"]?></td>")
-	msgwin.document.writeln("<td colspan=6 align=center bgcolor=white><?php echo $msgstr["picklist"]?></td>")
+	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=LightBlue><?php echo $msgstr["type"]?></td><td rowspan=2 align=center bgcolor=LightBlue><?php echo $msgstr["tag"]?></td>")
+	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=LightBlue><?php echo $msgstr["title"]?></td><td rowspan=2 align=center bgcolor=LightBlue>I</td><td rowspan=2 align=center bgcolor=LightBlue>R</td><td rowspan=2 align=center  bgcolor=LightBlue><?php echo $msgstr["subfields"]?></td><td rowspan=2 align=center bgcolor=LightBlue><?php echo $msgstr["preliteral"]?></td>")
+	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=LightBlue><?php echo $msgstr["inputtype"]?></td><td rowspan=2 align=center bgcolor=LightBlue><?php echo $msgstr["rows"]?></td><td rowspan=2 align=center bgcolor=LightBlue><?php echo $msgstr["cols"]?></td>")
+	msgwin.document.writeln("<td colspan=6 align=center bgcolor=LightBlue><?php echo $msgstr["picklist"]?></td>")
 
-	msgwin.document.writeln("<td bgcolor=white rowspan=2><?php echo $msgstr["help"]?></td>")
-	msgwin.document.writeln("<td bgcolor=white rowspan=2><?php echo $msgstr["url_help"]?></td><td bgcolor=white rowspan=2><?php echo $msgstr["link_fdt"]?></td><td bgcolor=white rowspan=2><?php echo $msgstr["mandatory"]?></td><td bgcolor=white rowspan=2><?php echo $msgstr["field_validation"]?></td><td bgcolor=white rowspan=2><?php echo $msgstr["pattern"]?></td>")
+	msgwin.document.writeln("<td bgcolor=LightBlue rowspan=2><?php echo $msgstr["help"]?></td>")
+	msgwin.document.writeln("<td bgcolor=LightBlue rowspan=2><?php echo $msgstr["url_help"]?></td><td bgcolor=LightBlue rowspan=2><?php echo $msgstr["link_fdt"]?></td><td bgcolor=LightBlue rowspan=2><?php echo $msgstr["mandatory"]?></td><td bgcolor=LightBlue rowspan=2><?php echo $msgstr["field_validation"]?></td><td bgcolor=LightBlue rowspan=2><?php echo $msgstr["pattern"]?></td>")
 	msgwin.document.writeln("<tr>")
-	msgwin.document.writeln("<td align=center bgcolor=white><?php echo $msgstr["type"]?></td><td bgcolor=white><?php echo $msgstr["name"]?></td><td bgcolor=white><?php echo $msgstr["prefix"]?></td><td bgcolor=white><?php echo $msgstr["pft"]?></td>")
-	msgwin.document.writeln("<td bgcolor=white><?php echo $msgstr["listas"]?></td><td bgcolor=white><?php echo $msgstr["extractas"]?></td>")
+	msgwin.document.writeln("<td align=center bgcolor=LightBlue><?php echo $msgstr["type"]?></td><td bgcolor=LightBlue><?php echo $msgstr["name"]?></td><td bgcolor=LightBlue><?php echo $msgstr["prefix"]?></td><td bgcolor=LightBlue><?php echo $msgstr["pft"]?></td>")
+	msgwin.document.writeln("<td bgcolor=LightBlue><?php echo $msgstr["listas"]?></td><td bgcolor=LightBlue><?php echo $msgstr["extractas"]?></td>")
 }
 function List(){
 	var width = screen.availWidth;
