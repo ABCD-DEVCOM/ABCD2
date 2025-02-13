@@ -5,6 +5,7 @@
 2024-04-16 fho4abcd Add function AsignarDbPicklistValues (was removed by accident)
 2024-04-22 fho4abcd Correct pl_type, send also title of field, Add function AsignarTxtPicklistValues (was removed by accident)
 2025-02-09 fho4abcd bgcolor in HeadRowsForValidate set to LightBlue
+2025-02-11 fho4abcd replace browse by translated message
 */
 /*
 ** Scripts common and equal for fdt processing
@@ -47,7 +48,7 @@ function AddRow(ixfila,Option){
 			break
 	}
 	linkr="<a href=javascript:EditRow(\""+ixf+"\","+ixf+")>"+ref+"</a>";
-	pick="<a href=javascript:Picklist(\"\","+ixf+")><font size=1>browse</a>";
+	pick="<a href=javascript:Picklist(\"\","+ixf+")><font size=1>"+"<?php echo $msgstr["edit"]?>"+"</a>";
 	mygrid.addRow((new Date()).valueOf(),[linkr,'','','','','','','','','','','','','',pick,'','','','','','','','','','','',''],ixfila)
 	mygrid.selectRow(ixfila);
 }

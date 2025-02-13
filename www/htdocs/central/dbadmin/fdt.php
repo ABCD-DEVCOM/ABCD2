@@ -8,6 +8,7 @@
 2024-04-16 fho4abcd Increase row link font, improve indent
 2024-04-22 fho4abcd Send title to picklist edit
 2025-02-09 fho4abcd Tests for Simple/Multiple picklist added. Moved displayed errors before the table display
+2025-02-11 fho4abcd replace browse by translated message
 */
 /*
 ** See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html / https://docs.dhtmlx.com/grid__styling.html for grid details
@@ -667,9 +668,9 @@ if (isset($fp)){
 			for ($ix=0;$ix<21;$ix++) if (!isset($t[$ix])) $t[$ix]="";
 			if (trim($t[0])!="H" and trim($t[0])!="L"){
 				if ($t[10]=="")
-					$pick="<a href='javascript:Picklist(\"".$t[1].".tab\",$i)'><font size=1>browse</font></a>";
+					$pick="<a href='javascript:Picklist(\"".$t[1].".tab\",$i)'><font size=1>".$msgstr["edit"]."</a>";
 				else
-					$pick="<a href='javascript:Picklist(\"".$t[10]."\",$i)'><font size=1>browse</font></a>";
+					$pick="<a href='javascript:Picklist(\"".$t[10]."\",$i)'><font size=1>".$msgstr["edit"]."</a>";
 			}
 			if (!isset($t[16])) $t[16]="";
 			$ixt=-1;
