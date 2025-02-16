@@ -5,7 +5,8 @@
 * It is also possible to detect databases with execution errors.
 * This file can be deleted if it poses a risk to the server.´
 * 2022-12-02 rogercgui Publish the first version of this script
-* 2022=12-04 fho4abcd Improvement for $actparfolder not equal to standard par/
+* 2022-12-04 fho4abcd Improvement for $actparfolder not equal to standard par/
+* 2025-02-10 fho4abcd Correct index "status_inf_mbstring" to "status_inf__mbstring" (=less work as updating all language files)
 */
 
 session_start();
@@ -285,7 +286,7 @@ $ip_server = getHostByName(php_uname('n'));
     </tr>    
  <tr>
     <td>mbstring</td>
-    <td><?php echo $msgstr["status_inf_mbstring"];?></td>
+    <td><?php echo $msgstr["status_inf__mbstring"];?></td>
     <td><?php if (extension_loaded('mbstring')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
 

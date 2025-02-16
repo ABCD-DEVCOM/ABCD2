@@ -13,6 +13,7 @@
 20220309 rogercgui Included verification for variable $t17
 20240129 fho4abcd Show correct number of OD entries. Time in 24 hour format. Improve calendar function. Typo's, formatting
 20240517 fho4abcd For PHP8: Empty parameters compare different with value 0: also compare with ""
+20250213 fho4abcd Replaced links by buttons, adde translation
 */
 require_once("combo_inc.php");
 require_once("../common/inc_calendar.php");
@@ -424,7 +425,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 				$Etq=$tag."_".$i."_".substr($subc,$j,1);
 				echo "<td nowrap>";
                 if ($j==0){
-                	if (isset($Etq) and !isset($ver)) echo "<a class=\"bt-fdt-blue\" href=javascript:RowClean('$Etq','$subc')><i class=\"fas fa-eraser\"></i> ".$msgstr["erase"]."</a> ";
+                	if (isset($Etq) and !isset($ver)) echo "<a class=\"bt-fdt-red\" href=javascript:RowClean('$Etq','$subc')><i class=\"fas fa-eraser\"></i> ".$msgstr["erase"]."</a> ";
 				//echo substr($subc,$j,1);
 				}
 				if ($type_de[7]!="COMBO" and $type_de[7]!="COMBORO"){
@@ -628,10 +629,10 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
  				$vd.=$key."|".$value."$$$";
  			}
  		}
- 		echo "<a href=javascript:addRow('".$t[1]."','$subc','add','$vd')>".$msgstr["add"]."</a> | ";
+		echo "<a class='bt bt-blue' href=javascript:addRow('".$t[1]."','$subc','add','$vd')>".$msgstr["add"]."</a>";
+		echo "<a class='bt bt-blue' href=javascript:addRow('".$t[1]."','$subc','duplicate','$vd')>".$msgstr["duplicate_last"]."</a>";
+		echo "<a class='bt bt-blue'  href=javascript:Organizar('".$t[1]."','$subc')>".$msgstr["orglist"]."</a>";
 
- 		echo "<a href=javascript:addRow('".$t[1]."','$subc','duplicate','')>".$msgstr["duplicate_last"]."</a>";
- 		echo " | <a href=javascript:Organizar('".$t[1]."','$subc')>Organizar</a>";
  	}
  	echo "<br></td>";
  	echo "\n</td></td>";
@@ -1154,16 +1155,16 @@ Function PrepararFormato() {
 							</SELECT>
 						</td>
 						<td ALIGN=\"left\" width=50 class='input-fdt'>
-							<a href=# onClick=\"moveOptionUp(document.forma1.reorg)\" class=boton>".$msgstr["r_subir"]."</a>
+							<a class='bt bt-gray' href=# onClick=\"moveOptionUp(document.forma1.reorg)\"><i class='fas fa-chevron-circle-up'></i></a>
 							<BR><BR>
-							<a href=\"javascript:moveOptionDown(document.forma1.reorg)\" class=boton>".$msgstr["r_bajar"]."</a>
+							<a class='bt bt-gray' href=\"javascript:moveOptionDown(document.forma1.reorg)\"><i class='fas fa-chevron-circle-down'></i></a>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<a href=\"javascript:OrganizarSalir('aceptar')\">".$msgstr["aceptar"]."</a>
-							&nbsp; | &nbsp;
-							<a href=\"javascript:OrganizarSalir('cancelar')\">".$msgstr["cancelar"]."</a>
+							<a class='bt bt-green' href=\"javascript:OrganizarSalir('aceptar')\">".$msgstr["aceptar"]."</a>
+							&nbsp;  &nbsp;
+							<a class='bt bt-red' href=\"javascript:OrganizarSalir('cancelar')\">".$msgstr["cancelar"]."</a>
 						</td>
 						<td></td>
 					</tr>

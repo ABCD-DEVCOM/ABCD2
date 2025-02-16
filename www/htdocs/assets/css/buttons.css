@@ -2,6 +2,7 @@
 * This style sheet serves as a basis for developers and database managers.
 * Its classes offer buttons of various colours that can be applied to link, button and input type elements.
 * To use it just call the class "bt" followed by the colour class, for example "bt-blue". 
+* 2025-02-13 fho4abc added fdt-bt-red
 */
 
 .bt, 
@@ -258,6 +259,15 @@ input[type=reset].bt-block {
   text-decoration: none;
   background-color: var(--abcd-blue);
   border: 1px solid var(--abcd-blue);
+  color: var(--abcd-white);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: normal;
+}
+.bt-fdt-red {
+  text-decoration: none;
+  background-color: var(--abcd-red);
+  border: 1px solid var(--abcd-red);
   color: var(--abcd-white);
   cursor: pointer;
   font-size: 12px;

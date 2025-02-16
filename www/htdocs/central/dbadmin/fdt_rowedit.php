@@ -1,5 +1,7 @@
 <?php
-
+/* Modifications
+2025-02-11 fho4abcd replace browse by translated message, replace links by buttons
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -141,11 +143,11 @@ foreach ($pick_type as $var=>$value){
 echo "</select>";
 if (trim($Fdt[0])!="H" and trim($Fdt[0])!="L"){
 	if ($Fdt[10]=="")
-		$pick="<a href='javascript:Picklist(\"".$Fdt[10].".tab\",".$arrHttp["row"].")'><font size=1>browse</a>";
+		$pick="<a href='javascript:Picklist(\"".$Fdt[10].".tab\",".$arrHttp["row"].")'><font size=1>".$msgstr["edit"]."</a>";
 	else
-		$pick="<a href='javascript:Picklist(\"".$Fdt[10]."\",".$arrHttp["row"].")'><font size=1>browse</a>";
+		$pick="<a href='javascript:Picklist(\"".$Fdt[10]."\",".$arrHttp["row"].")'><font size=1>".$msgstr["edit"]."</a>";
 }
-if (isset($pick)) echo "$pick</td>";
+if (isset($pick)) echo " $pick</td>";
 echo "<tr><td bgcolor=white>". $msgstr["name"]."</td><td bgcolor=white>";
 echo "<input type=text name=c12 value=\"".$Fdt[11]."\" size=80></td>";
 echo "<tr><td bgcolor=white>". $msgstr["prefix"]."</td><td bgcolor=white>";
@@ -182,9 +184,14 @@ echo "</select>";
 echo "</td>";
 echo "<tr><td bgcolor=white>". $msgstr["pattern"]."</td><td bgcolor=white>";
 echo "<input type=text name=c22 value= \"".stripslashes($Fdt[21])."\" size=80></td>";
-echo "</table>
-<a href=javascript:AsignarFdt()>".$msgstr["update"]."</a>&nbsp; &nbsp; &nbsp;<a href=javascript:self.close()>".$msgstr["cancel"]."</a>
-</form>
+echo "</table>"
+?>
+<a href="javascript:AsignarFdt()()" class="bt bt-green">
+	 <i class="far fa-window-close"></i> &nbsp; <?php echo $msgstr["update"]?></a> &nbsp;
+<a href="javascript:self.close()" class="bt bt-gray">
+	 <i class="far fa-window-close"></i> &nbsp; <?php echo $msgstr["cancel"]?></a>
+<?php
+echo "</form>
 </div>
 </div>
 </body>
