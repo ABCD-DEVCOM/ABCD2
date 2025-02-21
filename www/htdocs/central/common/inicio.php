@@ -11,6 +11,7 @@
 2024-05-19 fho4abcd Added alternative return script. When the standard index.php is forbidden
 2024-06-01 fho4abcd Check captcha
 2025-02-04 fho4abcd Improve UTF-8 display if no databases is selected
+2025-02-21 fho4abcd Make Change Password work, move some functions to inc_login_scripts.php, captcha error returns user
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -21,6 +22,7 @@ include("get_post.php");
 if (isset($arrHttp["db_path"]))
 	$_SESSION["DATABASE_DIR"]=$arrHttp["db_path"];
 require_once ("../config.php");
+include ("../common/inc_login_scripts.php");
 
 if ($use_ldap=="1") require_once ("ldap.php");
 
@@ -36,55 +38,8 @@ global $xWxis,$Wxis,$db_path,$wxisUrl,$MD5,$actparfolder;
 	$ValorCapturado="d30<30 0>".$new_password."</30>";
 	$ValorCapturado=urlencode($ValorCapturado);
 	$IsisScript=$xWxis."actualizar.xis";
-  	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$_SESSION["login"]."&Mfn=" . $Mfn."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
+  	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$_SESSION["login"]."&Mfn=".$Mfn."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
     include("wxis_llamar.php");
-}
-function LeerRegistro() {
-// la variable $llave permite retornar alguna marca que esté en el formato de salida
-// identificada entre $$LLAVE= .....$$
-
-$llave_pft="";
-global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5,$actparfolder;
-    $ic=-1;
-	$tag= "";
-	$IsisScript=$xWxis."login.xis";
-	$pass=$arrHttp["password"];
-	if (!isset($MD5) or  $MD5!=0){
-		$pass=md5($pass);
-	}
-    if ($actparfolder=="/")$actparfolder="acces/"; // initial value can be empty
-	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$arrHttp["login"];
-	include("wxis_llamar.php");
-	$llave_ret="";
-	 foreach ($contenido as $linea){
-
-	 	if ($ic==-1){
-			$ic=1;
-	 		$pos=strpos($linea, '##LLAVE=');
-	    	if (is_integer($pos)) {
-	     		$llave_pft=substr($linea,$pos+8);
-	     		$ll=explode('|',$llave_pft);
-	     		if ($ll[0]==$pass){
-	     			$llave_ret=$llave_pft;
-	     			$valortag=array();
-	     		} 
-			}
-		}else{
-			$linea=trim($linea);
-			$pos=strpos($linea, " ");
-			if (is_integer($pos)) {
-				$tag=trim(substr($linea,0,$pos));
-	//
-	//El formato ALL envía un <br> al final de cada línea y hay que quitarselo
-	//
-				$linea=rtrim(substr($linea, $pos+2,strlen($linea)-($pos+2)-5));
-				if (!isset($valortag[$tag])) $valortag[$tag]=$linea;
-			}
-		}
-
-	}
-	return $llave_ret;
-
 }
 function VerificarCaptcha(){
 Global $arrHttp,$msgstr,$retorno,$setcaptcha;
@@ -100,97 +55,13 @@ Global $arrHttp,$msgstr,$retorno,$setcaptcha;
 	}
 	$testcaptcha="";
 	if ( isset($arrHttp["captcha"])) $testcaptcha=$arrHttp["captcha"];
+	$user="";
+	if (isset($arrHttp["login"])) $user=$arrHttp["login"];
 	if ($testcaptcha=="" || $testcaptcha!=$cap_code){
-		header("Location: ".$retorno."?login=C");
+		header("Location: ".$retorno."?login=C&user=$user");
 		die;
 	}
 	return;
-}
-function VerificarUsuario(){
-Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per,$adm_login,$adm_password,$retorno;
- 	$llave=LeerRegistro();
- 	if ($llave!=""){
-  		$res=explode('|',$llave);
-  		$userid=$res[0];
-
-  		$_SESSION["mfn_admin"]=$res[1];
-  		$mfn=$res[1];
-  		$nombre=$res[2];
-		$arrHttp["Mfn"]=$mfn;
-  		$Permiso="|";
-  		$Per="";
-  		$value=$valortag[40];
-  		if (isset($valortag[60]))
-  			$fecha=$valortag[60];
-  		else
-  			$fecha="";
-  		$today=date("Ymd");
-  		if (trim($fecha)!=""){
-  			if ($today>$fecha){
-  				header("Location: ".$retorno."?login=N");
-  				die;
-  			}
-  		}
-  		//$value=substr($value,2);
-  		$ix0=strpos($value,'^');
-  		$ix0=$ix0+2;
-  		$ix=strpos($value,'^',$ix0);
-  		$Perfil=substr($value,$ix0,$ix-$ix0);
-    	if (!file_exists($db_path."par/profiles/".$Perfil)){
-    		echo "missing ". $db_path."par/profiles/".$Perfil;
-    		die;
-    	}
-    	$profile=file($db_path."par/profiles/".$Perfil);
-    	unset($_SESSION["profile"]);
-    	unset($_SESSION["permiso"]);
-    	unset($_SESSION["login"]);
-    	$_SESSION["profile"]=$Perfil;
-    	$_SESSION["login"]=$arrHttp["login"];
-    	foreach ($profile as $value){
-    		$value=trim($value);
-    		if ($value!=""){
-    			$key=explode("=",$value);
-    			$_SESSION["permiso"][$key[0]]=$key[1];
-    		}
-    	}
-        if (isset($valortag[70])){
-        	$library=$valortag[70];
-        	$_SESSION["library"]=$library;
-        }else{
-        	unset ($_SESSION["library"]);
-        }
- 	}else{
-        // This is the emergency login
- 		if ($arrHttp["login"]==$adm_login and $arrHttp["password"]==$adm_password){
- 			$Perfil="adm";
-  		    $nombre="!!Emergency/Emergencia!!"; // The displayed name of the emergency user
- 			unset($_SESSION["profile"]);
-    		unset($_SESSION["permiso"]);
-    		unset($_SESSION["login"]);
-            if (!file_exists($db_path."par/profiles/".$Perfil)){
-                echo "Missing file: ". $db_path."par/profiles/".$Perfil."<br>";
-                echo "The emergency user needs administrator privileges";
-                die;
-            }
- 			$profile=file($db_path."par/profiles/".$Perfil);
-    		$_SESSION["profile"]=$Perfil;
-    		$_SESSION["login"]=$arrHttp["login"];
-    		foreach ($profile as $value){
-    			$value=trim($value);
-
-    			if ($value!=""){
-    				$key=explode("=",$value);
-    				$_SESSION["permiso"][$key[0]]=$key[1];
-    			}
-    		}
-    	}else{
-
- 			echo "<script>\n";
- 				echo "self.location.href=\"".$retorno."?login=N\";\n";
- 			echo "</script>\n";
-  			die;
-  		}
- 	}
 }
 
 
@@ -390,6 +261,7 @@ if (isset($arrHttp["newindow"]))
 	$_SESSION["newindow"]="Y";
 else
 	if (!isset($arrHttp["reinicio"])) unset($_SESSION["newindow"]);
+
 if (isset($arrHttp["lang"]) and $arrHttp["lang"]!=""){
 	$_SESSION["lang"]=$arrHttp["lang"];
 	$lang=$arrHttp["lang"];
@@ -407,67 +279,56 @@ include("../lang/prestamo.php");
 include("../lang/lang.php");
 include("../lang/acquisitions.php");
 
-if (isset($_SESSION["HOME"])) {
-	$retorno = $_SESSION["HOME"];
-} elseif (isset($def['LOGIN_ERROR_PAGE'])) {
-	$retorno=$def['LOGIN_ERROR_PAGE'];
-} else {
-    if (file_exists("../../index.php")){
-        $retorno="../../index.php";
-    } else {
-        $retorno="../../index_abcd.php";
-    }
+// Change password before other options
+if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="chgpsw" ){
+	$user=$arrHttp["login"];
+	VerificarUsuario();
+	CambiarPassword($arrHttp["Mfn"],$arrHttp["new_password"]);
+	header("Location: $retorno?login=P&user=$user");
+	die;
 }
 
+if (!isset($_SESSION["Expresion"])) $_SESSION["Expresion"]="";
 
-	if (!isset($_SESSION["Expresion"])) $_SESSION["Expresion"]="";
-
-	if (isset($arrHttp["login"])){
-		VerificarCaptcha();
-		global $use_ldap;
-		if($use_ldap){
-			VerificarUsuarioLDAP();
-		} else {
-			VerificarUsuario();
-		}
+if (isset($arrHttp["login"])){
+	VerificarCaptcha();
+	global $use_ldap;
+	if($use_ldap){
+		VerificarUsuarioLDAP();
+	} else {
+		VerificarUsuario();
+	}
         if (isset($arrHttp["lang"]) && $arrHttp["lang"]!="") {
             $_SESSION["lang"]=$arrHttp["lang"];
         } else {
             $_SESSION["lang"]=$lang;
         }
-		$_SESSION["login"]=$arrHttp["login"];
-		$_SESSION["nombre"]=$nombre;
-//echo "Session=" ; var_dump($_SESSION); die;
+	$_SESSION["login"]=$arrHttp["login"];
+	$_SESSION["nombre"]=$nombre;
+}
 
-	}
-	if (!isset($_SESSION["permiso"])){
-		$msg=$msgstr["invalidright"]." ".$msgstr[$arrHttp["startas"]];
-		echo "
-		<html>
-		<body>
-		<form name=err_msg action=error_page.php method=post>
-		<input type=hidden name=error value=\"$msg\">
-		";
-		if (isset($arrHttp["newindow"]))
-			echo "<input type=hidden name=newindow value=Y>
-		";
-		echo "
-		</form>
-		<script>
-			document.err_msg.submit()
-		</script>
-		</body>
-		</html>
-		";
+if (!isset($_SESSION["permiso"])){
+	$msg=$msgstr["invalidright"]." ".$msgstr[$arrHttp["startas"]];
+	echo "
+	<html>
+	<body>
+	<form name=err_msg action=error_page.php method=post>
+	<input type=hidden name=error value=\"$msg\">
+	";
+	if (isset($arrHttp["newindow"]))
+		echo "<input type=hidden name=newindow value=Y>";
+	echo "
+	</form>
+	<script>
+		document.err_msg.submit()
+	</script>
+	</body>
+	</html>
+	";
     	session_destroy();
     	die;
-    }
-	$Permiso=$_SESSION["permiso"];
-	if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="chgpsw"){
-		CambiarPassword($arrHttp["Mfn"],$arrHttp["new_password"]);
-		header("Location: $retorno?login=P");
-	}else{
-		if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
-		include("homepage.php");
-	}
+}
+$Permiso=$_SESSION["permiso"];
+if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
+include("homepage.php");
 

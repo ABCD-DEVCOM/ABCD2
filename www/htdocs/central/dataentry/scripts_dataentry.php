@@ -9,6 +9,7 @@
 20230203 fho4abcd Removed unused function SeleccionarRegistro
 20230210 fho4abcd Improve text in breadcrumb
 20240103 fho4abcd Add leading zero's to tag if necessary in function Ayuda
+20250221 fho4abcd Check password extended with check for wrong characters (like in change_password.php)
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -472,6 +473,11 @@ function EnviarForma(){
 				if ($SECURE_PASSWORD_LENGTH>0) echo ". ". $msgstr["pass_format_1"]. " ".$SECURE_PASSWORD_LENGTH." ".$msgstr["characters"];?>')
 			    return
 			}
+		}
+		var allowedchars= /^[0-9a-zA-Z\.,!@#$%^&*?_~\\\-()]+$/;
+		if (!allowedchars.test(pwd.value)) {
+			alert("<?php echo $msgstr["validpwdchars"]?>")
+			return
 		}
 	}
 
