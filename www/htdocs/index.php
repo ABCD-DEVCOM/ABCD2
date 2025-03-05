@@ -12,6 +12,7 @@
                   Removed inline fixed size (clashed often with footer position). Removed unused div sectioninfo
 20230223 fho4abcd Check for existence of config.php
 20230602 fho4abcd Add captcha
+20250305 fho4abcd Use current username: makes filling login form more easy
 */
 session_start();
 $_SESSION=array();
@@ -32,7 +33,8 @@ if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$lang;
 	$_SESSION["lang"]=$lang;
 }
-
+$user="";
+if (isset($arrHttp["user"])) $user=$arrHttp["user"];
 include ("$app_path/lang/admin.php");
 include ("$app_path/lang/lang.php");	
 ?>
@@ -189,9 +191,9 @@ include ("$app_path/common/css_settings.php");
 		<td>
 			<?php
 			if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
-				echo "<input type='text' name='login' id='user' value='' class='textEntry superTextEntry inputAlert' onfocus=\"this.className='textEntry superTextEntry inputAlert textEntryFocus';\" onblur=\"this.className='textEntry superTextEntry inputAlert';\" />\n";
+				echo "<input type='text' name='login' id='user' value='".$user."' class='textEntry superTextEntry inputAlert' onfocus=\"this.className='textEntry superTextEntry inputAlert textEntryFocus';\" onblur=\"this.className='textEntry superTextEntry inputAlert';\" />\n";
 			}else{
-				echo "<input type='text' name='login' id='user' value='' class='textEntry superTextEntry' onfocus=\"this.className='textEntry superTextEntry textEntryFocus';\" onblur=\"this.className='textEntry superTextEntry';\" />\n";
+				echo "<input type='text' name='login' id='user' value='".$user."' class='textEntry superTextEntry' onfocus=\"this.className='textEntry superTextEntry textEntryFocus';\" onblur=\"this.className='textEntry superTextEntry';\" />\n";
 			}
 			?>
 		</td>

@@ -14,6 +14,7 @@
 2024-01-29 fho4abcd Correct typo in iframe
 2024-04-03 fho4abcd Larger window for thesaurus
 2024-05-03 fho4abcd Less options for freesearch
+2025-03-05 fho4abcd Remove unused barcode_this option (now in in Update database definitions)
 */
 //error_reporting(E_ALL);
 session_start();
@@ -217,17 +218,6 @@ function Tesaurus(){
   	msgwintesau=window.open("../tesaurus/index.php?base="+base,"tesaurus","width=450,height=650, top=0,left="+left+" menubar=yes, scrollbars=yes, resizable=yes")
   	msgwintesau.document.close()
   	msgwintesau.focus()
-}
-
-function BarcodeThis(){
-	if (browseby=="search")
-  		mfn_edit=Mfn_Search
-  	else
-  		mfn_edit=mfn
-  	top.main.location.href="../barcode/barcode.php?base="+base+"&Mfn="+mfn+"&tipo=barcode"
-  	//msgwin=window.open("../barcode/barcode.php?base="+base+"&print=Y&Mfn="+mfn,"barcode","width=400,height=400,menubar=yes, scrollbars=yes, resizable=yes")
-  	//msgwin.document.close()
-  	//msgwin.focus()
 }
 
 function ValidarIrA(){
@@ -444,9 +434,6 @@ function Menu(Opcion){
 			break;
 		case "barcode":
 			top.main.location="../barcode/bcl_labelshow.php?base="+base;
-			break;
-		case "barcode_this":
-			BarcodeThis()
 			break;
 		case "copiar_archivo":
 			top.main.document.location="copiar_archivo.php?&base="+base+"&cipar="+cipar

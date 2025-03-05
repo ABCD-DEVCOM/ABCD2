@@ -10,6 +10,7 @@ linked documents
 2022-02-14 fho4abcd Texts for dr_path+ sequence for dr_path+improved table layout+removed redirect (too rigid for dr_path)
 2022-03-10 fho4abcd Remove unused option barcode1reg from dr_path
 2024-01-04 fho4abcd No typewriter behavior(suppressed errors), give error for wrong upload filetype, no error if nothing to upload
+2025-03-05 fho4abcd Shuffle sections, modify some titles
 */
 
 
@@ -357,14 +358,14 @@ switch ($set_mod){
 
 	case "abcd_styles":
 		$ini_vars=array(
-					// Identification and sites of the institution
 
-					// Security
+					// Folders
 					"FOLDERS" => array("it"=>"title","Label"=>$msgstr["set_folders"]),
 
 					"MAIN_FOLDER" => array("it"=>"text","size"=>"70","placeholder"=>$ABCD_scripts_path,"Tip"=>$msgstr["set_TIP_MAIN_FOLDER"],"disabled"=>"disabled",),					
 					"DATABASES_FOLDER" => array("it"=>"text","size"=>"70","placeholder"=>$db_path,"Tip"=>$msgstr["set_TIP_DATABASES_FOLDER"],"disabled"=>"disabled",),
 					"DIRECTORY_SYSTEM_UPLOADS"  => array("it"=>"select","Options"=>"1;2","Label"=>$msgstr["set_MAIN_FOLDER"].";".$msgstr["set_DATABASES_FOLDER"],"Tip"=>$msgstr["set_TIP_DIRECTORY_SYSTEM_UPLOADS"]),							
+                                        // Identification
 					"IDENTIFICATION" => array("it"=>"title","Label"=>$msgstr["set_identification"]),
 
 					"INSTITUTION_NAME" => array("it"=>"text","size"=>"70","placeholder"=>$msgstr["set_INSTITUTION_NAME_PH"],"Tip"=>$msgstr["set_TIP_INSTITUTION_NAME"]),
@@ -376,19 +377,16 @@ switch ($set_mod){
 					"ADDITIONAL_LINK_TITLE" => array("it"=>"text","Options"=>"","size"=>"70","placeholder"=>$msgstr["set_ADDITIONAL_LINK_TITLE_PH"],"Tip"=>$msgstr["set_TIP_ADDITIONAL_LINK_TITLE"]),
 					"URL_ADDITIONAL_LINK" => array("it"=>"text","Options"=>"","size"=>"70","placeholder"=>$msgstr["set_URL_ADDITIONAL_LINK_PH"],"Tip"=>$msgstr["set_TIP_URL_ADDITIONAL_LINK"]),
 
-					// Local settings
-					"LOCAL_SET" => array("it"=>"title","Label"=>$msgstr["set_local"]),
-					"LOGIN_ERROR_PAGE" => array("it"=>"text","size"=>"70","placeholder"=>$msgstr["set_LOGIN_ERROR_PAGE"],"Tip"=>$msgstr["set_TIP_LOGIN_ERROR_PAGE"]),
+					// Database settings
+					"DATABASE_SET" => array("it"=>"title","Label"=>$msgstr["set_database"]),
+					"UNICODE" => array("it"=>"radio","Options"=>"1;0","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_UNICODE"]),
+					"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed,"Label"=>$cisis_versions_allowed,"Tip"=>$msgstr["set_TIP_CISIS_VERSION"]),
 					"MAIN_DATABASE"  => array("it"=>"select","Options"=>$databases_codes,"Label"=>$databases_codes,"Tip"=>$msgstr["set_TIP_MAIN_DATABASE"]),
-					"DEFAULT_LANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_LANG"]),
 					"DEFAULT_DBLANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_DBLANG"]),
 					"DATE_FORMAT" => array("it"=>"text","size"=>"50","placeholder"=>$config_date_format,"Tip"=>$msgstr["set_TIP_DATE_FORMAT"]),
 
-					"NEW_WINDOW" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_NEW_WINDOW"]),
-
-
 					// Logos
-					"STYLES" => array("it"=>"title","Label"=>$msgstr["set_logo_css"],"Tip"=>$msgstr["set_TIP_INSTITUTION_NAME"]),
+					"STYLES" => array("it"=>"title","Label"=>$msgstr["set_logos"],"Tip"=>$msgstr["set_TIP_INSTITUTION_NAME"]),
 					"LOGO_DEFAULT" => array("it"=>"check","Options"=>"Y","Label"=>"Yes","Tip"=>$msgstr["set_TIP_LOGO_DEFAULT"]),
 					"LOGO" => array("it"=>"file","Options"=>"","Label"=>"Reset","default"=>"","ID"=>"LOGO","Tip"=>$msgstr["set_TIP_LOGO"]),
 
@@ -409,6 +407,25 @@ switch ($set_mod){
 					"FOOTER" => array("it"=>"color","default"=>"#003366","Label"=>" Default: #003366 or (R: 0, G: 51, B: 102)","Tip"=>$msgstr["set_TIP_FOOTER"]),
 					"FOOTER_FONTCOLOR" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default #f8f8f8 or (R: 248, G: 248, B: 248)","Tip"=>$msgstr["set_TIP_FOOTER_FONTCOLOR"]),
 					"BG_WEB" => array("it"=>"color","Options"=>"","default"=>"#ffffff","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)","Tip"=>$msgstr["set_TIP_BG_WEB"]),
+
+					// Security
+					"SECURITY" => array("it"=>"title","Label"=>$msgstr["set_security"]),
+					"CHANGE_PASSWORD" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CHANGE_PASSWORD"]),					
+					"SECURE_PASSWORD_LENGTH" => array("it"=>"text","Options"=>"","size"=>1,"Tip"=>$msgstr["set_TIP_SECURE_PASSWORD_LENGTH"]),
+					"SECURE_PASSWORD_LEVEL" => array("it"=>"radio","Options"=>"0;1;2;3;4;5","Label"=>"0;1;2;3;4;5","Tip"=>$msgstr["set_TIP_SECURE_PASSWORD_LEVEL"]),
+					"CAPTCHA" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CAPTCHA"]),
+
+					// Other settings
+					"OTHER_SET" => array("it"=>"title","Label"=>$msgstr["set_other"]),
+
+					"REG_LOG" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_REG_LOG"]),
+					"DIRTREE" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_DIRTREE"]),
+					"DIRTREE_EXT"=> array("it"=>"text","Options"=>"","size"=>"70","Tip"=>$msgstr["set_TIP_DIRTREE_EXT"]),
+					"LOGIN_ERROR_PAGE" => array("it"=>"text","size"=>"70","placeholder"=>$msgstr["set_LOGIN_ERROR_PAGE"],"Tip"=>$msgstr["set_TIP_LOGIN_ERROR_PAGE"]),
+					"DEFAULT_LANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_LANG"]),
+
+					"NEW_WINDOW" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_NEW_WINDOW"]),
+
 					
 					//Circulation module settings
 					"CIRCULATION"=>array("it"=>"title","Label"=>$msgstr["loantit"]),
@@ -419,21 +436,17 @@ switch ($set_mod){
 					"AC_SUSP" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_AC_SUSP"]),
 					"ASK_LPN" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_AC_SUSP"]),
 					"ILLOAN" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_ILLOAN"]),		
-
-					// Security
-					"SECURITY" => array("it"=>"title","Label"=>$msgstr["set_security"]),
-					"UNICODE" => array("it"=>"radio","Options"=>"1;0","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_UNICODE"]),
-					"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed,"Label"=>$cisis_versions_allowed,"Tip"=>$msgstr["set_TIP_CISIS_VERSION"]),
-
-					"REG_LOG" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_REG_LOG"]),
-					"DIRTREE" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_DIRTREE"]),
-					"DIRTREE_EXT"=> array("it"=>"text","Options"=>"","size"=>"70","Tip"=>$msgstr["set_TIP_DIRTREE_EXT"]),
-					"CHANGE_PASSWORD" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CHANGE_PASSWORD"]),					
-					"SECURE_PASSWORD_LENGTH" => array("it"=>"text","Options"=>"","size"=>1,"Tip"=>$msgstr["set_TIP_SECURE_PASSWORD_LENGTH"]),
-					"SECURE_PASSWORD_LEVEL" => array("it"=>"radio","Options"=>"0;1;2;3;4;5","Label"=>"0;1;2;3;4;5","Tip"=>$msgstr["set_TIP_SECURE_PASSWORD_LEVEL"]),
-					"CAPTCHA" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CAPTCHA"]),
-
-					);
+						
+					//Circulation module settings
+					"CIRCULATION"=>array("it"=>"title","Label"=>$msgstr["loantit"]),
+					"CALENDAR" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CALENDAR"]),
+					"RESERVATION" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_RESERVATION"]),
+					"LOAN_POLICY" => array("it"=>"check","Options"=>"BY_USER","Label"=>"By user","Tip"=>$msgstr["set_TIP_LOAN_POLICY"]),
+					"EMAIL" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_EMAIL"]),
+					"AC_SUSP" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_AC_SUSP"]),
+					"ASK_LPN" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_AC_SUSP"]),
+					"ILLOAN" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_ILLOAN"]),		
+				);
 	/*
 	          "MODULES" => array("it"=>"title","Label"=>"<HR size=2>"),
 	$mod_vars=array("TITLE" => array("it"=>"text","Options"=>""),

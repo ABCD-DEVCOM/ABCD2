@@ -9,6 +9,7 @@
 2023-01-16 fho4abcd hover text for checkbox
 2023-02-03 fho4abcd Mark checkbox if in list of checked records, Remove wrong script
 2023-02-10 fho4abcd Move div-helper and javascript inside correct if.
+2025-03-05 fho4abcd Remove barcode option here. (there is no single record specific code)
 */
 
 //echo $arrHttp["ventana"];
@@ -113,11 +114,6 @@ if (!isset($arrHttp["ventana"])){
 				    }
 					if (isset($_SESSION["permiso"]["CENTRAL_ADDLO"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ADDLO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]))
 						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addloanobjects\")' title='".$msgstr["addloansdb"]."'><img src='../../assets/svg/catalog/ic_fluent_reading_list_add_24_regular.svg' alt='".$msgstr["addloansdb"]."' border=0></a> \n";
-				}
-				if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
-	    			 isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_BARCODE"]))
-	    			 and (isset($barcode1reg))){
-        				echo " &nbsp;<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"barcode_this\")' title='"."Código de barras"."'><img src=img/barcode.png alt='"."Código de barras"."' border=0></a> \n";
 				}
 				echo " &nbsp;";
 				break;
