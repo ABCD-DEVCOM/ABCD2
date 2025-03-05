@@ -4,6 +4,7 @@
 20210615 fho4abcd Improve html, cleanup code, lineends
 20211216 fho4abcd Backbutton by included file
 20250204 fho4abcd Improve UTF-8 display
+20250305 fho4abcd Improve link to edit abcd.def
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -91,7 +92,7 @@ include "../common/inc_div-helper.php";
             <?php if ($_SESSION["profile"]=="adm"){ ?>
 				<li>
 					<a href='javascript:Ejecutar("../settings/editar_abcd_def.php","abcd_styles")'>
-                    	<?php echo $msgstr["set_logo_css"];?>
+                    	<?php echo $msgstr["system_settings"]." (abcd.def)";?>
                 	</a>
                 </li>
 				<li>
