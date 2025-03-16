@@ -6,6 +6,7 @@
 20220316 fho4abcd remove duplicate target,empty lines, confusing spacing in html
 20220322 fho4abcd date&release comment
 20240519 fho4abcd Improve version info
+20250316 fho4abcd Hover over responsible logo shows responsible text
 */
 require_once (dirname(__FILE__)."/../config.php");
 $def = parse_ini_file($db_path."/abcd.def");
@@ -59,7 +60,7 @@ include "css_settings.php";
         } else {
             $text2 = "TEXT2";
         }
-		$versioninfo=$msgstr["version"].": v2.2.0-beta-1 + ... &rarr; 2025-02-05";
+		$versioninfo=$msgstr["version"].": v2.2.0-beta-1 + ... &rarr; 2025-03-16";
 ?>
         <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  - <?php echo $versioninfo?> </small></span>
     </div>
@@ -78,7 +79,7 @@ include "css_settings.php";
                 $responsible = "ABCD Community";
             }
             if (isset($def['RESPONSIBLE_LOGO_DEFAULT'])) {
-                echo "<img src='/assets/images/distributorLogo.png?".time()."' title='$institution_name'>";
+                echo "<img src='/assets/images/distributorLogo.png?".time()."' title='$responsible'>";
             } elseif ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["RESPONSIBLE_LOGO"]))) {
                 echo "<img src='".$folder_logo.$def["RESPONSIBLE_LOGO"]."?".time()."' title='".$responsible."'>";
             } else {

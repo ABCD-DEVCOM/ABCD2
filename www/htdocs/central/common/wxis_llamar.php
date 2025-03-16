@@ -14,9 +14,10 @@
 20220710 fho4abcd Remove rubbish+clean error for POST+improve GET+no exception for dump by login+better pop-up text
 20220716 fho4abcd Add IsisScript value to errormessage
 20221028 fho4abcd Log stamp in 24 hour format
+20250310 fho4abcd Write log controlled by $log (set in abcd.def parameter REG_LOG)
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$charset,$cgibin_path,$postMethod,$meta_encoding,$def,$arrHttp;
-global $ABCD_scripts_path,$app_path;
+global $ABCD_scripts_path,$app_path, $log;
 unset($contenido);  // This array will get the text of the result
 $err_wxis="";       // An empty variable indicates that no error occurred
 
@@ -174,7 +175,8 @@ if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
 }
 /////////// logging /////////
 // Write a line for this action to the log file
-if (is_writable($db_path."log") && is_dir($db_path."log")){
+// Controlled by the global $log setting and the existence of the log folder
+if (isset($log) && $log=="Y" && is_writable($db_path."log") && is_dir($db_path."log")){
     $fp=fopen($db_path."log/log_".date("Ymd").".log","a");
     $out=date('Ymd H:i:s')."\t";
     if( isset($_SESSION['login'])) {
