@@ -4,6 +4,7 @@
 * 2022-01-18 rogercgui added new user-configurable classes
 * 2022-01-21 rogercgui added "else" by class
 * 2023-01-20 fho4abcd. Style: reduce white space in definition,layout more readable
+* 2025-03-10 fho4abcd improve wrong comment. Effect is that body background color is honoured
 */
 
 if (isset($def['DIRECTORY_SYSTEM_UPLOADS'])) {
@@ -25,7 +26,7 @@ switch ($folder_logo){
 		break;
 }
 
-echo "<style><!--css_settings.php-->";
+echo "<style>/*--css_settings.php*/";
 if ((isset($def["BODY_BACKGROUND"])) && (!empty($def["BODY_BACKGROUND"]))) {
 	echo "
 	BODY {
