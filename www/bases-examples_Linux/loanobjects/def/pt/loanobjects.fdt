@@ -1,9 +1,10 @@
-F|1|Número de controle|0|0|||X||10|||||||0||
-F|10|Base de dados|0|0|||X|||||||||0||
-T|959|Cópias|0|1|abcefg||X|||||||||0||
-S||Número de inventário|0|0|||S|||||||||0||
-S||Biblioteca|0|0|||X|||||||||0||
-S||Biblioteca Setorial|0|0|||X|||||||||0||
-S||Tipo of Objeto|0|0|||R|||P|%path_database%acquisitions.dat|||||0||
-S||Volume|0|0|||X|||||||||0||
-S||Tomo|0|0|||X|||||||||0||
+F|1|Número de controle|0|0|||X||10|||||||0||0|0|||
+F|10|Base de dados de origem|0|0|||S|||P|%path_database%acquisitions.dat|||||0||0|0|||
+T|959|Cópias|0|0|ilbovt||TB|||||||||0||0|0|||
+S||Número de inventário|0|0|i||X||10|||||||0||0|0|||
+S||Biblioteca|0|0|l||X||20|||||||0||0|0|||
+S||Biblioteca Setorial|0|0|b||X||20|||||||0||0|0|||
+S||Tipo of Objeto|0|0|o||S|||P|%path_database%circulation/def/pt/items.tab|||||0||0|0|||
+S||Volume|0|0|v||X||10|||||||0||0|0|||
+S||Tomo|0|0|t||X||10|||||||0||0|0|||
+F|980|Adicionado em|0|1|||OD|5||||||||0||0|0|||
