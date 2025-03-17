@@ -13,6 +13,7 @@
 2023-02-03 fho4abcd Improve browse by, add code for selected records
 2024-04-02 fho4abcd More translations, layout
 2024-06-06 fho4abcd Free search->Search, result in list
+2025-02-12 rogercgui Check if the.fst file exists before trying to open it
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -25,13 +26,24 @@ include("../common/header.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 $db=$arrHttp["base"];
-$fst_file=file($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst");
-$prefix_W="";
-foreach ($fst_file as $value){
-    if (trim($value)!=""){
-        $fst[]=trim($value);
-    }
+
+
+// Check if the.fst file exists before trying to open it
+$fst_path = $db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst";
+if (file_exists($fst_path)) {
+  $fst_file = file($fst_path);
+
+  $prefix_W="";
+  foreach ($fst_file as $value){
+      if (trim($value)!=""){
+          $fst=trim($value);
+      }
+  }
+} else {
+  echo "<h4>".$msgstr["misfile"]." ".$fst_path."</h4>";
 }
+
+
 ?>
 
 <body class="toolbar-dataentry">
