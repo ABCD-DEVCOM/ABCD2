@@ -449,3 +449,6 @@ z3950_servers=servers
 z3950_tab=conversion table
 z3950_title=Title
 s_e_overview=System and environment overview
+cn_fwrite_success=File control_number.cn successfully updated with value:
+cn_fwrite_error:Error updating control_number.cn file.
+cn_last_number=Last number used:

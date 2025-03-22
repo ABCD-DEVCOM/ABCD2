@@ -48,7 +48,7 @@ function count_gizmo(&$numgizmos) {
 	$extension="mst";
 	while ($file = readdir($handle)) {
 		$path_parts = pathinfo($file);
-		if ($path_parts['extension']==$extension || $path_parts['extension']==strtoupper($extension)) {
+	if (isset($path_parts['extension']) && in_array(strtolower($path_parts['extension']), array($extension, strtoupper($extension)))) {
 			$gizmo=$path_parts['filename'];
 			if ($gizmo!=$base && $gizmo!=strtoupper($base)){
 				$numgizmos++;

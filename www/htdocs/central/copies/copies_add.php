@@ -207,6 +207,18 @@ if ($err_copies=="Y"){
 	die;
 }
 
+	//GET LAST CONTROL NUMBER
+	$archivo = $db_path . $arrHttp["base"] . "/data/control_number.cn";
+	if (!file_exists($archivo)) {
+		$fp = fopen($archivo, "w");
+		$res = fwrite($fp, "");
+		fclose($fp);
+	} else {
+		$fp = file($archivo);
+		$last_cn = implode("", $fp);
+		$last_cn = trim($last_cn); // Garante que não há espaços em branco extras
+	}
+
 ?>
 	<div class="searchBox">
 		<label for="addCopies">
@@ -227,12 +239,18 @@ if ($err_copies=="Y"){
 
 	<div class="formContent" id="formContent">
 <?php
+
+
+
 $arrHttp["cipar"]="copies.par";
 $fmt_test="S";
 $arrHttp["wks"]="new.fmt";
 $wks_avail["new"]=1;
 $valortag[10]=$db_addto;
 $arrHttp["db_addto"]=$db_addto;
+
+echo "<h4>".$msgstr["cn_last_number"]." ".$last_cn."</h4>";
+
 include("../dataentry/plantilladeingreso.php");
 ConstruyeWorksheetFmt();
 include("../dataentry/dibujarhojaentrada.php");

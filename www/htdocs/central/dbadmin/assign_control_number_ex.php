@@ -105,24 +105,26 @@ if ($tag_ctl==""){
 	}
     ?>
     </table>
-	<form name=forma1 action=assign_control_number.php method=post>
-	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-	<input type=hidden name=from value=<?php echo $Mfn?>>
-	<input type=hidden name=to value=<?php echo $Mfn+$arrHttp["to"]-$arrHttp["Mfn"]?>>
-	<input type=hidden name=encabezado value=s>
-    <?php
-	if (($Mfn)<=$tag["MAXMFN"]){
-        ?>
-		<input type=submit name=go value=<?php echo $msgstr["continuar"]?>>
-    <?php } ?>
+
+	<form name="forma1" action="assign_control_number.php" method="post">
+		<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+		<input type="hidden" name="from" value="<?php echo $Mfn?>">
+		<input type="hidden" name="to" value="<?php echo $Mfn+$arrHttp["to"]-$arrHttp["Mfn"]?>">
+		<input type="hidden" name="encabezado" value="s">
+    
+		<?php if (($Mfn)<=$tag["MAXMFN"]){ ?>
+			<input type="submit" class="bt-blue" name="go" value="<?php echo $msgstr["continuar"]?>">
+    	<?php } ?>
 	</form>
 	<?php
 }
 ?>
 </div>
 </div>
+
 <?php
 include "../common/footer.php";
+
 // =================== Functions ==============================
 function LeerFdt($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$msgstr;

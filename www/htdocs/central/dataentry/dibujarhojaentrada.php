@@ -1032,15 +1032,35 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 				}
 				if ($maxlength!=0)
 						echo "<a style=\"text-decoration:none\" onMouseover=\"ddrivetip(document.forma1.tag".$tag.".value,'linen',300 )\"; onMouseout=\"hideddrivetip()\"; onclick=\"hideddrivetip()\">";
-	   			echo '<input type="'.$it.'" name=tag'.$tag.' id="tag'.$tag.'" size="'.$len.'"';
-	   			if ($maxlength>0){
-	   				echo ' maxlength="'.$maxlength.'" "';
-	   			}
-	   			echo ' value="'.$campo.'" '.$arrow.'>';
+				if ($tipo!="AI") {
+					echo '<input type="'.$it.'" name=tag'.$tag.' id="tag'.$tag.'" size="'.$len.'"';
+					if ($maxlength>0){
+						echo ' maxlength="'.$maxlength.'" "';
+					}
+					echo ' value="'.$campo.'" '.$arrow.'>';
+				}
 	   			if ($maxlength!=0)
 	   				echo "</a>";
 
 	   			if ($tipo=="AI") {
+				//GET LAST CONTROL NUMBER
+						$archivo=$db_path.$arrHttp["base"]."/data/control_number.cn";
+						if (!file_exists($archivo)){
+							$fp=fopen($archivo,"w");
+							$res=fwrite($fp,"");
+							fclose($fp);
+						}else{
+							$fp=file($archivo);
+							$last_cn=implode("",$fp)+1;
+						}
+
+					echo '<input type="'.$it.'" name=tag'.$tag.' id="tag'.$tag.'" size="'.$len.'"';
+					if ($maxlength>0){
+						echo ' maxlength="'.$maxlength.'" "';
+					}
+					echo ' placeholder="'.$last_cn.'" value="'.$campo.'" '.$arrow.'>';
+
+
 	   				if (isset($_SESSION["permiso"]["CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["ACQ_ALL"]) or isset($_SESSION["permiso"]["ACQ_RESETCN"])){
 	   					echo "\n <a class='bt-fdt-green' href='javascript:ChangeSeq($tag,\"$pref\")'><i class=\"fas fa-plus\"></i> ".$msgstr["assign"]."</a> &nbsp; ";
 	   					echo "\n<a class='bt-fdt-help' href='../documentacion/ayuda.php?help=".$_SESSION["lang"]."/autoincrement.html' target=_blank><i class=\"far fa-life-ring\"></i> ".$msgstr["help"]."</a>&nbsp; &nbsp;";
