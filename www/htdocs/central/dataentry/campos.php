@@ -1,4 +1,12 @@
-<?php  session_start();
+<?php
+/*
+* This script runs in a pop-up window, launched by function Campos in campos.js
+* Modifications
+20250402 fho4abcd Improved html, removed obsolete code and redundant spacing
+20250402 fho4abcd Added standard breadcrumb & action div. Action buttons: moved to top, modified text, hover and color
+20250402 fho4abcd Added translations for js. Added standard helper and footer
+*/
+  session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
@@ -9,8 +17,7 @@ include("../config.php");
 include ("../lang/admin.php");
 include("../common/header.php");
 
-//if (!isset($arrHttp["is_marc"]))   $arrHttp["is_marc"]="";
-
+// Extract the subfields
 $fp=explode("\n",$arrHttp["SubC"]);
 $subc="";
 foreach ($fp as $linea){
@@ -22,9 +29,12 @@ foreach ($fp as $linea){
 }
 //echo $subc;
 $ix=-1;
-echo "<script>\n";
 $base=$arrHttp["base"];
 if (!isset($arrHttp["is_marc"]))  $arrHttp["is_marc"]="N";
+?>
+<body>
+<script>
+<?php
 if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$base."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$base."_ACTPICKLIST"])){
     echo "act_picklist='Y'\n";
 }else{
@@ -36,7 +46,6 @@ echo "NamePickList=new Array()\n";
 echo "SubCampos=new Array()\n";
 foreach ($fp as $linea){
 	$linea=trim($linea);
-	//echo $linea."<br>";
 	if (trim($linea)!=""){
 		$l=explode('|',$linea);
 		$ix=$ix+1;
@@ -60,8 +69,19 @@ foreach ($fp as $linea){
 		}
 	}
 }
-echo "mod_picklist=\"".$msgstr["mod_picklist"]."\"\n";
-echo "reload_picklist=\"".$msgstr["reload_picklist"]."\"\n";
+// Next statements define variables for the textstrings used in the js files
+echo "trn_mod_picklist=\"".$msgstr["mod_picklist"]."\"\n";
+echo "trn_reload_picklist=\"".$msgstr["reload_picklist"]."\"\n";
+echo "trn_addoccur=\"".$msgstr["addoccur"]."\"\n";
+echo "trn_deloccur=\"".$msgstr["deloccur"]."\"\n";
+echo "trn_fillempty=\"".$msgstr["fillempty"]."\"\n";
+echo "trn_moveoccdown=\"".$msgstr["moveoccdown"]."\"\n";
+echo "trn_moveoccup=\"".$msgstr["moveoccup"]."\"\n";
+echo "trn_occlist=\"".$msgstr["occlist"]."\"\n";
+echo "trn_movesubfdown=\"".$msgstr["movesubfdown"]."\"\n";
+echo "trn_movesubfup=\"".$msgstr["movesubfup"]."\"\n";
+echo "trn_occsearch=\"".$msgstr["occsearch"]."\"\n";
+
 ?>
 function RefrescarPicklist(tabla,Ctrl,valor){
 	ValorOpcion=valor
@@ -92,8 +112,8 @@ function AsignarTabla(){
 	var Sel = document.getElementById(SelectName);
 	Sel.options.length = 0;
 	var newOpt =Sel.appendChild(document.createElement('option'));
-    newOpt.text = "";
-    newOpt.value = " ";
+	newOpt.text = "";
+	newOpt.value = " ";
 	for (x in opciones){
 		op=opciones[x].split('|')
 		if (op[0]=="")
@@ -101,64 +121,42 @@ function AsignarTabla(){
 		if (op[1]=="")
 			op[1]=op[0]
 		var newOpt =Sel.appendChild(document.createElement('option'));
-    	newOpt.text = op[1];
-    	newOpt.value = op[0];
-    	if (op[0]==ValorOpcion)
-    		newOpt.selected=true
+		newOpt.text = op[1];
+		newOpt.value = op[0];
+		if (op[0]==ValorOpcion)
+			newOpt.selected=true
 	}
 }
 
 function EnviarArchivo(Tag,subc){
-
-		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=180,top=100,left=5");
-		msgwin.document.close();
-		msgwin.document.writeln("<html><title><?php echo $msgstr["uploadfile"]?></title><body link=black vlink=black bgcolor=white>\n");
-		msgwin.document.writeln("<form name=upload action=upload_img.php method=POST enctype=multipart/form-data>\n");
-		msgwin.document.writeln("<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>\n");
-		msgwin.document.writeln("<input type=hidden name=Tag value="+Tag+">")
-		msgwin.document.writeln("<input type=hidden name=subc value=\""+subc+"\">")
-		msgwin.document.writeln("  <?php echo $msgstr["storein"]?>: <input type=text name=storein size=40 value=\"\" onfocus=blur()>\n");
-		msgwin.document.writeln(" <a href=dirs_explorer.php?Opcion=explorar&base=<?php echo $arrHttp["base"]?>&tag="+Tag+" target=_blank>explorar</a>")
-		msgwin.document.writeln("<br>");
-		msgwin.document.writeln("<table width=100%>");
-		msgwin.document.writeln("<tr><td class=menusec1><?php echo $msgstr["archivo"]?></td><td class=menusec1></td>\n");
-		msgwin.document.writeln("<tr><td><input name=userfile[] type=file size=50></td><td></td>\n");
-		msgwin.document.writeln("</table>\n");
-		msgwin.document.writeln("  <input type=submit value='<?php echo $msgstr["uploadfile"]?>'>\n");
-		msgwin.document.writeln("</form>\n");
-		msgwin.document.writeln("</body>\n");
-		msgwin.document.writeln("</html>\n");
-		msgwin.focus()  ;
-	}
-
-<?php
-echo "</script>\n";
-
-?>
-
-<STYLE type=text/css>
-/*
-TABLE {
-	BACKGROUND-COLOR: #ffffff; FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 8pt
+	msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=180,top=100,left=5");
+	msgwin.document.close();
+	msgwin.document.writeln("<html><title><?php echo $msgstr["uploadfile"]?></title><body link=black vlink=black bgcolor=white>\n");
+	msgwin.document.writeln("<form name=upload action=upload_img.php method=POST enctype=multipart/form-data>\n");
+	msgwin.document.writeln("<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>\n");
+	msgwin.document.writeln("<input type=hidden name=Tag value="+Tag+">")
+	msgwin.document.writeln("<input type=hidden name=subc value=\""+subc+"\">")
+	msgwin.document.writeln("  <?php echo $msgstr["storein"]?>: <input type=text name=storein size=40 value=\"\" onfocus=blur()>\n");
+	msgwin.document.writeln(" <a href=dirs_explorer.php?Opcion=explorar&base=<?php echo $arrHttp["base"]?>&tag="+Tag+" target=_blank>explorar</a>")
+	msgwin.document.writeln("<br>");
+	msgwin.document.writeln("<table width=100%>");
+	msgwin.document.writeln("<tr><td class=menusec1><?php echo $msgstr["archivo"]?></td><td class=menusec1></td>\n");
+	msgwin.document.writeln("<tr><td><input name=userfile[] type=file size=50></td><td></td>\n");
+	msgwin.document.writeln("</table>\n");
+	msgwin.document.writeln("  <input type=submit value='<?php echo $msgstr["uploadfile"]?>'>\n");
+	msgwin.document.writeln("</form>\n");
+	msgwin.document.writeln("</body>\n");
+	msgwin.document.writeln("</html>\n");
+	msgwin.focus()  ;
 }
-BODY {
-	FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 8pt
-}
-
-input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
-select 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
-textarea	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
-text		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
-checkbox	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}*/
-</STYLE>
-</head>
+</script>
 <script language="JavaScript" type="text/javascript" src=js/terminoseleccionado.js?<?php echo time(); ?>></SCRIPT>
 <script language="JavaScript" type="text/javascript" src=js/lr_trim.js></SCRIPT>
 <script language=javascript>
-	base=window.opener.top.base
-	url_indice=""
-	Ctrl_activo=""
-	function getElement(psID) {
+base=window.opener.top.base
+url_indice=""
+Ctrl_activo=""
+function getElement(psID) {
 	if(!document.all) {
 		return document.getElementById(psID);
 
@@ -167,60 +165,52 @@ checkbox	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-CO
 	}
 }
 
-	function AbrirIndiceAlfabetico(xI,Prefijo,SubC,Separa,db,cipar,tag,Formato){
-		Ctrl_activo=getElement(xI)
-	    document.forma1.Indice.value=xI
-	    Separa="&delimitador="+Separa
-	    Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo
-	    ancho=200
-		url_indice="capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+xI+Prefijo+"&indice="+xI+"&repetible=0"+"&Formato="+Formato+"&postings=10&sfe=s"
-  		msgwin=window.open(url_indice,"indice","width=600, height=520,resizable, scrollbar")
-  		msgwin.focus()
-    	return
-
-
-
-	}
+function AbrirIndiceAlfabetico(xI,Prefijo,SubC,Separa,db,cipar,tag,Formato){
+	Ctrl_activo=getElement(xI)
+	document.forma1.Indice.value=xI
+	Separa="&delimitador="+Separa
+	Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo
+	ancho=200
+	url_indice="capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+xI+Prefijo+"&indice="+xI+"&repetible=0"+"&Formato="+Formato+"&postings=10&sfe=s"
+	msgwin=window.open(url_indice,"indice","width=600, height=520,resizable, scrollbar")
+	msgwin.focus()
+	return
+}
 
 function AbrirTesauro(Tag,base,prefijo){
+	Url="../tesaurus/index.php?base="+base+"&Tag="+Tag
+	myleft=screen.width-450
+	msgwin=window.open(Url,"Tesauro","width=450, height=530,  scrollbars, status, resizable location=no, left="+myleft)
+	msgwin.focus()
+}
 
-		Url="../tesaurus/index.php?base="+base+"&Tag="+Tag
-		myleft=screen.width-450
-		msgwin=window.open(Url,"Tesauro","width=450, height=530,  scrollbars, status, resizable location=no, left="+myleft)
-		msgwin.focus()
-	}
-
-
-	function AbrirIndice(ira){
-		url_indice=url_indice+ira
-	    ancho=screen.width-500-20
-		msgwin=window.open(url_indice,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=600,height=520,top=20,left="+ancho)
-		msgwin.focus()
-	}
-
-	function Ayuda(tag,help){
-
-		if (help!=""){
-			url=help
-		}else{
-
-			url="../documentacion/ayuda_db.php?&base="+base+"&campo=tag_"+tag+".html"
-		}
-		msgwin=window.open(url,"Ayuda","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=600,height=400,top=100,left=100")
-		msgwin.focus()
-	}
-
-
+function AbrirIndice(ira){
+	url_indice=url_indice+ira
+	ancho=screen.width-500-20
+	msgwin=window.open(url_indice,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=600,height=520,top=20,left="+ancho)
+	msgwin.focus()
+}
 </script>
-<body>
-	<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/assist_sc.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-	<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/assist_sc.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo " Script: campos.php" ?>
-	</div>
- <div class="middle form">
-			<div class="formContent">
-<body>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["editsubctag"]. ": ".$arrHttp["tag"]?>
+    </div>
+    <div class="actions">
+	<a class="bt bt-blue" href=javascript:AceptarCambios() title="<?php echo $msgstr["updateocclist"]?>">
+		<i class="far fa-eye"></i> <?php echo $msgstr["viewocclist"]?></a>
+	<a class="bt bt-green" href=javascript:ActualizarForma() title="<?php echo $msgstr["updatedeform"]?>">
+		<i class="fas fa-share"></i> <?php echo $msgstr["actualizar"]?></a>
+	<a class="bt bt-red" href="javascript:self.close()">
+		<i class="fas fa-times"></i> <?php echo $msgstr["cancelar"]?></a>
+	&nbsp;
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+<div class="middle form">
+	<div class="formContent">
 
 <form name=agregarpicklist action=../dbadmin/picklist_edit.php method=post target=Picklist>
    <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
@@ -239,41 +229,27 @@ function AbrirTesauro(Tag,base,prefijo){
 </form>
 
 <form name=forma1>
-
-<input type=hidden name=tagcampo>
-<input type=hidden name=occur>
-<input type=hidden name=ep>
-<input type=hidden name=NoVar>
-<input type=hidden name=Indice value="">
-<input type=hidden name=base>
-<input type=hidden name=cipar>
-<input type=hidden name=Formato>
-<input type=hidden name=Repetible>
-<input type=hidden name=Indice>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class=td2>
-    <tr>
-    	<td>
-			<script language="JavaScript" type="text/javascript" src=js/editarocurrencias.js?<?php echo time(); ?>></SCRIPT>
-		</td>
+    <input type=hidden name=tagcampo>
+    <input type=hidden name=occur>
+    <input type=hidden name=ep>
+    <input type=hidden name=NoVar>
+    <input type=hidden name=Indice value="">
+    <input type=hidden name=base>
+    <input type=hidden name=cipar>
+    <input type=hidden name=Formato>
+    <input type=hidden name=Repetible>
+    <input type=hidden name=Indice>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class=td2>
 	<tr>
-		<td id="asubc">
-		</td>
+	    <td>
+		<script language="JavaScript" type="text/javascript" src=js/editarocurrencias.js?<?php echo time(); ?>></SCRIPT>
+	    </td>
 	<tr>
-		<td>
-		</td>
-</table>
-<br><center>
-<table>
-	<td align=center>
-		<a class="bt bt-blue" href=javascript:AceptarCambios()><i class="fas fa-check"></i> <?php echo $msgstr["aceptar"]?></a>
-	</td>
-	<td  align=center>
-		<a class="bt bt-green" href=javascript:ActualizarForma()><i class="fas fa-share"></i> <?php echo $msgstr["actualizar"]?></a>
-	</td>
-	<td align=center>
-		<a class="bt bt-gray" href="javascript:self.close()"><i class="fas fa-times"></i> <?php echo $msgstr["cancelar"]?></a>
-	</td>
-</table>
+	    <td id="asubc">
+	        <!-- the content of this cell is created/modified by functions in editarocurrencias.js-->
+	    </td>
+    </table>
+</form>
 <script language=javascript>
   	if (Occ>0) {
   		TerminoSeleccionado()
@@ -281,13 +257,12 @@ function AbrirTesauro(Tag,base,prefijo){
   		Redraw("")
   	}
 </script>
-</form>
-</center>
 </div>
 </div>
-</body></html>
+<?php include("../common/footer.php")?>
 
 <?php
+
 // ===============================================
 function PickList($ix,$file){
 global $db_path,$lang_db,$arrHttp;
@@ -311,4 +286,3 @@ global $db_path,$lang_db,$arrHttp;
 	echo "PickList['$ix']='".str_replace("'","&#39;",$Options)."'\n";
 }
 ?>
-

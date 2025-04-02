@@ -14,6 +14,8 @@
 20240129 fho4abcd Show correct number of OD entries. Time in 24 hour format. Improve calendar function. Typo's, formatting
 20240517 fho4abcd For PHP8: Empty parameters compare different with value 0: also compare with ""
 20250213 fho4abcd Replaced links by buttons, adde translation
+202503xx rogercgui Improves the Autoincrement field by displaying the number that will be previously saved in the record.
+20250330 fho4abcd Encode quotes in variable $linea01 for $tipo_e=E to get correct value for <input name=eti... value=..>
 */
 require_once("combo_inc.php");
 require_once("../common/inc_calendar.php");
@@ -1756,7 +1758,8 @@ Function PrepararFormato() {
 									}
 								}
 								TextBox($linea01,$fondocelda,$titulo,$ver,$len,$tag,$ksc,$tipo,$delrep,"");
-								echo "<input type=hidden name=eti$tag value=\"$linea01\">\n";
+								$linea01C=str_replace("\"","&quot;",$linea01);
+								echo "<input type=hidden name=eti$tag value=\"$linea01C\">\n";
 								foreach($filas as $lin){
 									echo "<input type=hidden name=eti$tag value=\"$lin\">\n";
 								}

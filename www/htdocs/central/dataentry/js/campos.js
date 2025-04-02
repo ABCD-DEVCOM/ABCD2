@@ -1,3 +1,6 @@
+/*
+20250402 fho4abcd Larger window size in Campos
+*/
 /* Coloca en variables de la forma el campo en proceso */
 
 var NombreC
@@ -92,7 +95,7 @@ function Campos(Tag,i,Formato,Repetible,Url_help,Wks) {
     document.campos.is_marc.value=is_marc
     document.campos.SubC.value=a
     document.campos.tag.value=TagCampo
-   	msgwin=window.open("","EditC","status=yes,resizable=yes,toolbar=false,menu=no,scrollbars=yes,width=800,height=500,top=50,left=0")
+   	msgwin=window.open("","EditC","status=yes,resizable=yes,toolbar=false,menu=no,scrollbars=yes,width=1000,height=500,top=50,left=0")
  	msgwin.focus()
  	document.campos.submit()
 
