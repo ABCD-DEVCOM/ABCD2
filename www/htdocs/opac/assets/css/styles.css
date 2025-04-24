@@ -82,4 +82,28 @@ li.page-item > a.page-link > i.fas {
     transform: scale(1);
 }
 
+/* FACETAS */
 
+button.termo {
+    text-transform: lowercase;
+}
+
+<style>.faceta-box {
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.faceta-box h6 {
+    margin-bottom: 0.5em;
+}
+
+.faceta-box ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+
+
+</style>

@@ -605,6 +605,124 @@ function deleteAllCookies() {
 	}
 }
 
+
+
+// Importado do alfabetico.php
+
+function Localizar(Expresion, Existencias) {
+	Expr = Expresion.split('$#$')
+	document.indiceAlfa.Sub_Expresion.value = Expresion
+	//document.indiceAlfa.letra.value = primero
+	document.indiceAlfa.Opcion.value = "detalle"
+	document.indiceAlfa.action = "buscar_integrada.php"
+	document.indiceAlfa.Existencias.value = Existencias
+	document.indiceAlfa.submit()
+}
+
+
+
+/*
+function RefinF(Expresion, ExprArm) {
+	//Expr = Expresion.split('$#$')
+	document.filtro.Expresion.value = "("+Expresion+") and ("+ExprArm+")"
+	document.filtro.Opcion.value = "directa"
+	document.filtro.action = "buscar_integrada.php"
+	document.filtro.submit()
+}
+*/
+
+function RefinF(Expresion, ExprArm) {
+	// Monta a expressão combinada com operador booleano AND
+	const novaExpressao = `(${Expresion}) and (${ExprArm})`;
+
+	// Define os valores no formulário
+	const form = document.forms['filtro'];
+	if (!form) {
+		console.error("Formulário 'filtro' não encontrado.");
+		return;
+	}
+
+	form.Expresion.value = novaExpressao;
+	form.Opcion.value = "directa";
+	form.action = "buscar_integrada.php";
+	form.submit();
+}
+
+function processarTermosLivres() {
+	const input = document.getElementById('termosLivres');
+	const termos = input.value.trim();
+
+	if (!termos) {
+		alert("Digite pelo menos um termo.");
+		return;
+	}
+
+	const termosArray = termos.split(/\s+/).map(t => `"TW_${t}"`);
+	const novaExpressao = '(' + termosArray.join(' and ') + ')';
+
+	const inputExpresion = document.getElementById('Expresion');
+	let expresionAtual = inputExpresion.value.trim();
+
+	// Se tiver expressão anterior, adiciona com AND
+	if (expresionAtual) {
+		expresionAtual = `(${expresionAtual}) and ${novaExpressao}`;
+	} else {
+		expresionAtual = novaExpressao;
+	}
+
+	inputExpresion.value = expresionAtual;
+
+	// Submete o formulário
+	document.getElementById('facetasForm').submit();
+}
+
+
+function removerTermo(termoRemover) {
+	let campoExp = document.getElementById('Expresion');
+	let expresion = campoExp.value;
+	const termosAtivosDiv = document.getElementById('termosAtivos');
+	const botoesTermo = termosAtivosDiv.getElementsByClassName('termo');
+	const linkPaginaInicial = termosAtivosDiv.dataset.linkInicial;
+
+	// Normalizar espaços
+	expresion = expresion.replace(/\s+/g, ' ').trim();
+
+	// Remover o termo (com ou sem parênteses e AND antes/depois)
+	const termoRegex = new RegExp(`(\\s+and\\s+)?\\(?${termoRemover.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)?(\\s+and\\s+)?`, 'i');
+
+	expresion = expresion.replace(termoRegex, (match, andBefore, andAfter) => {
+		if (andBefore && andAfter) return ' and ';
+		return '';
+	});
+
+	// Limpar ANDs extras e bordas
+	expresion = expresion.replace(/^\s*and\s*|\s*and\s*$/gi, '').replace(/\s+and\s+/gi, ' and ').trim();
+
+	// 👉 Reaplicar parênteses apenas em torno dos termos (TW_ ou GDL_)
+	if (expresion) {
+		let termos = expresion
+			.split(/\s+and\s+/i)
+			.map(t => t.replace(/[()"]/g, '').trim()) // remove parênteses e aspas
+			.filter(t => t !== '') // elimina termos vazios
+			.map(t => `(${t})`); // reaplica parênteses corretamente
+
+		expresion = termos.join(' AND ');
+	}
+
+	// Atualiza o campo
+	campoExp.value = expresion;
+
+	if (botoesTermo.length <= 1) {
+		window.location.href = linkPaginaInicial;
+	} else {
+		const url = new URL(window.location.href);
+		url.searchParams.set('Expresion', expresion);
+		window.location.href = url.toString();
+	}
+}
+
+
+
 function clearAndRedirect(link) {
 	deleteAllCookies();
 	document.location = link;

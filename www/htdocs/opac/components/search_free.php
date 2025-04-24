@@ -32,6 +32,7 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 ?>
 <div id="search">
 <form method="get" action="buscar_integrada.php" name="libre">
+	<input type="hidden" name="page" value="startsearch">
 		<?php
 		
 		if (isset($_REQUEST["db_path"])) echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
@@ -43,14 +44,12 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 		if (isset($_REQUEST['Sub_Expresion'])) $_REQUEST['Sub_Expresion']=urldecode(str_replace('~','',$_REQUEST['Sub_Expresion']));
 		?>
 <div class="row g-3">
-	<div class="col-md-3">
-		<?php include $Web_Dir.'views/dropdown_db.php'; ?>
-	</div>
-
 	<div class="col-md-6">
 		<input class="form-control" type="text" name="Sub_Expresion" id="search-text" value="<?php if (isset($_REQUEST['Sub_Expresion'])) echo htmlentities($_REQUEST['Sub_Expresion']);?>" placeholder="<?php echo $msgstr["front_search"]?>  ..."/>
 	</div>
-	
+	<div class="col-md-3">
+		<?php include $Web_Dir.'views/dropdown_db.php'; ?>
+	</div>
 	<div class="col-md-3">
 		<button type="submit"  class="btn btn-success btn-submit mb-3 w-100"><i class="fa fa-search"></i> <?php echo $msgstr["front_search"]?></button>
 	</div>
@@ -63,13 +62,17 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 	<div class="col-auto">
 		<label class="text-secondary"><?php echo $msgstr["front_resultados_inc"]?> </label>
 
+		<?php
+			$alcance = $_REQUEST['alcance'] ?? 'or'; // Get alcance or default to 'or'
+		?>
+
 		<div class="form-check">
-			<input type="radio" value="and" name="alcance" id="and" class="form-check-input">
+			<input type="radio" value="and" name="alcance" id="and" class="form-check-input" <?php if ($alcance === 'and') echo 'checked'; ?>>
 			<label class="form-check-label text-secondary"><?php echo $msgstr["front_todas_p"]?> </label>
 		</div>
 
 		<div class="form-check">
-			<input type="radio" value="or" name="alcance" id="or" checked class="form-check-input">
+			<input type="radio" value="or" name="alcance" id="or" class="form-check-input" <?php if ($alcance === 'or') echo 'checked'; ?>>
 			<label class="form-check-label text-secondary"><?php echo $msgstr["front_algunas_p"]?></label>
 		</div>
 	</div><!--/more-->
@@ -107,7 +110,7 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 
 
 		<div id="more" class="col-md-4 col-xs-12 d-grid gap-2 d-xs-block">
-   			<input type=button class="btn btn-secondary" value="<?php echo $msgstr["front_diccionario"]?>" onclick="javascript:DiccionarioLibre(0)">
+   			<!--<input type=button class="btn btn-secondary" value="<?php echo $msgstr["front_diccionario"]?>" onclick="javascript:DiccionarioLibre(0)">-->
 		</div>	
 </div><!--/row-->
 </div><!--/searc-->

@@ -29,26 +29,9 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="")  {
         echo " (<strong><i>".$col[1]."<i></strong>)";
 
 }
- echo "</p>";
 ?>
 
+</p>
 
- <h4><?php echo $msgstr["front_buscar_a"]; ?></h4>
-	<?php
-		$Diccio=-1;
-		DibujarFormaBusqueda($Diccio);
-	?>
-</div>
-
-
-<form name="back" method="post" action="buscar_integrada.php">
-<?php
-	foreach ($_REQUEST as $var=>$value){
-		echo "<input type=hidden name=$var value=";
-		if (trim($value)!='""') echo urlencode($value);
-		echo ">\n";
-	}
-?>
-</form>
 
 <?php include("views/footer.php"); ?>
