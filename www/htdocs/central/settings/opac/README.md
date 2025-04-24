@@ -1,5 +1,23 @@
-## What's new?
+# What's new?
 
+## Opac - v1.1.2-beta (2025-04-24)
+
+In this version, a radical change has been made to the Facets and consequently to the search flow. The general facets file is still in the *bases/opac_conf/en/facetas.dat* directory.
+The database facets file is in */bases/dbname/opac/lang/dbname_facetas.dat*.
+
+**The new structure looks like this:**
+ Field | Format language | Prefix
+
+**Example:**
+
+ Year of publication | v260^c | DAT_
+
+With this, the search flow starts with a free search and then you can add or delete terms as required.
+To edit the facets, go to the “Database configuration” menu and click on a database. In the “Search” top menu, find “Facets”.
+
+
+
+----
 ## Opac - v1.1.1-beta (2024-06-18)
 * Improvements to the Opac configuration screen;
 * It's easier to enable and disable bases for Opac, but check the warning below before starting your update;
