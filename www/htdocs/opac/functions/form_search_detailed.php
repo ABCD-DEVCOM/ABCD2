@@ -114,8 +114,7 @@ global $db_path,$msgstr,$Web_Dir;
 
 <div id="registro">
 
-<form method="post" name="forma1" action="avanzada.php" onSubmit="Javascript:return false">
-
+<form method="GET" name="forma1" action="avanzada.php" onSubmit="Javascript:return false">
 	<?php
 	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
@@ -125,6 +124,8 @@ global $db_path,$msgstr,$Web_Dir;
 	if (isset($_REQUEST["indice_base"]))     echo "<input type=hidden name=base value=".$_REQUEST['indice_base'].">\n";
 	if (isset($_REQUEST["Formato"])) echo "<input type=hidden name=Formato value=\"".$_REQUEST["Formato"]."\">\n";
 ?>
+
+	<input type="hidden" name="page" value="startsearch">
 	<input type="hidden" name="Opcion" value="avanzada">
 	<input type="hidden" name="resaltar" value=S>
 	<input type="hidden" name="Campos" value="">
@@ -222,7 +223,7 @@ global $db_path,$msgstr,$Web_Dir;
 
 <div style='overflow: hidden;text-align:left; float:right;display:block;' id='mensajes'></div>
 	
-<form name="diccio" method="post" action="diccionario_integrado.php">
+<form name="diccio" method="GET" action="diccionario_integrado.php">
 <?php
 	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
@@ -231,6 +232,7 @@ global $db_path,$msgstr,$Web_Dir;
 	if (isset($_REQUEST["indice_base"])) echo "<input type=hidden name=indice_base value=".$_REQUEST['indice_base'].">";
 	if (isset($_REQUEST["coleccion"])) echo "<input type=hidden name=coleccion value=\"".$_REQUEST['coleccion']."\">";
 ?>
+		<input type="hidden" name="page" value="startsearch">
 	<input type="hidden" name="Sub_Expresion">
 	<input type="hidden" name="Campos">
 	<input type="hidden" name="Operadores">
