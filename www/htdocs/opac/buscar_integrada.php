@@ -111,172 +111,8 @@ if (isset($_REQUEST["integrada"])) $_REQUEST["integrada"]=urldecode($_REQUEST["i
 if (!isset($_REQUEST["alcance"]) or $_REQUEST["alcance"]=="") $_REQUEST["alcance"]="or";
 
 $Expresion="";
-switch ($_REQUEST["Opcion"]){
-    case "directa":
-    	$Expresion=urldecode($_REQUEST["Expresion"]);
-    	$_REQUEST["titulo_c"]=urldecode($_REQUEST["titulo_c"]) ;
-    	$afinarBusqueda="N";
-    	break;
+$Expresion = construir_expresion();
 
-	case "libre":
-		if (!isset($_REQUEST["alcance"])) $_REQUEST["alcance"]="or";
-		If (!isset($_REQUEST["Sub_Expresion"]) or trim($_REQUEST["Sub_Expresion"])==""){
-			if (isset($_REQUEST["Seleccionados"])) $_REQUEST["Sub_Expresion"]=$_REQUEST["Seleccionados"];
-		}
-		if (isset($_REQUEST["Sub_Expresion"]) and trim($_REQUEST["Sub_Expresion"])!=""){
-			if (strpos($_REQUEST["Sub_Expresion"],'"')!==false){
-				$pal=explode('"',$_REQUEST["Sub_Expresion"]);
-			}else{
-				$pal=explode(' ',$_REQUEST["Sub_Expresion"]);
-	            }
-			if ($_REQUEST["alcance"]=="") $_REQUEST["alcance"]="or";
-			if (isset($_REQUEST["prefijo"]) and $_REQUEST["prefijo"]=="TW_"){
-				 $_REQUEST["Sub_Expresion"]="";
-				foreach ($pal as $w){
-					if (trim($w)!=""){
-						if ($Expresion==""){
-							$Expresion='"'.$_REQUEST["prefijo"].$w.'"';
-							if (isset($_REQUEST["prefijo"]) and $_REQUEST["prefijo"]=="TW_") $_REQUEST["Sub_Expresion"]='"'.$w.'"';
-						}else{
-							$Expresion.=" ".$_REQUEST["alcance"].' "'.$_REQUEST["prefijo"].$w.'"';
-							if (isset($_REQUEST["prefijo"]) and $_REQUEST["prefijo"]=="TW_") $_REQUEST["Sub_Expresion"].=' "'.$w.'"';
-						}
-					}
-				}
-			}
-		} else{
-			$_REQUEST["Sub_Expresion"]="";
-			$Expresion='$';
-		}
-		if ($Expresion!='$'){
-			$CA[]=$_REQUEST["prefijo"];
-			$EX[]=$_REQUEST["Sub_Expresion"];
-			unset($_REQUEST["Seleccionados"]);
-		}
-		break;
-	case "detalle":
-        if (isset($_REQUEST["prefijo"]) and $_REQUEST["prefijo"]!="") $Prefijo=$_REQUEST["prefijo"];
-		$EX[]=str_replace($Prefijo,'',$_REQUEST["Sub_Expresion"]);
-		$CA[]=$Prefijo;
-		$_REQUEST["Campos"]= $Prefijo;
-		if (substr($_REQUEST["Sub_Expresion"],0,strlen($Prefijo))!=$Prefijo){
-			$Expresion=$Prefijo.$_REQUEST["Sub_Expresion"];
-		}else{
-			$Expresion=$_REQUEST["Sub_Expresion"];
-		}
-		$_REQUEST["Sub_Expresion"]=str_replace($_REQUEST["prefijo"],'',$_REQUEST["Sub_Expresion"]);
-		$Expresion="\"".$Expresion."\"";
-		break;
-	case "avanzada":
-	case "buscar_diccionario":
-		if ($_REQUEST["Opcion"]=="avanzada"){
-			$EX=explode('~~~',urldecode($_REQUEST["Sub_Expresion"]));
-			$CA=explode('~~~',$_REQUEST["Campos"]);
-			if (isset($_REQUEST["Operadores"])){
-				$_REQUEST["Operadores"].=" ~~~ ";
-				$OP=explode('~~~',$_REQUEST["Operadores"]);
-			}else{
-				$OP=array();
-			}
-			if (isset($_REQUEST["Seleccionados"])){
-				if (isset($_REQUEST["Diccio"])){
-					$EX[$_REQUEST["Diccio"]]=$_REQUEST["Seleccionados"] ;
-					$OP[]="";
-	            	$CA[]=$_REQUEST["prefijo"];
-				}else{
-					$EX[count($EX)-1]=$_REQUEST["Seleccionados"] ;
-	            	$OP[]="";
-	            	$CA[]=$_REQUEST["prefijo"];
-				}
-			}
-			
-		}else{
-            if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
-				$fav=file($db_path.$base."/opac/".$lang."/".$_REQUEST["base"]."_avanzada.tab");
-			else
-				$fav=file($db_path."opac_conf/".$lang."/avanzada.tab");
-			$ix=-1;
-			$exp_bb="";
-
-			foreach ($fav as $value){
-				$value=trim($value);
-				if ($value!=""){
-					$ix=$ix+1;
-					$v=explode('|',$value) ;
-					$OP[$ix]=" ";
-					$CA[$ix]=$v[1];
-					if ($_REQUEST["prefijo"]==$v[1])
-						if (isset($_REQUEST["Seleccionados"]))
-							$EX[$ix]=$_REQUEST["Seleccionados"];
-						else
-							$EX[$ix]=" ";
-	            	else
-	                    $EX[$ix]=" ";
-	          		if ($exp_bb=="")
-	          			$exp_bb=$EX[$ix];
-	          		else
-	          			$exp_bb.='~~~'.$EX[$ix];
-				}
-			}
-			$_REQUEST["Sub_Expresion"]=$exp_bb;
-			/*
-			if (isset($_REQUEST["Seleccionados"])){
-				$EX[0]=$_REQUEST["Seleccionados"];
-			}else{
-                $EX[0]=str_replace('"',"",$_REQUEST["Sub_Expresion"]);
-			}
-				$CA[0]=$_REQUEST["prefijo"];
-				$OP[0]="";
-            */
-		}
-
-		$Expresion="";
-		$EB=array();
-		$EBO=array();
-		$IB=-1;
-		for ($ix=0;$ix<count($EX);$ix++){
-			$booleano="";
-			if ($ix<>0) if(isset($OP[$ix-1]) )$booleano=$OP[$ix-1];
-			if (trim($EX[$ix])!=""){
-				if (strpos($EX[$ix],'"')===false){
-                    if (trim($CA[$ix])=="TW_"){
-						$expre=explode(' ',$EX[$ix]);
-					}else{
-						$expre=explode('"',$EX[$ix]);
-						$expre=explode(' ',$EX[$ix]);
-					}
-        	    }else{
-					$expre=explode('"',$EX[$ix]);
-				}
-                $sub_expre="";
-				foreach ($expre as $exp){
-					$exp=rtrim($exp);
-					if ($exp!=""){
-						$exp='"'.trim((string)$CA[$ix]).$exp.'"';
-						if ($sub_expre==""){
-							$sub_expre=$exp;
-						}else{
-							$sub_expre.=" ".$_REQUEST["alcance"]." ".$exp;
-						}
-					}
-				}
-				if ($sub_expre!=""){
-					$IB=$IB+1;
-					$EB[$IB]= "(".$sub_expre.")";
-					$EBO[$IB]=$OP[$ix];
-				}
-			}
-		}
-		$Expresion="";
-		for ($ix=0;$ix<=$IB;$ix++){
-			if ($ix==0){
-				$Expresion=$EB[$ix];
-			}else{
-				$Expresion.=" ".$EBO[$ix-1]." ".$EB[$ix];
-			}
-		}
-        break;
-}
 if ($Expresion=="") { 
 	$Expresion='$';
 } else {
@@ -442,7 +278,7 @@ $_SESSION['primera_base']=$primera_base;
 
 if (!isset($_REQUEST["mostrar_exp"])){
 	// Inserts the search refinement option by opening the advanced form
-	include_once $Web_Dir.'components/refine_search.php';
+	//include_once $Web_Dir.'components/refine_search.php';
 }
 
 
@@ -474,7 +310,7 @@ $contador=0;
 
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 
-include_once 'components/total_bases.php';
+//include_once 'components/total_bases.php';
 
 	if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
 			$Expr_facetas=$_REQUEST["facetas"];
@@ -483,11 +319,15 @@ include_once 'components/total_bases.php';
 		}
 ?>
 
-
+	<!-- Exibição do looping de resultados acontece aqui -->
 	<form name="continuar" action="buscar_integrada.php" method="get">
+		<input type="hidden" name="page" value="startsearch">
 		<input type="hidden" name="integrada" value="<?php echo $integrada;?>">
 		<input type="hidden" name="existencias">
-		<input type="hidden" name="facetas" value="<?php echo $Expr_facetas;?>">
+		<input type="hidden" name="Campos" value="<?php if (isset($_REQUEST["Campos"])) echo $_REQUEST["Campos"];?>">
+		<input type="hidden" name="Operadores" value="<?php if (isset($_REQUEST["Operadores"])) echo $_REQUEST["Operadores"];?>">
+		<input type="hidden" name="Sub_Expresion" value="<?php if (isset($_REQUEST["Sub_Expresion"])) echo urlencode($_REQUEST["Sub_Expresion"]);?>">
+
 	
 	<?php
 		if (isset($total_base) and count($total_base)>0 ){
@@ -522,17 +362,13 @@ include_once 'components/total_bases.php';
 		echo '<input type="hidden" name="Expresion" value="'.urlencode($Expresion).'">';
 		NavegarPaginas($contador,$count,$desde,$select_formato); 
 	?>
-		<input type="hidden" name="Campos" value="<?php if (isset($_REQUEST["Campos"])) echo $_REQUEST["Campos"];?>">
-		<input type="hidden" name="Operadores" value="<?php if (isset($_REQUEST["Operadores"])) echo $_REQUEST["Operadores"];?>">
-		<input type="hidden" name="Sub_Expresion" value="<?php if (isset($_REQUEST["Sub_Expresion"])) echo urlencode($_REQUEST["Sub_Expresion"]);?>">
 
 	</form>
 
 
 <?php
+
 // Inserts the total results per database in the footer.
-
-
 include_once 'components/total_bases_footer.php';
 
 
@@ -558,7 +394,7 @@ if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
 if (isset($_REQUEST["db_path"]))  echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 echo "</form>";
 
-include_once ('components/facets.php');
+//include_once ('components/facets.php');
 
 
 if (!isset($_REQUEST["base"])) $base="";
