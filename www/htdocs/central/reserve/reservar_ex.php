@@ -21,40 +21,23 @@ if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="IAH_RESERVA"){
 	$_SESSION["login"]="IAH";
 	$_SESSION["lang"]="es";
 	$script_php="../circulation/opac_statment_ex.php";
-?>
-	<style>
-	BODY {
-		background: <?php echo $def["BG_WEB"]?>;
-		font-family: "Trebuchet MS", Arial, Verdana, Helvetica;
-		font-size: 10pt;
-		color: #000;
-	}
-	td{
-		font-family:arial;
-		font-size:10px;
-	}
-	th{
-		font-family:arial;
-		font-size:10px;
-	}
-	</style>
-<?php
-	if (isset($logo_opac))echo "<img src=".$logo_opac.">";
+
+	if (isset($logo_opac)) { echo "<img src=".$logo_opac.">"; 
 }else{
 	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva"){
 		include("../common/header.php");
-	// RESERVA DESDE EL SISTEMA DE PRESTAMOS
+		// RESERVA DESDE EL SISTEMA DE PRESTAMOS
 
 		if (!isset($_SESSION["permiso"])){
-			header("Location: ../common/error_page.php") ;
+			header("Location: ../common/error_page.php");
 		}
-		$script_php="../circulation/estado_de_cuenta.php";ABCD
+		$script_php="../circulation/estado_de_cuenta.php";
 		if (!isset($_SESSION["login"])) die;
-		if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
+		if (!isset($_SESSION["lang"])) $_SESSION["lang"]="en";
 		include("../common/institutional_info.php");
 	}
 }
-
+}
 
 if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita") {
 	$_SESSION["lang"]=$_REQUEST["lang"];
@@ -363,7 +346,7 @@ if ($cont=="S" and isset($arrHttp["reservados"])){
 
 			if ($permitir_reserva=="N"){
 				echo $salida_catalogo."<font color=red>".$control_number." ".$msgstr["cannot_be_reserved"]."</font><hr>";
-				$continuar="N";ABCD
+				$continuar="N";
 				continue;
 			}
 			foreach ($prestamos as $value) {
@@ -377,8 +360,8 @@ if ($cont=="S" and isset($arrHttp["reservados"])){
 				$reservados[]=trim($pr);
 			else{
 				echo "$salida_catalogo<font color=red style=line-height:30px> ".$msgstr["duploan"]."</font><hr>";
-				$continuar="N";ABCD
-			}ABCD
+				$continuar="N";
+			}
 			if (count($reservados)>0 and $continuar==""){
     	        $cont="N";
 				if (count($user_reservations)>0){
@@ -428,6 +411,7 @@ if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vie
 ?>
    </div>
 </div>
+
 <?php
 	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita") Regresar();
 	if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vienede"]!="IAH_RESERVA") and $arrHttp["vienede"]!="orbita"){
