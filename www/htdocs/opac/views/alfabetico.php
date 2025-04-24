@@ -1,4 +1,11 @@
 <?php
+/**
+ * 20250402 rogercgui altera o local de verificação de alfabetos disponívels para a pasta da base de dados. Linha 26.
+ * 
+ * 
+ */
+
+
 $scptpath="../";
 //include("../head.php");
 
@@ -16,9 +23,10 @@ if (is_dir($db_path."opac_conf/alpha/$meta_encoding")){
 
 if (!isset($_REQUEST["modo"]) or $_REQUEST["modo"]!="integrado"){
  	if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
- 		if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"].".lang")){
+		$file_lang=$db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"].".lang";
+		$fp=file($file_lang);
+ 		if (file_exists($file_lang)){
  			$index_alfa=array();
- 			$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"].".lang");
  			foreach ($fp as $lang_val){
  				$l=explode('|',$lang_val);
  				foreach ($l as $xxl)
@@ -27,6 +35,8 @@ if (!isset($_REQUEST["modo"]) or $_REQUEST["modo"]!="integrado"){
  		}
  	}
 }
+
+
 $terminos=array();
 ?>
 
@@ -56,15 +66,7 @@ primer_indice="<?php echo $primer_indice?>"
 			Ctrl=document.getElementById(ix)
 			Ctrl.style.display="block"
 		}
-		function Localizar(Expresion,Existencias){
-			Expr=Expresion.split('$#$')
-			document.indiceAlfa.Sub_Expresion.value=Expresion
-			document.indiceAlfa.letra.value=primero
-			document.indiceAlfa.Opcion.value="detalle"
-			document.indiceAlfa.action="buscar_integrada.php"
-			document.indiceAlfa.Existencias.value=Existencias
-			document.indiceAlfa.submit()
-		}
+
 
 		function IrA(){
 			ix=document.iraFrm.coleccion.selectedIndex
@@ -99,7 +101,7 @@ primer_indice="<?php echo $primer_indice?>"
 
 <form name="iraFrm" onSubmit="IrA();return false" method="post">
 		<input type="hidden" name="titulo" value="<?php echo $_REQUEST["titulo"]?>">
-
+		<input type="hidden" name="page" value="startsearch">
 		<?php
 			if (isset($_REQUEST["Formato"])) echo "<input type=hidden name=Formato value=\"".$_REQUEST["Formato"]."\">\n";
 			if (isset($_REQUEST["db_path"])) echo "<input type=hidden name=db_path value=\"".$_REQUEST["db_path"]."\">\n";
@@ -244,7 +246,7 @@ if ($ixc>0 ){
 		$cuenta++;
 		$linea=trim($linea);
 		$a=explode('|$$|',$linea);
-		$b=explode('$$$',$a[0]);
+		$b=explode('$$$',$a[1]);
 		$c=explode('$$$',$a[1]);
 		if ($primeraVez=="S") {
 			$primerTermino=$c[1];
@@ -278,14 +280,14 @@ if ($ixc>0 ){
             	$Existencias="";
             $Expresion=substr($Expresion,strlen($prefijo));
 			$url="<li class=\"list-group-item list-group-item-action bg-light\"><a href=javascript:Localizar(\"$Expresion\",\"$Existencias\")>";
-			echo	"$url".substr(trim($c[1]),strlen($prefijo))   ;
+			echo	$url.substr(trim($c[1]),strlen($prefijo))   ;
 			if ($prefijo!="TI_"){
 				if (isset($postings[$key]) and !isset($a[2]) ) {
 					echo "&nbsp;&nbsp;<font size=-1><i>[".$postings[$key]."]</i>";
 				}
 
 			}
-
+			echo " (".$b[0].") ";
 			echo "</a>";
 			echo "</li>\n";
         }

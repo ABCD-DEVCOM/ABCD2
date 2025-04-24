@@ -7,7 +7,7 @@
 
 
 function PresentarExistencias($Existencias){
-global $db_path,$xWxis,$msgstr, $actparfolder;
+global $db_path,$xWxis,$msgstr, $actparfolder, $base;
 	$e=explode(';',$Existencias);
 	$base=$e[1];
 	echo "<table id=existencias>";
@@ -67,10 +67,11 @@ global $yaidentificado,$db_path,$msgstr,  $actparfolder;
 					}
 				}
 				break;
-			case "libre":
+			case "free":
             case "detalle":
             case "avanzada":
-				$Exp_b=urldecode($_REQUEST["Expresion"]);
+				if (isset($_REQUEST["Expresion"])) $Exp_b=urldecode($_REQUEST["Expresion"]);
+				if (isset($_REQUEST["Sub_Expresion"])) $Exp_b=urldecode($_REQUEST["Sub_Expresion"]);
 				if (isset($_REQUEST["prefijoindice"])) $Exp_b=str_replace($_REQUEST["prefijoindice"],'',$_REQUEST["Expresion"]);
 				foreach ($camposbusqueda as $key=>$value){
 					if (isset($_REQUEST["prefijoindice"]))
@@ -83,7 +84,10 @@ global $yaidentificado,$db_path,$msgstr,  $actparfolder;
 				$Exp_b=str_replace("|"," ",$Exp_b);
 				break;
 			default:
+			if (isset($_REQUEST["Expresion"])) {
 				$Exp_b=$_REQUEST["Expresion"];
+			}else {
+				$Exp_b=$_REQUEST["Sub_Expresion"];}
 				if (isset($_REQUEST["prefijoindice"])) $Exp_b=str_replace($_REQUEST["prefijoindice"],'',$_REQUEST["Expresion"]);
                 if (isset($_REQUEST["prefijo"])) $Exp_b=str_replace($_REQUEST["prefijo"],'',$Exp_b);
 				foreach ($camposbusqueda as $key=>$value){

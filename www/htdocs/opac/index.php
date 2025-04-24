@@ -4,6 +4,7 @@
 ***********************************************/
 include realpath(__DIR__ . '/../central/config_opac.php');
 
+/*
 $_REQUEST["modo"]="integrado";
 if (file_exists("opac_dbpath.dat")){
 	$fp=file("opac_dbpath.dat");
@@ -19,6 +20,8 @@ if (file_exists("opac_dbpath.dat")){
 		}
 	}
 }
+*/
+
 
 $primeraPagina="Y";
 
@@ -31,9 +34,7 @@ if (isset($_REQUEST["primeravez"]) and $_REQUEST["primeravez"]=="Y"){ ?>
 <?php 
 }
 
-
 include("head.php");
-
 
 if (isset($_REQUEST["cookie"])) {
 	include("views/view_selection.php");
@@ -46,16 +47,3 @@ if (isset($_REQUEST["cookie"])) {
 ?>
 
 <?php include("views/footer.php");?>
-
-<script>
-function resizer(id) {
-    var doc = document.getElementById(id).contentWindow.document;
-    var body_ = doc.body;
-    html_ = doc.documentElement;
-    var height = Math.max(body_.scrollHeight, body_.offsetHeight, html_.clientHeight, html_.scrollHeight, html_
-        .offsetHeight);
-    var width = Math.max(body_.scrollWidth, body_.offsetWidth, html_.clientWidth, html_.scrollWidth, html_.offsetWidth);
-    document.getElementById(id).style.height = height;
-    document.getElementById(id).style.width = width;
-}
-</script>
