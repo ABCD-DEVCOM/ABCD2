@@ -1,6 +1,9 @@
-Books|XC_AB
-Documents|XC_AD
-Monographies|XC_AM
-Electronic|XC_AR
-English|XC_LA-EN
-Spanish|XC_LA-ES
+Lugar de publicación|v260^a|PA_|
+Editor/Publicador|v264^b|ED_|
+Año|v264^c|DT_|
+ISBN/ISSN|v20^a|IS_|
+Autor personal|v100^a[1]|AU_|
+Autor institucional|v110^a[1]|AI_|
+Título|v245^a': 'v245^b|TI_|
+Asunto (Tema)|v650^a|MA_|
+

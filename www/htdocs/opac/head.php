@@ -1,119 +1,147 @@
 <?php
 include realpath(__DIR__ . '/../central/config_opac.php');
-include $Web_Dir.'functions.php';
+include $Web_Dir . 'functions.php';
 
-session_start(); 
+// Definição de cabeçalhos de segurança
+$nonce = base64_encode(random_bytes(16));
+header("X-XSS-Protection: 1; mode=block");
+header("Content-Type: text/html; charset=$meta_encoding");
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Pragma: no-cache");
+
+//header("Content-Security-Policy: script-src 'self' 'nonce-$nonce'; object-src 'none'; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;");
+
+header("Cache-Control: no-cache, no-store, must-revalidate"); // ou header("Cache-Control: no-store");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Data no passado para invalidar o cache
+header("Pragma: no-cache"); // Para HTTP/1.0
 
 //include ("get_ip_address.php");
-
-header('Content-Type: text/html; charset=".$meta_encoding."');
-header("Cache-Control: no cache");
-
 //session_cache_limiter("private_no_expire");
 
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/";
-$ActualDir=getcwd();
-$meta_encoding=$meta_encoding;
+$ActualDir = getcwd();
+
+session_start();
+
+//foreach ($_REQUEST as $var => $value) echo "$var=>$value<br>";
 ?>
 
 <!doctype html>
 <html lang="<?php echo $lang; ?>">
 
 <head>
-	<!-- Meta Tags para SEO -->
-	<title><?php echo $TituloPagina; ?></title>
-	<meta name="description" content="<?php echo $Site_Description;?>">
-	<meta name="keywords" content="<?php echo $Site_Keywords;?>" />
-	<meta http-equiv="content-type" content="text/html; charset=<?php echo $meta_encoding ?>" />
-	<meta name="author" content="<?php echo $TituloEncabezado;?>">
-	<meta name="language" content="<?php echo $lang; ?>">
+    <title><?php echo htmlspecialchars($TituloPagina, ENT_QUOTES, 'UTF-8'); ?></title>
+    <meta name="description" content="<?php echo htmlspecialchars($Site_Description, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($Site_Keywords, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta charset="<?php echo $meta_encoding; ?>">
+    <meta name="author" content="<?php echo htmlspecialchars($TituloEncabezado, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="language" content="<?php echo $lang; ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
 
-	<!-- Meta Tags para Redes Sociais (Facebook, Twitter, LinkedIn) -->
-	<meta property="og:title" content="<?php echo $TituloPagina; ?>">
-	<meta property="og:description" content="<?php echo $Site_Description;?>">
-	<meta property="og:image" content="<?php echo $link_logo;?>">
-	<meta property="og:url" content="<?php echo $OpacHttp;?>">
-	<meta name="twitter:title" content="<?php echo $TituloPagina; ?>">
-	<meta name="twitter:description" content="<?php echo $Site_Description;?>">
-	<meta name="twitter:image" content="<?php echo $link_logo;?>">
-	<meta name="twitter:card" content="<?php echo $link_logo;?>">
-	<meta name="linkedin:title" content="<?php echo $TituloPagina; ?>">
-	<meta name="linkedin:description" content="<?php echo $Site_Description;?>">
-	<meta name="linkedin:image" content="<?php echo $link_logo;?>">
+    <!-- Meta Tags para Redes Sociais -->
+    <?php foreach (["og", "twitter", "linkedin"] as $prefix) : ?>
+        <meta property="<?php echo $prefix; ?>:title" content="<?php echo htmlspecialchars($TituloPagina, ENT_QUOTES, 'UTF-8'); ?>">
+        <meta property="<?php echo $prefix; ?>:description" content="<?php echo htmlspecialchars($Site_Description, ENT_QUOTES, 'UTF-8'); ?>">
+        <meta property="<?php echo $prefix; ?>:image" content="<?php echo htmlspecialchars($link_logo, ENT_QUOTES, 'UTF-8'); ?>">
+    <?php endforeach; ?>
 
-	<!-- Meta Tags para Resultados de Pesquisa (Google, Bing) -->
-	<meta name="robots" content="index, follow">
-	<meta name="googlebot" content="index, follow">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<!-- Link para o Ícone da Página -->
-	<?php if (isset($shortIcon) and $shortIcon != "") { ?>
-		<link rel="icon"  href="<?php echo $shortIcon;?>">
-	<?php } ?>
+    <!-- Ícone da Página -->
+    <?php if (!empty($shortIcon)) : ?>
+        <link rel="icon" href="<?php echo htmlspecialchars($shortIcon, ENT_QUOTES, 'UTF-8'); ?>">
+    <?php endif; ?>
 
-		<!--FontAwesome-->
-	<link href="/assets/css/all.min.css" rel="stylesheet">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="stylesheet" href="<?php echo $OpacHttp; ?>assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo $OpacHttp; ?>assets/css/styles.css?<?php echo time(); ?>">
 
-	<link href="<?php echo $OpacHttp;?>assets/css/bootstrap.min.css" rel="stylesheet">
-	<link href="<?php echo $OpacHttp;?>assets/css/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
-	
-	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/script_b.js?<?php echo time(); ?>"></script>
-	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/highlight.js?<?php echo time(); ?>"></script>
-	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/lr_trim.js"></script>
-	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/selectbox.js"></script>
-	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/jquery-3.6.4.min.js?<?php echo time(); ?>"></script>
-	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/get_cookies.js?<?php echo time(); ?>"></script>
+    <!-- Scripts -->
+    <?php foreach (["script_b.js", "highlight.js", "lr_trim.js", "selectbox.js", "jquery-3.6.4.min.js", "get_cookies.js"] as $script) : ?>
+        <script nonce="<?php echo $nonce; ?>" src="<?php echo $OpacHttp; ?>assets/js/<?php echo $script; ?>?<?php echo time(); ?>"></script>
+    <?php endforeach; ?>
 
-	<?php echo $googleAnalyticsCode;?>
-	
-	<?php echo $CustomStyle;?>
+    <?php echo $googleAnalyticsCode; ?>
+    <?php echo $CustomStyle; ?>
 
-	<script>
-		msgstr = Array()
-		msgstr["no_rsel"] = "<?php echo $msgstr["front_no_rsel"] ?>"
-		msgstr["sel_term"] = "<?php echo $msgstr["front_sel_term"] ?>"
-		msgstr["miss_se"] = "<?php echo $msgstr["front_miss_se"] ?>"
-		msgstr["rsel_no"] = "<?php echo $msgstr["front_rsel_no"] ?>"
-		msgstr["reserv_no"] = "<?php echo $msgstr["front_reserv_no"] ?>"
-		actualScript = "<?php echo $actualScript ?>"
-	</script>
-	
 </head>
 
 <body>
-	<?php include("views/topbar.php");?>
+    <?php include "views/topbar.php"; ?>
+    <div class="container<?php echo $container; ?>">
 
-	<div class="container<?php echo $container;?>">
+        <?php
+        if (isset($_REQUEST['page'])) {
+            $page= $_REQUEST['page'];
+        }else{
+            $page = "";
+        }
 
-	<?php if ($sidebar=="SL") { ?>
-	<div id="searchBox" class="card bg-white p-4 mb-4 custom-searchbox">
-		<?php if ($search_form!="detailed") include("components/search_free.php");  ?>
-		<?php if ($search_form=="detailed") include("components/search_detailed.php"); ?>
-	</div>
-	<?php } ?>
-	
-	<main>
-			<?php
 
-			if (!empty($_REQUEST['Sub_Expresion'])) { $EscondeSide="Y"; } else { $EscondeSide="N"; };
+        if ($sidebar == "SL") :
 
-			//foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
+            if ($page != "startsearch") {
+        ?>
+        
+            <div id="searchBox" class="card bg-white custom-searchbox p-4 mb-4 rounded-0">
+                <?php
+                // Define qual formulário deverá ser exibido para o pesquisador
+                switch ($search_form) {
+                    case 'free':
+                        include("components/search_free.php");
+                        break;
+                    case 'detailed':
+                    case 'detalle':
+                    case 'avanzada':
+                        include("components/search_detailed.php");
+                        break;
+                    case 'directa':
+                        include("components/search_directa.php");
+                        break;
+                    default:
+                        include("components/search_free.php") ;
+                        break;
+                }
+            } ?>
+            </div>
+        <?php endif; ?>
 
-			if ($sidebar!="N") { ?>
-				<div class="d-flex flex-row col-md-12">
+        <main>
+            <?php
 
-					<?php if ($EscondeSide.$hideSIDEBAR!="YY") include("views/sidebar.php"); ?>
+            if ((isset($_REQUEST['page'])) && (($_REQUEST['page'] == "startsearch"))) : ?>
+                <div class="d-flex flex-row col-md-12">
+                    <?php include "views/sidebar.php"; ?>
+                <?php else : ?>
+                    <div class="row">
+                    <?php endif; ?>
+                    <div id="page" class="container">
+                        <div class="col-md-12 p-4" id="content" <?php if (isset($desde) and $desde = "ecta"); ?>>
+                            <?php if ($sidebar != "SL") : ?>
+                                <div id="searchBox" class="card bg-white p-4 mb-4 rounded-0">
 
-				<?php } else { ?>
-				<div class="row">
-			<?php } ?>
-
-				<div id="page" class="container">
-					<div class="col-md-12" id="content" <?php if (isset($desde) and $desde = "ecta"); ?>>
-						<?php if ($sidebar!="SL") { ?>
-						<div id="searchBox" class="card bg-white p-4 mb-4">
-							<?php if ($search_form!="detailed") include("components/search_free.php");  ?>
-							<?php if ($search_form=="detailed") include("components/search_detailed.php"); ?>
-						</div>
-						<?php } ?>
-						<?php $_REQUEST["base"] = $actualbase; ?>
+                                    <?php //if ($search_form!="detailed") include("components/search_free.php");  
+                                    ?>
+                                    <?php //if (($search_form=="detailed") || ($search_form!="directa")) include("components/search_detailed.php"); 
+                                    ?>
+                                    <?php
+                                    // Define qual formulário deverá ser exibido para o pesquisador
+                                    switch ($search_form) {
+                                        case 'free':
+                                            include("components/search_free.php");
+                                            break;
+                                        case 'detailed':
+                                        case 'detalle':
+                                        case 'avanzada':
+                                            include("components/search_detailed.php");
+                                            break;
+                                        default:
+                                            include("components/search_free.php");
+                                            break;
+                                    }
+                                    ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php $_REQUEST["base"] = $actualbase; ?>

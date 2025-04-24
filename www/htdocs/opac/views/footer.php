@@ -1,5 +1,11 @@
+	
+	
 	</div>
+
+	
+
 </div>
+
 
 </main>
 
@@ -7,6 +13,8 @@
 
 				</div>
 					</div>
+
+					<?php include_once ($Web_Dir.'views/more_links.php'); ?>
 
 					<!--ESTO SE CAMBIO PARA PODER INSERTAR EL NUEVO FOOTER -->
 					<?php
@@ -71,12 +79,13 @@
 	</html>
 
 	<!-- Light Switch -->
-	<script type="text/javascript" src="<?php echo $OpacHttp;?>assets/js/switch.js?<?php echo time(); ?>"></script>
-	<script type="text/javascript" src="<?php echo $OpacHttp;?>assets/js/slick.min.js?<?php echo time(); ?>"></script>
+	<script nonce="<?php echo $nonce; ?>" type="text/javascript" src="<?php echo $OpacHttp;?>assets/js/switch.js?<?php echo time(); ?>"></script>
+	<script nonce="<?php echo $nonce; ?>" type="text/javascript" src="<?php echo $OpacHttp;?>assets/js/slick.min.js?<?php echo time(); ?>"></script>
+	<script nonce="<?php echo $nonce; ?>" type="text/javascript" src="<?php echo $OpacHttp;?>assets/js/script_f.js?<?php echo time(); ?>"></script>
 
-<script>
-	console.log('OPAC ABCD Version: 1.2.0-beta 20230507');
-</script>
+
+	
+
 
 <?php 
 	toTop();

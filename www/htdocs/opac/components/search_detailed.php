@@ -33,6 +33,7 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="")  {
 	?>
 
 <form name="back" method="post" action="buscar_integrada.php">
+	<input type="hidden" name="page" value="startsearch">
 <?php
 	foreach ($_REQUEST as $var=>$value){
 		echo "<input type=hidden name=$var value=";

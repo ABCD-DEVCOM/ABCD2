@@ -8,14 +8,48 @@ if (basename($_SERVER["SCRIPT_FILENAME"]) == "index.php"){
 }
 ?>
 
-<form name="buscar" action="buscar_integrada.php" method="post">
+<form name="filtro" action="buscar_integrada.php" method="GET">
+	<input type="hidden" name="page" value="startsearch" >
+	<?php if (isset($_REQUEST["alcance"])) echo	'<input type="hidden" name="alcance" value="'.$_REQUEST["alcance"].'">';?>
+<?php if (isset($_REQUEST["Formato"])) echo "<input type=hidden name=Formato value=\"" . $_REQUEST["Formato"] . "\">\n"; ?>
+
+	<input type="hidden" name="integrada" value="<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"] ?>">
+	<input type="hidden" name="modo" value="1B0" >
+
+	<input type="hidden" name="base" value="<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"] ?>">
+
+	<input type="hidden" name="Opcion" value="directa" >
+	<input type="hidden" name="Expresion" value="<?php if (isset($_REQUEST["Expresion"])) echo urlencode($_REQUEST["Expresion"]) ?>" >
+	<input type="hidden" name="count" value="<?php if (isset($count)) echo $count;?>" >
+	<input type="hidden" name="coleccion" value="" >
+	<input type="hidden" name="lang" value="<?php echo $lang;?>" >
+</form>
+
+
+
+<form name="buscar" action="buscar_integrada.php" method="POST">
+	<input type="hidden" name="page" value="startsearch">
+
+	<?php
+
+		echo "<input type=hidden name=prefijo value=";
+		if (isset($_REQUEST["prefijo"])) echo $_REQUEST["prefijo"];
+		echo ">\n";
+
+
+		echo "<input type=hidden name=Sub_Expresion value=\"";
+		if (isset($_REQUEST["Sub_Expresion"])) echo urlencode($_REQUEST["Sub_Expresion"]);
+		echo "\">\n";
+
+		?>
+
 	<input type="hidden" name="cookie">
 	<input type="hidden" name="LastKey">
 	<input type="hidden" name="resaltar">
 	<input type="hidden" name="pagina">
 	<input type="hidden" name="sendto">
 	<input type="hidden" name="Accion">
-	<input type="hidden" name="facetas" value="<?php if (isset($_REQUEST["facetas"])) echo $_REQUEST["facetas"]; ?>">
+
 	<?php if (isset($_REQUEST["db_path"])) echo	'<input type="hidden" name="db_path" value="'.$_REQUEST["db_path"].'">';?>
 	<?php if (isset($_REQUEST["alcance"])) echo	'<input type="hidden" name="alcance" value="'.$_REQUEST["alcance"].'">';?>
 	<?php if (isset($_REQUEST["integrada"])) echo '<input type="hidden" name="integrada" value="'.$_REQUEST["integrada"].'">';?>
@@ -40,16 +74,17 @@ if (basename($_SERVER["SCRIPT_FILENAME"]) == "index.php"){
 	if (isset($_REQUEST["Incluir"])) echo "<input type=hidden name=Incluir value=" . $_REQUEST["Incluir"] . ">\n";
 	if (isset($_REQUEST["titulo"])) echo "<input type=hidden name=titulo value=" . $_REQUEST["titulo"] . ">\n";
 	if (isset($_REQUEST["Diccio"])) echo "<input type=hidden name=Diccio value=" . $_REQUEST["Diccio"] . ">\n";
-	echo "<input type=hidden name=prefijo value=";
-	if (isset($_REQUEST["prefijo"])) echo $_REQUEST["prefijo"];
-	echo ">\n";
+
+
+
 	if (isset($_REQUEST["prefijoindice"])) echo "<input type=hidden name=prefijoindice value=" . $_REQUEST["prefijoindice"] . ">\n";
 	if (isset($_REQUEST["iden"])) echo "<input type=hidden name=iden value=" . $_REQUEST["iden"] . ">\n";
 	if (isset($_REQUEST["Campos"])) echo "<input type=hidden name=Campos value=\"" . $_REQUEST["Campos"] . "\">\n";
 	if (isset($_REQUEST["Operadores"])) echo "<input type=hidden name=Operadores value=\"" . $_REQUEST["Operadores"] . "\">\n";
-	echo "<input type=hidden name=Sub_Expresion value=\"";
-	if (isset($_REQUEST["Sub_Expresion"])) echo urlencode($_REQUEST["Sub_Expresion"]);
-	echo "\">\n";
+	
+
+
+
 	echo "<input type=hidden name=coleccion value=\"";
 	if (isset($_REQUEST["coleccion"])) echo $_REQUEST["coleccion"];
 	echo "\">\n";
@@ -138,10 +173,12 @@ if (isset($_REQUEST["prefijo"])) {
 	?>
 </form>
 
-<form name="diccio_libre" action="diccionario_integrado.php" method="post">
+
+<!-- Acionado pela função DiccionarioLibre() em scripts_b.js -->
+<form name="diccio_free" action="diccionario_integrado.php" method="post">
 	<input type="hidden" name="lista_bases" value="">
 	<input type="hidden" name="prefijo" value="TW_">
-	<input type="hidden" name="Opcion" value="libre">
+	<input type="hidden" name="Opcion" value="free">
 	<?php
 	if (isset($_REQUEST["facetas"])) echo '<input type="hidden" name="facetas" value="'.$_REQUEST["facetas"].'">';
 	if (isset($_REQUEST["db_path"])) echo '<input type="hidden" name="db_path" value="'.$_REQUEST["db_path"].'">\n';
@@ -169,7 +206,7 @@ if (isset($_REQUEST["prefijo"])) {
 	?>
 </form>
 
-<form name="changelanguage" method="get">
+<form name="changelanguage" method="POST">
 	<?php
 	foreach ($_REQUEST as $key => $value) {
 		echo '<input type=hidden name="'.$key.'" value="'.$value.'">';
@@ -189,34 +226,8 @@ if (isset($_REQUEST["prefijo"])) {
 	?>
 </form>
 
-
-<script>
-
-function BuscarIntegrada(base, modo, Opcion, Expresion, Coleccion, titulo_c, resaltar, submenu, Pft, mostrar_exp) {
-	if (mostrar_exp != "") document.bi.action = "inicio_base.php"
-	document.bi.base.value = base
-	document.bi.Opcion.value = Opcion
-	document.bi.modo.value = modo
-	document.bi.home.value = mostrar_exp
-
-	if (Opcion == "libre") {
-		document.bi.coleccion.value = Coleccion
-		document.bi.Expresion.value = Expresion
-	}
-
-	if (Opcion == "directa") {
-		document.bi.Expresion.value = Expresion
-		document.bi.titulo_c.value = titulo_c
-		document.bi.resaltar.value = resaltar
-		document.bi.submenu.value = submenu
-		document.bi.Pft.value = Pft
-		document.bi.mostrar_exp.value = mostrar_exp
-	}
-	document.bi.submit()
-}
-</script>
-
 <form name="bi" action="buscar_integrada.php" method="post">
+	<input type="hidden" name="page" value="startsearch">
 	<input type="hidden" name="base">
 	<input type="hidden" name="cipar">
 	<input type="hidden" name="Opcion">
@@ -243,7 +254,8 @@ function BuscarIntegrada(base, modo, Opcion, Expresion, Coleccion, titulo_c, res
 
 
 
-	<form AQUIEE name="regresar" action="buscar_integrada.php" method="GET">
+	<form name="regresar" action="buscar_integrada.php" method="POST">
+		<input type="hidden" name="page" value="startsearch">
 		<?php 
 		foreach ($_REQUEST as $key=>$value){
 			echo "<input type='hidden' name='".$key."' value='".$value."'>\r\n";
@@ -251,7 +263,8 @@ function BuscarIntegrada(base, modo, Opcion, Expresion, Coleccion, titulo_c, res
 	</form>
 
 
-<form name="indiceAlfa" method="post" action="alfabetico.php">
+<form name="indiceAlfa" method="POST" action="alfabetico.php">
+	<input type="hidden" name="page" value="startsearch">
 	<input type="hidden" name="alfa" value="<?php if (isset($_REQUEST["alfa"]) and $_REQUEST["alfa"]!="") echo $_REQUEST["alfa"];?>">
 	<input type="hidden" name="titulo" value="<?php if (isset($_REQUEST["titulo"])) echo $_REQUEST["titulo"];?>">
 	<input type="hidden" name="columnas" value="<?php if (isset($_REQUEST["columnas"])) echo $_REQUEST["columnas"];?>">
@@ -266,6 +279,7 @@ function BuscarIntegrada(base, modo, Opcion, Expresion, Coleccion, titulo_c, res
 	<?php if (isset($primero)) { $letra=$primero; } else { $letra=""; } ?>
 	<input type="hidden" name="letra" value="<?php if (isset($_REQUEST["prefijo"])) echo str_replace($_REQUEST["prefijo"],'',$letra) ?>">
 	<input type="hidden" name="Existencias">
+	<input type="hidden" name="Campos">
 	<input type="hidden" name="coleccion" value="<?php if (isset($_REQUEST["coleccion"])) echo $_REQUEST["coleccion"]?>">
 	<input type="hidden" name="lang" value="<?php if (isset($_REQUEST["lang"])) echo $_REQUEST["lang"]?>">
 	<?php
@@ -279,5 +293,5 @@ function BuscarIntegrada(base, modo, Opcion, Expresion, Coleccion, titulo_c, res
 	?>
 </form>
 
-<script src="<?php echo $OpacHttp;?>assets/js/bootstrap.bundle.min.js"></script>
+<script nonce="<?php echo $nonce; ?>" src="<?php echo $OpacHttp;?>assets/js/bootstrap.bundle.min.js"></script>
 

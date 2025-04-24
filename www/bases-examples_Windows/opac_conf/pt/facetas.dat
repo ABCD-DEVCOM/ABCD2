@@ -1,4 +1,9 @@
-Livros|BK
-Periódicos|SE
-Electrônicos|XC_AR
-Local|PA_
+Lugar de publicação|v260^a|PA_|
+Editor/Publicador|v264^b|ED_|
+Ano|v264^c|DT_|
+ISBN/ISSN|v20^a|IS_|
+Autor pessoal|v100^a[1]|AU_|
+Autor institucional|v110^a[1]|AI_|
+Título|v245^a': 'v245^b|TI_|
+Assunto (Tópico)|v650^a|MA_|
+

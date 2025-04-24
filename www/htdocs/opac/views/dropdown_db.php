@@ -17,13 +17,7 @@ if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
 
     $primeravez="S";
      if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]!=""){
-?>
-
-
-
-
-<?php	}
-
+}
 
 	foreach ($bd_list as $key => $value){
 		$archivo=$db_path.$key."/opac/".$lang."/".$key."_colecciones.tab";
@@ -43,7 +37,7 @@ if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
 			}
 		}
 		if (trim($value["nombre"])!=""){
-			echo "<li><a class='dropdown-item' href='javascript:BuscarIntegrada(\"$key\",\"\",\"libre\",\"\$\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
+			echo "<li><a class='dropdown-item' href='javascript:BuscarIntegrada(\"$key\",\"\",\"free\",\"\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
 			echo "<strong>".$value["titulo"]."</strong></a></li>\n";
 	    	if (file_exists($archivo)){
 	    		$fp=file($archivo);
@@ -61,8 +55,8 @@ if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
 							else
 								$cipar="";
 							echo "<li>";
-							echo "<a class='dropdown-item' href='javascript:BuscarIntegrada(\"$key\",\"1B\",\"libre\",\"\",\"$colec\",\"\",\"\",\"\",\"\",\"\")'>";
-							//echo "<a href=\"buscar_integrada.php?base=".$key."&cipar=".$key.$cipar."&coleccion=".$colec."&Opcion=libre\">";
+							echo "<a class='dropdown-item' href='javascript:BuscarIntegrada(\"$key\",\"1B\",\"free\",\"\",\"$colec\",\"\",\"\",\"\",\"\",\"\")'>";
+							//echo "<a href=\"buscar_integrada.php?base=".$key."&cipar=".$key.$cipar."&coleccion=".$colec."&Opcion=free\">";
 			          		echo $v[1]."</a></li>\n";
 	          			}else{
 		          				//echo "<li>".$v[1]."</i></label></a></li>\n";

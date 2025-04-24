@@ -1,5 +1,23 @@
 # O que há de novo?
 
+## Opac – v1.1.2-beta (2025-04-24)
+
+Nesta versão foi feita uma mudança radical nas Facetas e consequentemente no fluxo de pesquisa. O arquivo das facetas geral continua no diretório *bases/opac_conf/pt/facetas.dat*.
+O arquivo de facetas das bases de dados ficam em */bases/dbname/opac/lang/dbname_facetas.dat*.
+
+**A nova estrutura é assim:**
+        Campo | Linguagem de formato | Prefixo
+
+**Exemplo:**
+
+        Ano de publicação|v260^c|DAT_
+
+Com isso, o fluxo de pesquisa inicia na pesquisa livre e em seguida é possível acrescentar ou eliminar termos conforme a necessidade da pesquisa.
+Para editar as facetas, vá até o menu "Configuração de banco de dados" e clique em uma base de dados. No menu superios "Pesquisa" localize "Facetas".
+
+
+----
+
 ## Opac – v1.1.1-beta (2024-06-18)
 *   Melhorias na tela de configuração do Opac;
 *   Ficou mais fácil habilitar e desabilitas bases para o Opac, mas verifique o alerta abaixo antes de iniciar sua atualização;

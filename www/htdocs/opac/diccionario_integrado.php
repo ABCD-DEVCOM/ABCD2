@@ -56,6 +56,7 @@ document.onkeypress =
 	<h2><?php echo $msgstr["front_diccio"]." "?></h2><hr>
 
 	<form name="diccionario" method="post" action="diccionario_integrado.php">
+				<input type="hidden" name="page" value="startsearch">
 
 <?php 
 if (isset($_REQUEST["campo"])) echo "<h4>".$_REQUEST["campo"]."</h4>";

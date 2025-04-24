@@ -13,6 +13,7 @@ function parseMarkdown($markdownFile) {
     $html = preg_replace('/### (.+)/', '<h3>$1</h3>', $markdown);
     $html = preg_replace('/## (.+)/', '<h2>$1</h2>', $html);
     $html = preg_replace('/# (.+)/', '<h1>$1</h1>', $html);
+    $html = preg_replace('/     (.+)/', '<code>$1</code>', $html);
     $html = preg_replace('/\*   (.+)/', '<li>$1', $html);
     $html = preg_replace('/\*\*(.+?)\*\*/', '<strong>$1</strong>', $html);
     $html = preg_replace('/\*(.+?)\*/', '<em>$1</em>', $html);
