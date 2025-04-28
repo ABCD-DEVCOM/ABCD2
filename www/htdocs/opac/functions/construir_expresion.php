@@ -1,5 +1,23 @@
 <?php
 
+function limpar_termo($termo)
+{
+    // 1. Remove acentos
+    $termo = iconv('UTF-8', 'ASCII//TRANSLIT', $termo);
+
+    // 2. Remove caracteres especiais que causam erro na busca
+    $termo = preg_replace('/[^a-zA-Z0-9\s]/', '', $termo);
+
+    // 3. (Opcional) Tudo minúsculo
+    $termo = strtolower($termo);
+
+    // 4. Remove espaços duplicados
+    $termo = preg_replace('/\s+/', '', $termo);
+
+    return trim($termo);
+}
+
+
 function construir_expresion()
 {
     $expresion = "";
@@ -10,7 +28,9 @@ function construir_expresion()
 
         $busqueda_decode = mb_convert_encoding($sub_expresion, 'ISO-8859-1', 'UTF-8');
 
-        $termos = explode(" ", $busqueda_decode);
+        //$termos = explode(" ", $busqueda_decode);
+        $termos_brutos = explode(" ", $busqueda_decode);
+        $termos = array_map('limpar_termo', $termos_brutos);
 
         $total_termos = count($termos);
 

@@ -620,28 +620,18 @@ function Localizar(Expresion, Existencias) {
 }
 
 
-
-/*
-function RefinF(Expresion, ExprArm) {
-	//Expr = Expresion.split('$#$')
-	document.filtro.Expresion.value = "("+Expresion+") and ("+ExprArm+")"
-	document.filtro.Opcion.value = "directa"
-	document.filtro.action = "buscar_integrada.php"
-	document.filtro.submit()
-}
-*/
-
-function RefinF(Expresion, ExprArm) {
-	// Monta a expressão combinada com operador booleano AND
+function RefinF(Expresion, ExprArm, Base) {
+	// Assembles the combined expression with the boolean AND operator
 	const novaExpressao = `(${Expresion}) and (${ExprArm})`;
 
-	// Define os valores no formulário
+	// Defines the values in the form
 	const form = document.forms['filtro'];
 	if (!form) {
-		console.error("Formulário 'filtro' não encontrado.");
+		console.error("Form 'filter' not found.");
 		return;
 	}
 
+	form.base.value = Base;
 	form.Expresion.value = novaExpressao;
 	form.Opcion.value = "directa";
 	form.action = "buscar_integrada.php";
@@ -649,11 +639,11 @@ function RefinF(Expresion, ExprArm) {
 }
 
 function processarTermosLivres() {
-	const input = document.getElementById('termosLivres');
+	const input = document.getElementById('termo-busca');
 	const termos = input.value.trim();
 
 	if (!termos) {
-		alert("Digite pelo menos um termo.");
+		alert("Type in at least one term.");
 		return;
 	}
 
@@ -663,7 +653,7 @@ function processarTermosLivres() {
 	const inputExpresion = document.getElementById('Expresion');
 	let expresionAtual = inputExpresion.value.trim();
 
-	// Se tiver expressão anterior, adiciona com AND
+	// If you have a previous expression, add it with AND
 	if (expresionAtual) {
 		expresionAtual = `(${expresionAtual}) and ${novaExpressao}`;
 	} else {
@@ -672,7 +662,7 @@ function processarTermosLivres() {
 
 	inputExpresion.value = expresionAtual;
 
-	// Submete o formulário
+	// Submit the form
 	document.getElementById('facetasForm').submit();
 }
 
@@ -684,10 +674,10 @@ function removerTermo(termoRemover) {
 	const botoesTermo = termosAtivosDiv.getElementsByClassName('termo');
 	const linkPaginaInicial = termosAtivosDiv.dataset.linkInicial;
 
-	// Normalizar espaços
+	// Standardising spaces
 	expresion = expresion.replace(/\s+/g, ' ').trim();
 
-	// Remover o termo (com ou sem parênteses e AND antes/depois)
+	// Remove the term (with or without brackets and AND before/after)
 	const termoRegex = new RegExp(`(\\s+and\\s+)?\\(?${termoRemover.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)?(\\s+and\\s+)?`, 'i');
 
 	expresion = expresion.replace(termoRegex, (match, andBefore, andAfter) => {
@@ -695,21 +685,21 @@ function removerTermo(termoRemover) {
 		return '';
 	});
 
-	// Limpar ANDs extras e bordas
+	// Clean up extra ANDs and edges
 	expresion = expresion.replace(/^\s*and\s*|\s*and\s*$/gi, '').replace(/\s+and\s+/gi, ' and ').trim();
 
-	// 👉 Reaplicar parênteses apenas em torno dos termos (TW_ ou GDL_)
+	// Reapply brackets only around terms
 	if (expresion) {
 		let termos = expresion
 			.split(/\s+and\s+/i)
-			.map(t => t.replace(/[()"]/g, '').trim()) // remove parênteses e aspas
-			.filter(t => t !== '') // elimina termos vazios
-			.map(t => `(${t})`); // reaplica parênteses corretamente
+			.map(t => t.replace(/[()"]/g, '').trim()) // remove brackets and inverted commas
+			.filter(t => t !== '') // eliminates empty terms
+			.map(t => `(${t})`); // reapply brackets correctly
 
 		expresion = termos.join(' AND ');
 	}
 
-	// Atualiza o campo
+	// Updates the field
 	campoExp.value = expresion;
 
 	if (botoesTermo.length <= 1) {
@@ -720,7 +710,6 @@ function removerTermo(termoRemover) {
 		window.location.href = url.toString();
 	}
 }
-
 
 
 function clearAndRedirect(link) {
