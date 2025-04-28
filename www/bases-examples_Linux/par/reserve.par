@@ -1,5 +1,6 @@
 reserve.*=%path_database%reserve/data/reserve.*
 biblo.*=%path_database%biblo/data/biblo.*
+logtrans.*=%path_database%logtrans/data/logtrans.*
 reserve.pft=%path_database%reserve/pfts/es/reserve.pft
 prologoact.pft=%path_database%www/prologoact.pft
 epilogoact.pft=%path_database%www/epilogoact.pft
