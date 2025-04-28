@@ -96,6 +96,7 @@ $wiki_help="OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci
 		<li><a href="javascript:EnviarForma('/central/settings/opac/parametros.php')"><?php echo $msgstr["parametros"];?></a></li>
 
 		<li><a href="javascript:EnviarForma('/central/settings/opac/adm_email.php')"><?php echo $msgstr["cfg_email"];?></a></li>
+		<li><a href="javascript:EnviarForma('/central/settings/opac/view_search.php')">View Seach</a></li>
 	</div>
    
 
