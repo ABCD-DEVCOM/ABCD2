@@ -1,18 +1,18 @@
 '<TABLE>
   <tr>
      <td class=textbody03 colspan=3>
-         <font size="1" face=verdana color=#666600 size=-1><b>MFN: ',f(mfn,1,0)'</a>',"  ("v1001"/"v1002")" 
-                ' - Nº de controle: ',v1,'<br></b>
+         <font size="1" face=verdana color=#666600 size=-1><b>MFN: ',f(mfn,1,0)'</a>',"Â  ("v1001"/"v1002")" 
+                ' - NÂº de controle: ',v1,'<br></b>
      </td></font>
  </tr>'
  if p(v50) or p(v82) then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Número de chamada:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>NÃºmero de chamada:</TD>
             <TD valign=top ><font face=arial size=2>'
                 v50^a,"."v50^b,v82^a,"/"v82^b,"/"v82^2'<BR>
             </TD>'
  fi/  
  (if p(v60) then 
-    if occ=1 then '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Nº chmada NLM:</TD><TD valign=top ><font face=arial size=2>' 
+    if occ=1 then '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>NÂº chmada NLM:</TD><TD valign=top ><font face=arial size=2>' 
     fi,v60^a,"."v60^b,'<BR>'/
  fi/),"</TD>"D60 ,
  if s(v100,v110,V111)<>'' then 
@@ -23,14 +23,14 @@
     if s(v100,v110,V111)<>'' then '</td>' 
     fi/ 
  if p(v240) then 
-    '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Título uniforme:</TD>
+    '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÃ­tulo uniforme:</TD>
          <TD valign=top ><font face=arial size=2>'
              mdl,v240^a, v240^d, v240^f, v240^g, v240^h, v240^k, v240^l, v240^m, v240^n, v240^o, v240^p, v240^r, v240^s, mpl, 
          '</td>'/
  fi,  
 (if p(v210) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Título abreviado:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÃ­tulo abreviado:</TD>
             <TD valign=top ><font face=arial size=2>' 
     fi,v210^a,| (|v210^b|)| ,'<BR>'/
 fi/)
@@ -38,21 +38,21 @@ fi/)
     fi, 
 (if p(v222) then 
    if occ=1 then 
-      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Título chave:</TD>
+      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÃ­tulo chave:</TD>
            <TD valign=top ><font face=arial size=2>' 
    fi,v222^a,| (|v222^b|)| ,'<BR>'/
 fi/) 
    if p(v222) then '</td>' 
    fi, 
 if p(v245) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Título:</TD>
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÃ­tulo:</TD>
         <TD valign=top ><font face=arial size=2>',
             v245^a, | |v245^n, | |v245^p, | |v245^h, | |v245^b, | |v245^c,
        '</TD>
     </TR>'
 fi/ 
 if p(v242) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Título traduzido:</TD>
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÃ­tulo traduzido:</TD>
         <TD valign=top ><font face=arial size=2>',     v242^a,| |v242^n, | |v242^p, | |v242^h, | |v242^b, | |v242^c,| (|v242^y|)| ,'</td>'/
 fi/ 
 if p(v773) then 
@@ -61,7 +61,7 @@ if p(v773) then
 fi/ 
 (if p(v730) then 
     if occ=1 then 
-      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Título uniforme:</TD>
+      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÃ­tulo uniforme:</TD>
            <TD valign=top ><font face=arial size=2>',
     fi,v730^a, | |v730^n, | |v730^p ,'<BR>'/
 fi/),
@@ -69,39 +69,39 @@ fi/),
     fi, 
 (if p(v740) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Título relacionado:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÃ­tulo relacionado:</TD>
         <TD valign=top ><font face=arial size=2>',
     fi,v740^a, ,'<BR>'/
 fi/) 
     if p(v740) then '</td>' 
     fi, 
 if p(v250) then 
-      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Edição:</TD>'
+      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>EdiÃ§Ã£o:</TD>'
           '<TD valign=top ><font face=arial size=2>',v250^a+|  |,
           '</TD>
        </TR>'/
 fi/, 
 if p(v260) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Publicaçao:</TD>'
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>PublicaÃ§ao:</TD>'
        '<TD valign=top ><font face=arial size=2>',v260^a,| |v260^b,| |v260^c+|  |,
        '</TD>'/
 fi/, 
 if p(v300) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Descrição:</td>'
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>DescriÃ§Ã£o:</td>'
        '<TD valign=top ><font face=arial size=2>',v300^a| |,v300^b| |,v300^c| |,v300^e| |,
        '</TD>'/
 fi/ 
 if p(v362) then 
-  '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Data de publicação:</TD>
+  '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Data de publicaÃ§Ã£o:</TD>
        <TD valign=top ><font face=arial size=2>',,v362^a/ '</td>' 
 fi, 
 if p(v310) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Frequência:</TD>
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>FrequÃªncia:</TD>
         <TD valign=top ><font face=arial size=2>',,v310^a , '</td>',/
 fi, 
 (if p(v440) or p(v490) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Informações de série:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>InformaÃ§Ãµes de sÃ©rie:</TD>
             <TD valign=top ><font face=arial size=2>',
     fi,v440^a,| |v440^n,| |v440^p,| |v440^v,| |v440^x,v490^a,| |v490^n,| |v490^p,| |v490^v,| |v490^x,,'<BR>'/
 fi/) 
@@ -109,7 +109,7 @@ fi/)
     fi, 
 (if p(v856) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Localização eletrônica:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>LocalizaÃ§Ã£o eletrÃ´nica:</TD>
             <TD valign=top ><font face=arial size=2>' 
     fi,v856^u, |, Nota: |v856^z,,'<BR>'/
 fi/),  
@@ -133,7 +133,7 @@ fi/),
     fi,  
 (if p(v505) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Conteúdo:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>ConteÃºdo:</TD>
             <TD valign=top ><font face=arial size=2>' 
     fi,,v505^a+|;  | ,'<BR>'/
 fi/), 
@@ -149,7 +149,7 @@ fi/),
     fi,  
 (if p(v521) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Público alvo:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>PÃºblico alvo:</TD>
             <TD valign=top ><font face=arial size=2>' 
     fi,,v521^a+|;  | ,'<BR>'/
 fi/),
@@ -157,7 +157,7 @@ fi/),
     fi,  
 (if p(v533) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Reprodução:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>ReproduÃ§Ã£o:</TD>
             <TD valign=top ><font face=arial size=2>',
     fi,,v533^a| |, v533^c| |,       v533^b| |, v533^d| |, v533^e| |, v533^f| |, v533^m| |, v533^n| |,'<BR>'/
 fi/),
@@ -165,7 +165,7 @@ fi/),
     fi,  
 (if p(v534) then  
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Versão original:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>VersÃ£o original:</TD>
             <TD valign=top ><font face=arial size=2>',
     fi,,v534^a| |, v534^t| |,      v534^b| |,v534^d| |, v534^c| |, v534^e| |, v534^p| |,,'<BR>'/
 fi/),
@@ -199,7 +199,7 @@ fi/),
     if occ=1 then 
        '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>ISBN:</TD>
             <TD valign=top ><font face=arial size=2>',
-    fi,,v20^a, v20^c| |, |  |v20^z| ISBN inválido|, ,'<BR>'/
+    fi,,v20^a, v20^c| |, |  |v20^z| ISBN invÃ¡lido|, ,'<BR>'/
 fi/), 
     if p(v20) then '</td>' 
     fi,  
@@ -231,7 +231,7 @@ fi/),
             if v24*0.1='7' then 'XXX:</TD>
                <TD valign=top ><font face=arial size=2>',
             fi,     
-            if v24*0.1='8' then 'Códico não especificado:</TD>
+            if v24*0.1='8' then 'CÃ³dico nÃ£o especificado:</TD>
                <TD valign=top ><font face=arial size=2>',
             fi ,v24^a| |, v24^c| |, v24^d| |, v24^z| | ,'<BR>'/
 fi/), 
@@ -239,26 +239,26 @@ fi/),
    fi,  
 (if p(v28) then  
     if occ=1 then ,
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Número do editor',/
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>NÃºmero do editor',/
     fi    
     if v28*0.1='0' then 
-       '     Número da edição:</TD>
+       '     NÃºmero da ediÃ§Ã£o:</TD>
       <TD valign=top ><font face=arial size=2>',
     fi,     
     if v28*0.1='1' then 
-       '  Número da matriz:</TD>
+       '  NÃºmero da matriz:</TD>
        <TD valign=top ><font face=arial size=2>',
     fi,     
-    if v28*0.1='2' then '  Número da placa:</TD>
+    if v28*0.1='2' then '  NÃºmero da placa:</TD>
        <TD valign=top ><font face=arial size=2>',
     fi,     
-    if v28*0.1='3' then ' Outro nº da músicaTD>
+    if v28*0.1='3' then ' Outro nÂº da mÃºsicaTD>
        <TD valign=top ><font face=arial size=2>',
     fi,     
-    if v28*0.1='4' then ' Gravação de vídeo:</TD>
+    if v28*0.1='4' then ' GravaÃ§Ã£o de vÃ­deo:</TD>
        <TD valign=top ><font face=arial size=2>',
     fi,     
-    if v28*0.1='5' then '   Outro nº do editor:</TD>
+    if v28*0.1='5' then '   Outro nÂº do editor:</TD>
        <TD valign=top ><font face=arial size=2>',
     fi,v28^a, |, |v28^b, ,'<BR>'/
 fi/) , 
@@ -286,31 +286,31 @@ if s(v600,v610,v611,v630,v650,v651,v653,v655)<>'' then
    fi/),   
    (if p(v630) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>      Título uniforme:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>      TÃ­tulo uniforme:</TD>
                <TD valign=top ><font face=arial size=2>' 
        fi,v630^a,| |v630^n,| |v630^p,| -- |v630^x,| -- |v630^z,| -- |v630^y,| -- |v630^v,'<BR>'/
    fi/)   
    (if p(v650) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>         Termo tópico:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>         Termo tÃ³pico:</TD>
                <TD valign=top ><font face=arial size=2>' 
        fi,v650^a,| |v650^e,| -- |v650^x,| -- |v650^z,| -- |v650^y,| -- |v650^v,/
    fi)   
    (if p(v651) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>       Nome geográfico:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>       Nome geogrÃ¡fico:</TD>
                <TD valign=top ><font face=arial size=2>' 
        fi,v651^a,| -- |v651^x,| -- |v651^z,| -- |v651^y,| -- |v651^v,/
    fi)   
    (if p(v653) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Termo índice (não controlado):</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Termo Ã­ndice (nÃ£o controlado):</TD>
                <TD valign=top ><font face=arial size=2>',
        fi,v653^a,/
    fi)   
    (if p(v655) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>  Termo gênero/forma:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>  Termo gÃªnero/forma:</TD>
                <TD valign=top ><font face=arial size=2>' 
        fi,v655^a,| -- |v655^x,| -- |v655^z,| -- |v655^y,| -- |v655^v,| (|v655^v|)|,/
    fi),
@@ -318,7 +318,7 @@ fi/,
    if s(v600,v610,v611,v630,v650,v651,v653,v655)<>'' then '</td>' 
    fi, 
 if s(v700,v710,v711,v720)<>'' then ,
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><u>Entrada(s) secunária(s):</u></TD>
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><u>Entrada(s) secunÃ¡ria(s):</u></TD>
         <TD valign=top ><font face=arial size=2>', /    
    (if p(v700) then 
        if occ=1 then 

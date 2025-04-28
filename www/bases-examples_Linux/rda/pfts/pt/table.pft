@@ -4,6 +4,25 @@
 'tr th.title+td { padding: 8px; width: 600px; background: white; font-size: 13px;}'
 '</style>'
 
+if npost(['copies'],'CN_'v5001'_'v1)>0 then
+  '<p><dd><dd><dd>
+  <table>
+    <tr>
+      <td colspan=6 bgcolor=#ffffff><b>Total de exemplares</b>:'                
+          f(npost(['copies'],'CN_'v5001'_'v1),1,0)
+     '</td>
+    </tr>
+    <tr>
+        <th>Controle</th>
+        <th>Tombo</th>
+        <th>Situação</th>
+        <th>No. cópias</th>
+        <th>Disponibilidade</th>'/   
+       /'$$REF:copies,inven,CN_'v5001'_'v1/
+     '</tr>
+  </table>'
+fi,
+
 
 '<table border=0>'
 '<tbody style="font-family:arial;font-size:smaller;vertical-align:top" >'
