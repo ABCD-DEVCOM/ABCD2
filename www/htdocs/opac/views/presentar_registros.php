@@ -145,7 +145,7 @@ if ((!isset($opac_gdef['downloadButton'])) or ($opac_gdef['downloadButton']==="Y
 
 $i=1;	
 $ff_pft="'
-<div class=\"card overflow-auto bg-white my-2\" id=\"".$base."'mfn'\">
+<div class=\"card overflow-auto bg-white my-2\" id=\"".$base. "'mfn'\">
   <div class=\"card-body\">
     <div class=\"card-title\">
 		<div class=\"d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center\">
@@ -153,7 +153,16 @@ $ff_pft="'
         	<input class=\"form-check-input\" type=\"checkbox\" name=\"c_=',mstname,'_='f(mfn,1,0)'\" id=\"c_='mstname'_='f(mfn,1,0)'\"  onclick=\"javascript:Seleccionar(this)\">
         	<label class=\"text-muted\"><small>Selecionar 'mfn(0)'</small></label>
 		</div>
-    <div class=\"btn-group\">
+
+<div class=\"btn-group d-block d-md-none\">
+  <button type=\"button\" class=\"btn btn-primary dropdown-toggle\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
+    <i class=\"fa fa-plus\"></i> 
+  </button>
+  <ul class=\"dropdown-menu\">
+ 		" . $AllButtons . "
+  </ul>
+</div>
+    <div class=\"btn-group d-none d-md-block\">
         ".$AllButtons."
     </div>
   </div>
