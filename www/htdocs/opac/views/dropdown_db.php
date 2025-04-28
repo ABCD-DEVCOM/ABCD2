@@ -55,8 +55,8 @@ if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
 							else
 								$cipar="";
 							echo "<li>";
-							echo "<a class='dropdown-item' href='javascript:BuscarIntegrada(\"$key\",\"1B\",\"free\",\"\",\"$colec\",\"\",\"\",\"\",\"\",\"\")'>";
-							//echo "<a href=\"buscar_integrada.php?base=".$key."&cipar=".$key.$cipar."&coleccion=".$colec."&Opcion=free\">";
+							//echo "<a class='dropdown-item' href='javascript:BuscarIntegrada(\"$key\",\"1B\",\"free\",\"\",\"$colec\",\"\",\"\",\"\",\"\",\"\")'>";
+							echo "<a href=\"buscar_integrada.php?base=".$key."&cipar=".$key.$cipar."&coleccion=".$colec."&Opcion=free\">";
 			          		echo $v[1]."</a></li>\n";
 	          			}else{
 		          				//echo "<li>".$v[1]."</i></label></a></li>\n";

@@ -9,124 +9,104 @@ function facetas()
     include("includes/leer_bases.php");
 
     if (isset($facetas) and $facetas == "S") {
-        $archivo = "";
 
-
-        if ( (isset($_REQUEST['base'])) &&  ($_REQUEST['base']!="") ) {
-        $db_facetas = $db_path . $_REQUEST['base'] . "/opac/" . $_REQUEST["lang"] . "/" . $_REQUEST['base'] . "_facetas.dat";
-        $bd_orig = $_REQUEST['base'];
-    }else {
-        $db_facetas="";
-        $bd_orig= $bd_list[$v[0]]["nombre"];
-    }
-
-
-        if ((file_exists($db_facetas)) && (isset($_REQUEST['base']))) {
-            $archivo = $db_facetas;
+        if (isset($_REQUEST['base']) && $_REQUEST['base'] != "") {
+            $bases_para_processar = [$_REQUEST['base']];
         } else {
-            if (file_exists($db_path . "opac_conf/" . $_REQUEST["lang"] . "/facetas.dat")) {
-                $archivo = $db_path . "opac_conf/" . $_REQUEST["lang"] . "/" . "facetas.dat";
-            }
+            $bases_para_processar = array_keys($bd_list);
         }
-    }
 
+        // Build the expression only once for all facets
+        $expresionOriginal = construir_expresion();
+        $expresionSemAcento = removeacentos($expresionOriginal);
+        $expresionClean = str_replace(['(', ')', '+and+'], ['', '', ') and ('], $expresionSemAcento);
 
-    $conteudo = file($archivo, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($bases_para_processar as $base_atual) {
+            $db_facetas = $db_path . $base_atual . "/opac/" . $_REQUEST["lang"] . "/" . $base_atual . "_facetas.dat";
 
-    foreach ($conteudo as $linha) {
-        list($cabecalho, $formato, $pref) = explode("|", $linha);
+            if (!file_exists($db_facetas)) {
+                continue;
+            }
 
-        // Gera o cabeçalho <h4>
-        echo "<div class='faceta-box'>";
-        echo "<hr><h6>" . trim($cabecalho) . "</h6>";
+            $conteudo = file($db_facetas, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-        $bd_ref = $bd_orig;
+            if (empty($conteudo)) {
+                continue;
+            }
 
-        $arrHttp["base"] = $bd_ref;
-        $arrHttp["cipar"] = $bd_ref . ".par";
+            echo "<h5 class='mt-4 mb-3 border-bottom pb-2'>" . $bd_list[$base_atual]['descripcion'] . "</h5>";
 
-        $expresion = construir_expresion();
-        $expresion = removeacentos($expresion);
+            foreach ($conteudo as $linha) {
+                list($cabecalho, $formato, $pref, $ordem) = array_pad(explode("|", $linha), 4, 'Q');
 
-        //ECHO $expresion;
+                $arrHttp["base"] = $base_atual;
+                $arrHttp["cipar"] = $base_atual . ".par";
+                $arrHttp["Opcion"] = "buscar";
+                $Formato = trim($formato);
 
-        $arrHttp["Opcion"] = "buscar";
-        $Formato = trim($formato);
+                $query_param = "&cipar=" . $db_path . "par/" . $arrHttp["cipar"];
+                $query_param .= "&Expresion=" . $expresionOriginal;
+                $query_param .= "&Opcion=" . $arrHttp["Opcion"];
+                $query_param .= "&base=" . $base_atual;
+                $query_param .= "&from=1";
+                $query_param .= "&Formato=" . $Formato;
 
-        $query_param = "&cipar=" . $db_path . "par/" . $arrHttp["cipar"];
-        //$query_param.="&prefijo=".$prefixo;
-        $query_param .= "&Expresion=" . $expresion;
-        $query_param .= "&Opcion=" . $arrHttp["Opcion"];
-        $query_param .= "&base=" . $arrHttp["base"];
-        $query_param .= "&from=1";
-        $query_param .= "&Formato=" . $Formato;
+                $IsisScript = $xWxis . "opac/facetas.xis";
+                $query = $query_param;
 
-        $query = $query_param;
+                include($ABCD_scripts_path . "central/common/wxis_llamar.php");
 
+                $ocorrencias = [];
 
-        $IsisScript = $xWxis . "opac/facetas.xis";
+                foreach ($contenido as $value) {
+                    $value_tratado = trim($value);
+                    if (!empty($value_tratado)) {
+                        $ocorrencias[$value_tratado] = ($ocorrencias[$value_tratado] ?? 0) + 1;
+                    }
+                }
 
-        include($ABCD_scripts_path . "central/common/wxis_llamar.php");
+                if (!empty($ocorrencias)) {
+                    if (strtoupper(trim($ordem)) === 'A') {
+                        ksort($ocorrencias);
+                    } else {
+                        arsort($ocorrencias);
+                    }
 
-        $ocurrencias = [];
+                    echo "<div class='faceta-box mt-3'>";
+                    echo "<h6 class='text-primary mb-2'>" . trim($cabecalho) . "</h6>";
+                    echo '<ul class="list-group shadow-sm border rounded" style="max-height: 300px; overflow-y: auto; scrollbar-width: thin;">';
 
-        foreach ($contenido as $value) {
-            $value_tratado = trim($value); // Remove espaços em branco do início e do fim
+                    foreach ($ocorrencias as $termo => $quantidade) {
+                        $faceta_atual = removeacentos($pref . $termo);
 
-            if (!empty($value_tratado)) { // Verifica se o valor não está vazio após o tratamento
-                if (isset($ocurrencias[$value_tratado])) {
-                    $ocurrencias[$value_tratado]++;
-                } else {
-                    $ocurrencias[$value_tratado] = 1;
+                        $negrito = '';
+                        if (stripos($expresionClean, $faceta_atual) !== false) {
+                            $negrito = 'font-weight: bold;';
+                        }
+
+                        echo '<li class="list-group-item py-1 px-2 d-flex justify-content-between align-items-center" style="border: none; border-bottom: 1px solid #eee;">';
+                        echo '<a href="javascript:RefinF(\'' . $faceta_atual . '\', \'' . $expresionClean . '\',\'' . $base_atual . '\')" style="text-decoration: none; color: inherit; ' . $negrito . '">';
+                        echo '<span class="text-secondary" style="font-size: 1rem;">➕</span> ' . htmlspecialchars($termo) . ' (' . $quantidade . ')';
+                        echo '</a>';
+                        echo '</li>';
+                    }
+
+                    echo '</ul>';
+                    echo "</div>";
                 }
             }
         }
-
-        arsort($ocurrencias);
-        echo '<ul class="list-group">';
-
-
-
-        foreach ($ocurrencias as $termo => $quantidade) {
-
-
-            $expresion = str_replace('(', '', $expresion);
-            $expresion = str_replace(')', '', $expresion);
-            $expresion = str_replace('+and+', ') and (', $expresion);
-            //$expresion = str_replace(' ', '+', $expresion);
-
-            //$faceta_atual = str_replace(' ', '+', $pref . $termo);
-            $faceta_atual = $pref . $termo;
-            $faceta_atual = removeacentos($faceta_atual);
-
-            // Determinar se o link da faceta deve ser negrito
-            $negrito = '';
-            if (strpos($expresion, $faceta_atual) !== false) {
-                $negrito = 'style="font-weight: bold;"';
-            }
-
-
-            echo '<li class="list-group-item">
-                <label>
-                    <a href="javascript:RefinF(\'' . $faceta_atual . '\', \'' . $expresion . '\')" ' . $negrito . '>+ ' . $termo . " (" . $quantidade . ")</a>
-                </label>
-              </li>";
-        }
-        echo '</ul>';
-        echo "</div>";
     }
 }
 
-
 if (function_exists('PresentarExpresion')) {
-    $resultado = PresentarExpresion($base); // Chama a função se ela existir
+    $resultado = PresentarExpresion($base);
 
 ?>
-    <h5><?php echo $msgstr["front_su_consulta"]; ?>:</h5>
+    <h5 class="mt-4"><?php echo $msgstr["front_su_consulta"]; ?>:</h5>
     <div id="termosAtivos" class="mb-3" data-link-inicial="<?php echo htmlspecialchars($link_logo); ?>">
         <?php
         $expOriginal = $resultado;
-        //$expOriginal = isset($_REQUEST['Expresion']) ? $_REQUEST['Expresion'] : '';
         $expFormatada = str_replace('"', '', $expOriginal);
         $termos = preg_split('/\s+and\s+/i', $expFormatada);
 
@@ -138,25 +118,18 @@ if (function_exists('PresentarExpresion')) {
         }
         ?>
     </div>
-    <br>
 
-    <button type="button" class="btn btn-outline-danger mt-3 ml-2" onclick="clearAndRedirect('<?php echo $link_logo; ?>')">Limpar Pesquisa</button>
+    <button type="button" class="btn btn-danger mt-3 mb-3" onclick="clearAndRedirect('<?php echo $link_logo; ?>')"><?php echo $msgstr['clean_search'] ?></button>
 
-
-
-    <h4 class="mt-4">Refinar sua busca</h4>
+    <h4 class="mt-4"><?php echo $msgstr['front_afinar'] ?></h4>
     <form id="facetasForm" method="GET" class="form-inline mt-3 mb-3" onsubmit="event.preventDefault(); processarTermosLivres();">
         <input type="hidden" name="page" value="startsearch">
-
-
         <?php $expresion = construir_expresion(); ?>
-
         <input type="hidden" name="Expresion" id="Expresion" value="<?php echo htmlspecialchars($expresion); ?>">
-
         <input type="hidden" name="Opcion" value="directa">
         <?php if (isset($_REQUEST['base'])) { ?>
-            <input type="hidden" name="base" value="<?php echo $_REQUEST['base']; ?>">
-         <?php } ?>
+            <input type="hidden" name="base" id="base" value="<?php echo $_REQUEST['base']; ?>">
+        <?php } ?>
         <input type="hidden" name="lang" value="<?php echo $_REQUEST['lang']; ?>">
         <?php if (isset($_REQUEST['indice_base'])) { ?>
             <input type="hidden" name="indice_base" value="<?php echo $_REQUEST['indice_base']; ?>">
@@ -164,18 +137,16 @@ if (function_exists('PresentarExpresion')) {
         <input type="hidden" name="modo" value="1B">
         <input type="hidden" name="resaltar" value="S">
 
-        <div class="form-group mr-2 mb-3">
-            <label for="termosLivres" class="mr-2">Termos livres:</label>
-            <input type="text" class="form-control" name="termosLivres" id="termosLivres" placeholder="Digite termos separados por espaço">
+        <div class="form-group mr-2 mb-2">
+            <label for="termosLivres" class="mr-2"><?php echo $msgstr['free_terms'] ?></label>
+            <input type="text" class="form-control" name="termosLivres" id="termo-busca" placeholder="<?php echo $msgstr['type_terms'] ?>">
         </div>
-        <button type="submit" class="btn btn-primary">Adicionar à busca</button>
+        <button type="submit" class="btn btn-primary"><?php echo $msgstr['add_terms'] ?></button>
     </form>
 
 <?php
     facetas();
 } else {
     echo "";
-    // Ou então, logar o erro, lançar uma exceção, etc.
 }
-
 ?>

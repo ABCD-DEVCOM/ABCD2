@@ -1,5 +1,17 @@
 # O que há de novo?
 
+## Opac – v1.1.3-beta (2025-04-28)
+
+O OPAC agora conta com o prático sistema de autocompletar no formulário de pesquisa. Aos poucos os formulários de pesquisas rebuscados serão substituídos por modelos mais dinâmicos. O autocompletar do ABCD utiliza o formato json, mas não hpa necessidade de geração de arquivo .json. A geração do json acontece no script http://localhost:9090/opac/json.php?letra=A sendo o parâmetro "letra" determinante para a construção dos termos.
+
+Nesta versão, além do autocompletar utilizando todas as bases de dados disponíveis, ainda foram corrigidas as facetas para funcionar com todas as bases de dados.
+
+As facetas também ganham mais um parâmetro. Agora na quarta coluna podemos definir a forma de ordenação das facetas. Se "A" a ordenação contece em ordem alfabética, se "Q" a ordenação acontece de acordo com a quantidade de termos.
+
+As imagens também ganharam um tratamento melhor. O script "show_image.php", utilizado para renderizar imagens do repositório, conta agora com uma marca d'água fixa com a URL da instalação, data e hora para resguardar copias indevidas do acervo.
+
+
+
 ## Opac – v1.1.2-beta (2025-04-24)
 
 Nesta versão foi feita uma mudança radical nas Facetas e consequentemente no fluxo de pesquisa. O arquivo das facetas geral continua no diretório *bases/opac_conf/pt/facetas.dat*.

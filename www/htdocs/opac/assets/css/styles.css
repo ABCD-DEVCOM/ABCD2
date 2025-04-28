@@ -88,22 +88,71 @@ button.termo {
     text-transform: lowercase;
 }
 
-<style>.faceta-box {
-    margin: 1em 0;
-    padding: 1em;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
 
-.faceta-box h6 {
-    margin-bottom: 0.5em;
-}
+/* Ajustes gerais para mobile */
+@media (max-width: 768px) {
+  .container, .card, .table-responsive {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .card, .table {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  /* Botões mais compactos */
+  .btn, button {
+    padding: 4px 8px; /* Menor altura e largura */
+    font-size: 0.8rem; /* Texto menor */
+  }
 
-.faceta-box ul {
-    list-style: none;
-    padding-left: 0;
-}
+  /* Ícones dentro dos botões */
+  .btn i {
+    font-size: 1rem; /* Ícones proporcionais */
+  }
 
+  /* Tabela ajustando para não quebrar */
+  .table td, .table th {
+    white-space: normal; /* Quebra o texto dentro das células */
+    word-break: break-word; /* Separa palavras longas */
+  }
+    th {
+        width: 50px;
+        font-size: 14px;
+        word-break: break-word;
+    }
+    td {
+        width: 180px;
+        font-size: 14px;
+        word-break: break-word;
+    }
 
+    table.responsive-stack {
+      width: 100%;
+    }
 
-</style>
+    table.responsive-stack thead {
+      display: none;
+    }
+
+    table.responsive-stack tr {
+      display: block;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.responsive-stack td {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+
+    table.responsive-stack td::before {
+      content: attr(data-label);
+      border-bottom: none;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #555;
+    }
+  }

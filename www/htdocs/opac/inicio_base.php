@@ -1,8 +1,10 @@
 <?php
 include("../central/config_opac.php");
+
+$inicio_base = "Y";
+
 include("head.php");
-//echo "<div style=\"margin:0 auto;height:100%\">";
-//foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
+
 if (isset($_REQUEST["home"])){
 	if (substr($_REQUEST["home"],0,6)=="[LINK]"){
 		echo "<iframe frameborder=\"0\" id=idf width=100% height=2000   src=".substr($_REQUEST["home"],6)."></iframe>";
@@ -17,7 +19,6 @@ if (isset($_REQUEST["home"])){
     }
 
 }
-//echo "</div>";
 
 include("views/footer.php");
 ?>

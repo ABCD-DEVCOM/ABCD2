@@ -1,5 +1,17 @@
 # What's new?
 
+## Opac - v1.1.3-beta (2025-04-28)
+
+OPAC now has a practical autocomplete system in the survey form. Little by little, the elaborate survey forms will be replaced by more dynamic models. The ABCD autocomplete uses the json format, but there is no need to generate a .json file. The json is generated in the http://localhost:9090/opac/json.php?letra=A script, with the "letra" parameter determining the construction of the terms.
+
+In this version, in addition to autocomplete using all available databases, the facets have also been corrected to work with all databases.
+
+The facets have also gained another parameter. Now in the fourth column we can define how the facets are sorted. If 'A', the sorting takes place in alphabetical order, if 'Q', the sorting takes place according to the number of terms.
+
+Images have also been given a better treatment. The ‘show_image.php’ script, used to render images from the repository, now has a fixed watermark with the installation URL, date and time to safeguard against improper copying of the collection.
+
+
+
 ## Opac - v1.1.2-beta (2025-04-24)
 
 In this version, a radical change has been made to the Facets and consequently to the search flow. The general facets file is still in the *bases/opac_conf/en/facetas.dat* directory.

@@ -119,6 +119,14 @@ if ($Expresion=="") {
 	$_REQUEST["Expresion"]=$Expresion;
 }
 
+if (isset($_GET['Expresion']) && trim($_GET['Expresion']) != "") {
+	registrar_log_busca($_GET['Expresion']);
+} 
+
+if (isset($_GET['Sub_Expresion']) && trim($_GET['Sub_Expresion']) != "") {
+	registrar_log_busca($_GET['Sub_Expresion']);
+} 
+
 if (isset($_REQUEST["prefijo"]) or $_REQUEST["Opcion"]=="detalle") {
 	$formula=explode('$#$',$Expresion);
 	if ((strpos($formula[0],"(")!==false or strpos($formula[0],")" )!==false or strpos($formula[0],"'" )!==false ) and strpos($formula[0],'"')===false)
