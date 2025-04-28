@@ -167,12 +167,12 @@ S||Local de publicação, distribuição, etc.|0|1|a||X|||D||PA_|v260^a|v260^a||0||1
 S||Editora|0|1|b||X|||D||ED_|v260^b|v260^b||0||1|0|||
 S||Data|0|1|c||X|||||||||0||1|0|||
 H||25X-28X - Edição, Impressão, Etc. Campos - Informações Gerais|0|0||||||||||||0||1|0|||
-T|264|Produção, Publicação, Distribuição, Fabricação e Aviso de Direitos Autorais|0|0|¹²abi||X|||||||||0||1|0|||
+T|264|Produção, Publicação, Distribuição, Fabricação e Aviso de Direitos Autorais|0|0|¹²abc||X|||||||||0||1|0|||
 S||Indicador 1|0|0|¹||S||1|P|264-ind1.tab|||||0||1|0|||
 S||Indicador 2|0|0|²||S||1|P|264-ind2.tab|||||0||1|0|||
 S||Local de produção, publicação, distribuição, fabricação|0|0|a||X|||||||||0||1|0|||
 S||Nome do produtor, editor, distribuidor, fabricante|0|0|b||X|||||||||0||1|0|||
-S||Data de produção, publicação, distribuição, fabricação ou aviso de direitos autorais|0|0|i||X|||||||||0||1|0|||
+S||Data de produção, publicação, distribuição, fabricação ou aviso de direitos autorais|0|0|c||X|||||||||0||1|0|||
 H||3XX: Campos de descrição física, etc.|0|0||||||||||||0||1|0|||
 T|300|Descrição física|0|1|¹²abce||X||100|||||||1||1|0|||
 S||Indicador 1|0|0|¹||X||1|P|Ind-b.tab|||||0||1|0|||
@@ -238,8 +238,8 @@ S||Configuração de fita|0|0|f||X|||||||||0||1|0|||
 S||Fonte|0|0|2||X|||||||||0||1|0|||
 T|345|Características da Imagem em Movimento|0|1|¹²ab2||X|||||||||0||1|0|||
 S||Formato de apresentação|0|0|a||X|||||||||0||1|0|||
-S||Indicador 1|0|0|¹||S||1|P|344-ind1.tab|||||0||0|0|||
-S||Indicador 2|0|0|²||S||1|P|344-ind2.tab|||||0||0|0|||
+S||Indicador 1|0|0|¹||S||1|P|344-ind1.tab|||||0||1|0|||
+S||Indicador 2|0|0|²||S||1|P|344-ind2.tab|||||0||1|0|||
 S||Velocidade de projeção|0|0|b||X|||||||||0||1|0|||
 S||Fonte|0|0|2||X|||||||||0||1|0|||
 T|346|Características do Vídeo|0|0|¹²ab2||X|||||||||0||1|0|||
@@ -249,8 +249,8 @@ S||Formato de vídeo|0|0|a||X|||||||||0||1|0|||
 S||Padrão de transmissão|0|0|b||X|||||||||0||1|0|||
 S||Fonte|0|0|2||X|||||||||0||1|0|||
 T|347|Características do arquivo digital|0|0|¹²abcde2||X|||||||||0||1|0|||
-S||Indicador 1|0|0|¹||S||1|P|344-ind1.tab|||||0||0|0|||
-S||Indicador 2|0|0|²||S||1|P|344-ind2.tab|||||0||0|0|||
+S||Indicador 1|0|0|¹||S||1|P|344-ind1.tab|||||0||1|0|||
+S||Indicador 2|0|0|²||S||1|P|344-ind2.tab|||||0||1|0|||
 S||Tipo de arquivo|0|0|a||X|||||||||0||1|0|||
 S||Formato de codificação|0|0|b||X|||||||||0||1|0|||
 S||Tamanho do arquivo|0|0|c||X|||||||||0||1|0|||
@@ -315,10 +315,11 @@ T|516|Tipo de arquivo de computador ou dado|0|1|¹²a||X|2|100|||||||1||1|0|||
 S||Indicador 1|0|0|¹||X||1|P|516-ind1.tab|||||0||1|0|||
 S||Indicador 2|0|0|²||X||1|P|516-ind2.tab|||||0||1|0|||
 S||Tipo de arquivo ou dado|0|0|a||X|||||||||0||1|0|||
-T|520|Nota de Resumo|0|1|¹²a||X|5|100|||||||1||1|0|||
+T|520|Resumo, etc.|0|1|¹²a2||X|5|100|||||||1||1|0|||
 S||Indicador 1|0|0|¹||X||1|P|520-ind1.tab|||||0||1|0|||
 S||Indicador 2|0|0|²||X||1|P|520-ind2.tab|||||0||1|0|||
 S||Resumo|0|0|a||X|||||||||0||1|0|||
+S||Fonte|0|0|2||X|||||||||0||1|0|||
 T|521|Público-alvo|0|1|¹²a||X|2|100|||||||1||1|0|||
 S||Indicador 1|0|0|¹||X||1|P|521-ind1.tab|||||0||1|0|||
 S||Indicador 2|0|0|²||X||1|P|521-ind2.tab|||||0||1|0|||

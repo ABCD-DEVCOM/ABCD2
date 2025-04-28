@@ -1,6 +1,7 @@
 1 0 "CN_"v1 
 50 5 '/CL_/',"v50^a,|.|v50^b, 
-20 5 '/IS_/',(v20^a/),(v22^a/) 
+20 0 mpu,(|IS_|v20^a|%|/)
+22 0 mpu,(|IS_|v22^a|%|/)
 82 5 '/CL_/',(v82^a/) 
 100 5 '/AU_/',(v100^a/),(v700^a/), if a(v100) then (replace(v245^c,'by ', ' ')) fi   /*is this correct ? e.g. Cuba : put other authors in v245^c and 1st author in v100 ???) */, (v110^a/)
 100 8 '/AU_/',(v100^a/),(v700^a/), if a(v100) then (replace(v245^c,'by ', ' ')) fi   /*is this correct ? e.g. Cuba : put other authors in v245^c and 1st author in v100 ???) */, (v110^a/)
@@ -10,8 +11,12 @@
 111 8 '/CM_/',(v111^a/),(v711^a/)
 245 5 '/TI_/',(v240^a/),(v242^a/),(v245^a/),(v773^t/),(v740^a/) 
 245 8 '/TW_/',(v240^a/),(v242^a/),(v245^a/),(v245^b|%|/),(v773^t/),(v740^a/) 
-260 5 '|PU_|',(v260^b/), 
-260 8 '|PU_|',(v260^b/), 
+264 0 mpu,(|PA_|v264^a|%|/) 
+264 0 mpu,(|PU_|v264^b|%|/) 
+264 0 mpu,(|DT_|v264^c|%|/) 
+260 0 mpu,(|PA_|v260^a|%|/) 
+260 0 mpu,(|PU_|v260^b|%|/) 
+260 0 mpu,(|DT_|v260^c|%|/) 
 260 5 '|PD_|',(v260^c/),(v8*7.4)
 490 5 '/ST_/',(v490^a/) 
 490 8 '/ST_/',(v490^a/)
@@ -45,4 +50,6 @@
 998 8 mpu,'|TW_|'(v600^a|%|/) 
 998 8 mpu,'|TW_|'(v610^a|%|/) 
 998 8 mpu,'|TW_|'(v700^a|%|/) 
-998 8 mpu,'|TW_|'(v710^a|%|/) 
+998 8 mpu,'|TW_|'(v710^a|%|/)
+980 0 mpu,(|OD_|v980^d.6|%|/) 
+980 0 mpu,(|OD_|v980^o|%|/) 

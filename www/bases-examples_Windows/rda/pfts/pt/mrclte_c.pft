@@ -1,18 +1,18 @@
 '<TABLE>
   <tr>
      <td class=textbody03 colspan=3>
-         <font size="1" face=verdana color=#666600 size=-1><b>MFN: ',f(mfn,1,0)'</a>',"† ("v1001"/"v1002")" 
-                ' - N∫ de controle: ',v1,'<br></b>
+         <font size="1" face=verdana color=#666600 size=-1><b>MFN: ',f(mfn,1,0)'</a>',"¬† ("v1001"/"v1002")" 
+                ' - N¬∫ de controle: ',v1,'<br></b>
      </td></font>
  </tr>'
  if p(v50) or p(v82) then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>N˙mero de chamada:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>N√∫mero de chamada:</TD>
             <TD valign=top ><font face=arial size=2>'
                 v50^a,"."v50^b,v82^a,"/"v82^b,"/"v82^2'<BR>
             </TD>'
  fi/  
  (if p(v60) then 
-    if occ=1 then '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>N∫ chmada NLM:</TD><TD valign=top ><font face=arial size=2>' 
+    if occ=1 then '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>N¬∫ chmada NLM:</TD><TD valign=top ><font face=arial size=2>' 
     fi,v60^a,"."v60^b,'<BR>'/
  fi/),"</TD>"D60 ,
  if s(v100,v110,V111)<>'' then 
@@ -23,14 +23,14 @@
     if s(v100,v110,V111)<>'' then '</td>' 
     fi/ 
  if p(v240) then 
-    '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÌtulo uniforme:</TD>
+    '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>T√≠tulo uniforme:</TD>
          <TD valign=top ><font face=arial size=2>'
              mdl,v240^a, v240^d, v240^f, v240^g, v240^h, v240^k, v240^l, v240^m, v240^n, v240^o, v240^p, v240^r, v240^s, mpl, 
          '</td>'/
  fi,  
 (if p(v210) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÌtulo abreviado:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>T√≠tulo abreviado:</TD>
             <TD valign=top ><font face=arial size=2>' 
     fi,v210^a,| (|v210^b|)| ,'<BR>'/
 fi/)
@@ -38,14 +38,14 @@ fi/)
     fi, 
 (if p(v222) then 
    if occ=1 then 
-      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÌtulo chave:</TD>
+      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>T√≠tulo chave:</TD>
            <TD valign=top ><font face=arial size=2>' 
    fi,v222^a,| (|v222^b|)| ,'<BR>'/
 fi/) 
    if p(v222) then '</td>' 
    fi, 
 if p(v245) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÌtulo:</TD>
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>T√≠tulo:</TD>
         <TD valign=top ><font face=arial size=2>',
             v245^a, | |v245^n, | |v245^p, | |v245^h, | |v245^b, | |v245^c,
        '</TD>
@@ -53,38 +53,38 @@ if p(v245) then
 fi/ 
 (if p(v246) then 
     '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>'     
-   if v246*1.1='0' or v246*1.1=' ' then 'Parte do tÌtulo:</TD>
+   if v246*1.1='0' or v246*1.1=' ' then 'Parte do t√≠tulo:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,      
-   if v246*1.1='1' then 'TÌtulo paralelo:</TD>
+   if v246*1.1='1' then 'T√≠tulo paralelo:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,      
-   if v246*1.1='2' then 'TÌtulo diferente:</TD>
+   if v246*1.1='2' then 'T√≠tulo diferente:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,      
-   if v246*1.1='3' then 'Outro tÌtulo:</TD>
+   if v246*1.1='3' then 'Outro t√≠tulo:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,      
-   if v246*1.1='4' then 'TÌtulo de capa:</TD>
+   if v246*1.1='4' then 'T√≠tulo de capa:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,      
-   if v246*1.1='5' then 'TÌtulo secund·rio:</TD>
+   if v246*1.1='5' then 'T√≠tulo secund√°rio:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,      
-   if v246*1.1='6' then 'TÌtulo legenda:</TD>
+   if v246*1.1='6' then 'T√≠tulo legenda:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,      
-   if v246*1.1='7' then 'TÌtulo corrente:</TD>
+   if v246*1.1='7' then 'T√≠tulo corrente:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,      
-   if v246*1.1='8' then 'TÌtulo de prateleira:</TD>
+   if v246*1.1='8' then 'T√≠tulo de prateleira:</TD>
       <TD valign=top ><font face=arial size=2>',
    fi,
           v246^i,| |v246^a,| |v246^n,| |v246^f,| |v246^p,| |v246^h,| |v246^b,| |v246^g, 
      '</TD><BR>'/
 fi/) 
 if p(v242) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÌtulo traduzido:</TD>
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>T√≠tulo traduzido:</TD>
         <TD valign=top ><font face=arial size=2>',     v242^a,| |v242^n, | |v242^p, | |v242^h, | |v242^b, | |v242^c,| (|v242^y|)| ,'</td>'/
 fi/ 
 if p(v773) then 
@@ -93,7 +93,7 @@ if p(v773) then
 fi/ 
 (if p(v730) then 
     if occ=1 then 
-      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÌtulo uniforme:</TD>
+      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>T√≠tulo uniforme:</TD>
            <TD valign=top ><font face=arial size=2>',
     fi,v730^a, | |v730^n, | |v730^p ,'<BR>'/
 fi/),
@@ -101,39 +101,39 @@ fi/),
     fi, 
 (if p(v740) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>TÌtulo relacionado:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>T√≠tulo relacionado:</TD>
         <TD valign=top ><font face=arial size=2>',
     fi,v740^a, ,'<BR>'/
 fi/) 
     if p(v740) then '</td>' 
     fi, 
 if p(v250) then 
-      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>EdiÁ„o:</TD>'
+      '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Edi√ß√£o:</TD>'
           '<TD valign=top ><font face=arial size=2>',v250^a+|  |,
           '</TD>
        </TR>'/
 fi/, 
 if p(v260) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>PublicaÁ„o:</TD>'
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Publica√ß√£o:</TD>'
        '<TD valign=top ><font face=arial size=2>',v260^a,| |v260^b,| |v260^c+|  |,
        '</TD>'/
 fi/, 
 if p(v300) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>DescriÁ„o:</td>'
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Descri√ß√£o:</td>'
        '<TD valign=top ><font face=arial size=2>',v300^a| |,v300^b| |,v300^c| |,v300^e| |,
        '</TD>'/
 fi/ 
 if p(v362) then 
-  '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Data de publicaÁ„o:</TD>
+  '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Data de publica√ß√£o:</TD>
        <TD valign=top ><font face=arial size=2>',,v362^a/ '</td>' 
 fi, 
 if p(v310) then 
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>FrequÍncia:</TD>
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Frequ√™ncia:</TD>
         <TD valign=top ><font face=arial size=2>',,v310^a , '</td>',/
 fi, 
 (if p(v440) or p(v490) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>InformaÁıes de sÈrie:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Informa√ß√µes de s√©rie:</TD>
             <TD valign=top ><font face=arial size=2>',
     fi,v440^a,| |v440^n,| |v440^p,| |v440^v,| |v440^x,v490^a,| |v490^n,| |v490^p,| |v490^v,| |v490^x,,'<BR>'/
 fi/) 
@@ -141,7 +141,7 @@ fi/)
     fi, 
 (if p(v856) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>LocalizaÁ„o eletrÙnica:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Localiza√ß√£o eletr√¥nica:</TD>
             <TD valign=top ><font face=arial size=2>' 
     fi,v856^u, |, Nota: |v856^z,,'<BR>'/
 fi/),  
@@ -165,7 +165,7 @@ fi/),
     fi,  
 (if p(v505) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Conte˙do:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Conte√∫do:</TD>
             <TD valign=top ><font face=arial size=2>' 
     fi,,v505^a+|;  | ,'<BR>'/
 fi/), 
@@ -181,7 +181,7 @@ fi/),
     fi,  
 (if p(v521) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>P˙blico alvo:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>P√∫blico alvo:</TD>
             <TD valign=top ><font face=arial size=2>' 
     fi,,v521^a+|;  | ,'<BR>'/
 fi/),
@@ -189,7 +189,7 @@ fi/),
     fi,  
 (if p(v533) then 
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>ReproduÁ„o:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Reprodu√ß√£o:</TD>
             <TD valign=top ><font face=arial size=2>',
     fi,,v533^a| |, v533^c| |,       v533^b| |, v533^d| |, v533^e| |, v533^f| |, v533^m| |, v533^n| |,'<BR>'/
 fi/),
@@ -197,7 +197,7 @@ fi/),
     fi,  
 (if p(v534) then  
     if occ=1 then 
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Vers„o original:</TD>
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Vers√£o original:</TD>
             <TD valign=top ><font face=arial size=2>',
     fi,,v534^a| |, v534^t| |,      v534^b| |,v534^d| |, v534^c| |, v534^e| |, v534^p| |,,'<BR>'/
 fi/),
@@ -231,7 +231,7 @@ fi/),
     if occ=1 then 
        '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>ISBN:</TD>
             <TD valign=top ><font face=arial size=2>',
-    fi,,v20^a, v20^c| |, |  |v20^z| ISBN inv·lido|, ,'<BR>'/
+    fi,,v20^a, v20^c| |, |  |v20^z| ISBN inv√°lido|, ,'<BR>'/
 fi/), 
     if p(v20) then '</td>' 
     fi,  
@@ -263,7 +263,7 @@ fi/),
             if v24*0.1='7' then 'XXX:</TD>
                <TD valign=top ><font face=arial size=2>',
             fi,     
-            if v24*0.1='8' then 'CÛdico n„o especificado:</TD>
+            if v24*0.1='8' then 'C√≥dico n√£o especificado:</TD>
                <TD valign=top ><font face=arial size=2>',
             fi ,v24^a| |, v24^c| |, v24^d| |, v24^z| | ,'<BR>'/
 fi/), 
@@ -271,26 +271,26 @@ fi/),
    fi,  
 (if p(v28) then  
     if occ=1 then ,
-       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>N˙mero do editor',/
+       '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>N√∫mero do editor',/
     fi    
     if v28*0.1='0' then 
-       '     N˙mero da ediÁ„o:</TD>
+       '     N√∫mero da edi√ß√£o:</TD>
       <TD valign=top ><font face=arial size=2>',
     fi,     
     if v28*0.1='1' then 
-       '  N˙mero da matriz:</TD>
+       '  N√∫mero da matriz:</TD>
        <TD valign=top ><font face=arial size=2>',
     fi,     
-    if v28*0.1='2' then '  N˙mero da placa:</TD>
+    if v28*0.1='2' then '  N√∫mero da placa:</TD>
        <TD valign=top ><font face=arial size=2>',
     fi,     
-    if v28*0.1='3' then ' Outro n∫ da m˙sicaTD>
+    if v28*0.1='3' then ' Outro n¬∫ da m√∫sicaTD>
        <TD valign=top ><font face=arial size=2>',
     fi,     
-    if v28*0.1='4' then ' GravaÁ„o de vÌdeo:</TD>
+    if v28*0.1='4' then ' Grava√ß√£o de v√≠deo:</TD>
        <TD valign=top ><font face=arial size=2>',
     fi,     
-    if v28*0.1='5' then '   Outro n∫ do editor:</TD>
+    if v28*0.1='5' then '   Outro n¬∫ do editor:</TD>
        <TD valign=top ><font face=arial size=2>',
     fi,v28^a, |, |v28^b, ,'<BR>'/
 fi/) , 
@@ -318,31 +318,31 @@ if s(v600,v610,v611,v630,v650,v651,v653,v655)<>'' then
    fi/),   
    (if p(v630) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>      TÌtulo uniforme:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>      T√≠tulo uniforme:</TD>
                <TD valign=top ><font face=arial size=2>' 
        fi,v630^a,| |v630^n,| |v630^p,| -- |v630^x,| -- |v630^z,| -- |v630^y,| -- |v630^v,'<BR>'/
    fi/)   
    (if p(v650) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>         Termo tÛpico:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>         Termo t√≥pico:</TD>
                <TD valign=top ><font face=arial size=2>' 
        fi,v650^a,| |v650^e,| -- |v650^x,| -- |v650^z,| -- |v650^y,| -- |v650^v,/
    fi)   
    (if p(v651) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>       Nome geogr·fico:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>       Nome geogr√°fico:</TD>
                <TD valign=top ><font face=arial size=2>' 
        fi,v651^a,| -- |v651^x,| -- |v651^z,| -- |v651^y,| -- |v651^v,/
    fi)   
    (if p(v653) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Termo Ìndice (n„o controlado):</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Termo √≠ndice (n√£o controlado):</TD>
                <TD valign=top ><font face=arial size=2>',
        fi,v653^a,/
    fi)   
    (if p(v655) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>  Termo gÍnero/forma:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>  Termo g√™nero/forma:</TD>
                <TD valign=top ><font face=arial size=2>' 
        fi,v655^a,| -- |v655^x,| -- |v655^z,| -- |v655^y,| -- |v655^v,| (|v655^v|)|,/
    fi),
@@ -350,7 +350,7 @@ fi/,
    if s(v600,v610,v611,v630,v650,v651,v653,v655)<>'' then '</td>' 
    fi, 
 if s(v700,v710,v711,v720)<>'' then ,
-   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><u>Entrada(s) secun·ria(s):</u></TD>
+   '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><u>Entrada(s) secun√°ria(s):</u></TD>
         <TD valign=top ><font face=arial size=2>', /    
    (if p(v700) then 
        if occ=1 then 
@@ -376,7 +376,7 @@ fi,
    if s(v700,v710,v711,v720)<>'' then ,'</td>' 
    fi,
 if s(v72,v80,v82,v43,v44,v45)<>'' then 
-   '<tr><TD valign=top  colspan=2><font face=arial size=2>InformaÁıes administrativas','  -  </td>',/ 
+   '<tr><TD valign=top  colspan=2><font face=arial size=2>Informa√ß√µes administrativas','  -  </td>',/ 
     (if p(v72) then 
        if occ=1 then 
           '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Categoria de assunto:</TD>
@@ -387,7 +387,7 @@ if s(v72,v80,v82,v43,v44,v45)<>'' then
        fi, 
    (if p(v80) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>ClassificaÁ„o CDU:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Classifica√ß√£o CDU:</TD>
                <TD valign=top ><font face=arial size=2>',
        fi,,v80^a, v80^b, v80^x,  | -- cdu |v80^2,
    fi/) 
@@ -395,7 +395,7 @@ if s(v72,v80,v82,v43,v44,v45)<>'' then
        fi,
    (if p(v82) then 
        if occ=1 then 
-          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>ClassificaÁ„o CDD:</TD>
+          '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Classifica√ß√£o CDD:</TD>
                <TD valign=top ><font face=arial size=2>',
        fi,v82^a, | -- dc |v82^2,
    fi/)
@@ -403,7 +403,7 @@ if s(v72,v80,v82,v43,v44,v45)<>'' then
        fi,
    (if p(v84) then 
       if occ=1 then 
-         '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Outra classificaÁ„o:</TD>
+         '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Outra classifica√ß√£o:</TD>
            <TD valign=top ><font face=arial size=2>',
       fi,v84^a,| |v84^b,|(|v84^2|)|,
    fi/)  /
@@ -411,7 +411,7 @@ if s(v72,v80,v82,v43,v44,v45)<>'' then
       fi,
     (if p(v43) then 
       if occ=1 then 
-         '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>¡rea geogr·fica:</TD>
+         '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>√Årea geogr√°fica:</TD>
            <TD valign=top ><font face=arial size=2>',
       fi,v43^a,
    fi/)  /
@@ -419,7 +419,7 @@ if s(v72,v80,v82,v43,v44,v45)<>'' then
       fi,
     (if p(v44) then 
       if occ=1 then 
-         '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>PaÌs:</TD>
+         '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Pa√≠s:</TD>
            <TD valign=top ><font face=arial size=2>',
       fi,v44^a,
    fi/)  /
@@ -427,7 +427,7 @@ if s(v72,v80,v82,v43,v44,v45)<>'' then
       fi,
     (if p(v45) then 
       if occ=1 then 
-         '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>PerÌodo cronolÛgica:</TD>
+         '<TR><TD valign=top  width="20%"  align=right><font face=arial size=2><b>Per√≠odo cronol√≥gica:</TD>
            <TD valign=top ><font face=arial size=2>',
       fi,v45^a,
    fi/)  /

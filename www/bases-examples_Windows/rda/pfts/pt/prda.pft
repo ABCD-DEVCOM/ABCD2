@@ -68,7 +68,7 @@ fi,fi,fi,/
 
 '</td><tr><td colspan=4><font size=2>
 <b>Existencias</b>: 
-(Cuando se indica <img src=img/delete.gif height=10 align=middle><font size=1> significa que el ejemplar no est· disponible</font>)'/
+(Cuando se indica <img src=img/delete.gif height=10 align=middle><font size=1> significa que el ejemplar no est√° disponible</font>)'/
 '$$EXISTENCIAS:'v990'$$'/
 
 '</td>'/

@@ -1,0 +1,73 @@
+'<style>
+  table.etiquetas {
+    border-collapse: collapse;
+    width: 220mm;
+    table-layout: fixed;
+  }
+
+  table.etiquetas td {
+    width: 101.6mm;
+    height: 25.4mm;
+    padding: 2mm;
+    box-sizing: border-box;
+    vertical-align: middle;
+    border: 1px dashed #ccc; /* Remova para impressão final */
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+  }
+
+  .conteudo-etiqueta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .conteudo-etiqueta img {
+    width: 50%;
+   /*max-width: 100mm;
+    height: 12mm;*/
+  }
+
+  .localizacao {
+    text-align: center;
+    font-weight: bold;
+    white-space: pre-line;
+    padding-left: 5px;
+    flex-grow: 1;
+  }
+
+  .barcode {
+    width: 55%;
+  }
+
+  .localizacao-area {
+    width: 65%;
+  }
+</style>
+
+<table class="etiquetas">
+  <tr>
+    <td>
+      <div class="conteudo-etiqueta">
+        <div class="barcode">
+          <img src="/barcode.php?f=svg&s=code-128&h=90&ts=20&th=19&pv=20&d='/'$$REF:copies,cnclean,CN_'v5001'_'v1/'" alt="Código de Barras">
+        </div>
+        <div class="localizacao-area">
+          <div class="localizacao">'v90[1]^a'<br>'v90[1]^b'<br>'v90[1]^c'</div>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="conteudo-etiqueta">
+        <div class="barcode">
+          <img src="/barcode.php?f=svg&s=code-128&h=90&ts=20&th=19&pv=20&d='/'$$REF:copies,cnclean,CN_'v5001'_'v1/'" alt="Código de Barras">
+        </div>
+        <div class="localizacao-area">
+          <div class="localizacao">'v90[1]^a'<br>'v90[1]^b'<br>'v90[1]^c'</div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+  <!-- Continue adicionando <tr>...</tr> para novas linhas com 3 etiquetas -->
+</table>'

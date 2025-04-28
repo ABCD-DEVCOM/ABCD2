@@ -5,3 +5,27 @@
 [06-Sep-2024 02:46:35 Europe/Berlin] PHP Warning:  Undefined array key "HTTP_ACCEPT_LANGUAGE" in C:\xampp\htdocs\ABCD2\www\htdocs\central\config_opac.php on line 33
 [06-Sep-2024 02:46:35 Europe/Berlin] PHP Deprecated:  substr(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\ABCD2\www\htdocs\central\config_opac.php on line 33
 [06-Sep-2024 02:46:35 Europe/Berlin] PHP Warning:  Undefined array key "front_dne" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\includes\leer_bases.php on line 21
+[28-Apr-2025 12:59:29 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 141
+[28-Apr-2025 12:59:29 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 142
+[28-Apr-2025 12:59:29 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 145
+[28-Apr-2025 12:59:32 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 141
+[28-Apr-2025 12:59:32 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 142
+[28-Apr-2025 12:59:32 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 145
+[28-Apr-2025 12:59:51 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 141
+[28-Apr-2025 12:59:51 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 142
+[28-Apr-2025 12:59:51 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 145
+[28-Apr-2025 13:00:11 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 141
+[28-Apr-2025 13:00:11 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 142
+[28-Apr-2025 13:00:11 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 145
+[28-Apr-2025 13:00:30 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 141
+[28-Apr-2025 13:00:30 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 142
+[28-Apr-2025 13:00:30 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 145
+[28-Apr-2025 13:04:28 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 141
+[28-Apr-2025 13:04:28 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 142
+[28-Apr-2025 13:04:28 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 145
+[28-Apr-2025 13:04:50 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 141
+[28-Apr-2025 13:04:50 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 142
+[28-Apr-2025 13:04:50 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 145
+[28-Apr-2025 13:05:49 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 141
+[28-Apr-2025 13:05:49 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 142
+[28-Apr-2025 13:05:49 Europe/Berlin] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\opac\components\search_free.php on line 145

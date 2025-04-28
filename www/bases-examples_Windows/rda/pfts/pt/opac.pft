@@ -1,113 +1,120 @@
-'<table border=0>'
+'<table class="table table-borderless">'
 '<tbody>'
 
-'<tr><th></th><td></td><td valign=top rowspan=100%>'if p(v20^a) then '<img src="https://covers.openlibrary.org/b/isbn/'v20^a'-M.jpg" />' fi '</td></tr>'
+(if p(v20^a) then '<tr><th></th><td></td><td valign=top rowspan=100%><img src="https://covers.openlibrary.org/b/isbn/'v20^a'-M.jpg" /></td></tr>' fi)
 
-if p(v5) then '<tr><th width=20%>Data da última modificação</th><td>'v5+|<br>|,'</td>' fi/
-if p(v10) then '<tr><th width=20%>Número de controle da LC</th><td>'(| |v10^a||, if iocc<>nocc(v10) and p(v10) then '<br>' fi),'</td>' fi/
-if p(v20) then '<tr><th width=20%>ISBN</th><td>'(| |v20^a||,| |v20^c||,| |v20^q||, if iocc<>nocc(v20) and p(v20) then '<br>' fi),'</td>' fi/
-if p(v22) then '<tr><th width=20%>ISSN</th><td>'(| |v22^a||,| |v22^l||, if iocc<>nocc(v22) and p(v22) then '<br>' fi),'</td>' fi/
-if p(v24) then '<tr><th width=20%>Outro Identificador Padrão</th><td>'(| |v24^a||,| |v24^c||,| |v24^q||, if iocc<>nocc(v24) and p(v24) then '<br>' fi),'</td>' fi/
-if p(v40) then '<tr><th width=20%>Instituição Catalogadora</th><td>'(| |v40^a||,| |v40^b||,| |v40^d||,| |v40^e||, if iocc<>nocc(v40) and p(v40) then '<br>' fi),'</td>' fi/
-if p(v41) then '<tr><th width=20%>Idioma</th><td>'(| |v41^a||,| |v41^b||,| |v41^h||,| |v41^k||, if iocc<>nocc(v41) and p(v41) then '<br>' fi),'</td>' fi/
-if p(v43) then '<tr><th width=20%>Código de Área Geográfica</th><td>'(| |v43^a||, if iocc<>nocc(v43) and p(v43) then '<br>' fi),'</td>' fi/
-if p(v44) then '<tr><th width=20%>Código do país de publicação</th><td>'(| |v44^a||, if iocc<>nocc(v44) and p(v44) then '<br>' fi),'</td>' fi/
-if p(v45) then '<tr><th width=20%>Código do período cronológico</th><td>'(| |v45^a||, if iocc<>nocc(v45) and p(v45) then '<br>' fi),'</td>' fi/
-if p(v80) then '<tr><th width=20%>Classificação CDU</th><td>'(| |v80^a||,| |v80^x||,| |v80^2||, if iocc<>nocc(v80) and p(v80) then '<br>' fi),'</td>' fi/
-if p(v82) then '<tr><th width=20%>Classificação CDD</th><td>'(| |v82^a||,| |v82^b||,| |v82^2||, if iocc<>nocc(v82) and p(v82) then '<br>' fi),'</td>' fi/
-if p(v84) then '<tr><th width=20%>Outra Classificação</th><td>'(| |v84^a||,| |v84^b||,| |v84^2||, if iocc<>nocc(v84) and p(v84) then '<br>' fi),'</td>' fi/
-if p(v90) then '<tr><th width=20%>Número de chamada local</th><td>'(| |v90^a||,| |v90^b||,| |v90^c||,| |v90^d||, if iocc<>nocc(v90) and p(v90) then '<br>' fi),'</td>' fi/
-if p(v100) then '<tr><th width=20%>Autor Pessoal</th><td>'(| |v100^a||,| |v100^b||,| |v100^c||,| |v100^d||,| |v100^q||, if iocc<>nocc(v100) and p(v100) then '<br>' fi),'</td>' fi/
-if p(v110) then '<tr><th width=20%>Autor Entidade Coletiva</th><td>'(| |v110^a||,| |v110^b||, if iocc<>nocc(v110) and p(v110) then '<br>' fi),'</td>' fi/
-if p(v111) then '<tr><th width=20%>Autor Nome de evento</th><td>'(| |v111^a||,| |v111^c||,| |v111^d||,| |v111^n||,| |v111^q||, if iocc<>nocc(v111) and p(v111) then '<br>' fi),'</td>' fi/
-if p(v210) then '<tr><th width=20%>Título Abreviado</th><td>'(| |v210^a||,| |v210^b||, if iocc<>nocc(v210) and p(v210) then '<br>' fi),'</td>' fi/
-if p(v222) then '<tr><th width=20%>Título-Chave</th><td>'(| |v222^a||,| |v222^b||, if iocc<>nocc(v222) and p(v222) then '<br>' fi),'</td>' fi/
-if p(v240) then '<tr><th width=20%>Título Uniforme</th><td>'(| |v240^a||,| |v240^m||, if iocc<>nocc(v240) and p(v240) then '<br>' fi),'</td>' fi/
-if p(v242) then '<tr><th width=20%>Título traduzido pela instituição</th><td>'(| |v242^a||,| |v242^b||,| |v242^c||,| |v242^h||, if iocc<>nocc(v242) and p(v242) then '<br>' fi),'</td>' fi/
-if p(v245) then '<tr><th width=20%>Título Principal</th><td>'(| |v245^a||,| |v245^b||,| |v245^c||,| |v245^h||,| |v245^k||,| |v245^n||,| |v245^p||, if iocc<>nocc(v245) and p(v245) then '<br>' fi),'</td>' fi/
-if p(v246) then '<tr><th width=20%>Nome da parte/seção de uma obra</th><td>'(| |v246^a||,| |v246^b||,| |v246^c||,| |v246^i||,| |v246^n||,| |v246^p||, if iocc<>nocc(v246) and p(v246) then '<br>' fi),'</td>' fi/
-if p(v250) then '<tr><th width=20%>Edição</th><td>'(| |v250^a||,| |v250^b||, if iocc<>nocc(v250) and p(v250) then '<br>' fi),'</td>' fi/
-if p(v255) then '<tr><th width=20%>Dados cartográficos matemáticos</th><td>'(| |v255^a||,| |v255^b||,| |v255^c||,| |v255^d||,| |v255^e||,| |v255^f||,| |v255^g||, if iocc<>nocc(v255) and p(v255) then '<br>' fi),'</td>' fi/
-if p(v257) then '<tr><th width=20%>País da entidade produtora</th><td>'(| |v257^a||, if iocc<>nocc(v257) and p(v257) then '<br>' fi),'</td>' fi/
-if p(v260) then '<tr><th width=20%>Publicação (imprenta)</th><td>'(| |v260^a||,| |v260^b||,| |v260^c||, if iocc<>nocc(v260) and p(v260) then '<br>' fi),'</td>' fi/
-if p(v264) then '<tr><th width=20%>Produção, Publicação, Distribuição, Fabricação e Aviso de Direitos Autorais</th><td>'(| |v264^a||,| |v264^b||,| |v264^i||, if iocc<>nocc(v264) and p(v264) then '<br>' fi),'</td>' fi/
-if p(v300) then '<tr><th width=20%>Descrição física</th><td>'(| |v300^a||,| |v300^b||,| |v300^c||,| |v300^e||, if iocc<>nocc(v300) and p(v300) then '<br>' fi),'</td>' fi/
-if p(v310) then '<tr><th width=20%>Freqüência</th><td>'(| |v310^a||,| |v310^b||, if iocc<>nocc(v310) and p(v310) then '<br>' fi),'</td>' fi/
-if p(v321) then '<tr><th width=20%>Publicação anterior e frequência</th><td>'(| |v321^a||,| |v321^b||, if iocc<>nocc(v321) and p(v321) then '<br>' fi),'</td>' fi/
-if p(v336) then '<tr><th width=20%>Tipo de conteúdo</th><td>'(| |v336^a||,| |v336^b||,| |v336^1||,| |v336^2||, if iocc<>nocc(v336) and p(v336) then '<br>' fi),'</td>' fi/
-if p(v337) then '<tr><th width=20%>Tipo de mídia</th><td>'(| |v337^a||,| |v337^b||,| |v337^1||,| |v337^2||, if iocc<>nocc(v337) and p(v337) then '<br>' fi),'</td>' fi/
-if p(v338) then '<tr><th width=20%>Tipo de Suporte</th><td>'(| |v338^a||,| |v338^b||,| |v338^1||,| |v338^2||, if iocc<>nocc(v338) and p(v338) then '<br>' fi),'</td>' fi/
-if p(v340) then '<tr><th width=20%>Meio físico</th><td>'(| |v340^a||,| |v340^b||,| |v340^e||,| |v340^i||, if iocc<>nocc(v340) and p(v340) then '<br>' fi),'</td>' fi/
-if p(v342) then '<tr><th width=20%>Dados de referência geoespacial</th><td>'(| |v342^a||,| |v342^b||,| |v342^c||,| |v342^d||,| |v342^k||, if iocc<>nocc(v342) and p(v342) then '<br>' fi),'</td>' fi/
-if p(v344) then '<tr><th width=20%>Características do som</th><td>'(| |v344^a||,| |v344^b||,| |v344^c||,| |v344^d||,| |v344^f||,| |v344^2||, if iocc<>nocc(v344) and p(v344) then '<br>' fi),'</td>' fi/
-if p(v345) then '<tr><th width=20%>Características da Imagem em Movimento</th><td>'(| |v345^a||,| |v345^b||,| |v345^2||, if iocc<>nocc(v345) and p(v345) then '<br>' fi),'</td>' fi/
-if p(v346) then '<tr><th width=20%>Características do Vídeo</th><td>'(| |v346^a||,| |v346^b||,| |v346^2||, if iocc<>nocc(v346) and p(v346) then '<br>' fi),'</td>' fi/
-if p(v347) then '<tr><th width=20%>Características do arquivo digital</th><td>'(| |v347^a||,| |v347^b||,| |v347^c||,| |v347^d||,| |v347^e||,| |v347^2||, if iocc<>nocc(v347) and p(v347) then '<br>' fi),'</td>' fi/
-if p(v351) then '<tr><th width=20%>Organização e arranjo de materiais</th><td>'(| |v351^a||,| |v351^b||,| |v351^c||, if iocc<>nocc(v351) and p(v351) then '<br>' fi),'</td>' fi/
-if p(v362) then '<tr><th width=20%>Data de Publicação ou Designação Sequencial</th><td>'(| |v362^a||, if iocc<>nocc(v362) and p(v362) then '<br>' fi),'</td>' fi/
-if p(v490) then '<tr><th width=20%>Informação de série</th><td>'(,| |v490^a||,| |v490^v||, if iocc<>nocc(v490) and p(v490) then '<br>' fi),'</td>' fi/
-if p(v500) then '<tr><th width=20%>Nota Geral</th><td>'(| |v500^a||, if iocc<>nocc(v500) and p(v500) then '<br>' fi),'</td>' fi/
-if p(v502) then '<tr><th width=20%>Nota de Tese/Dissertação</th><td>'(| |v502^a||,| |v502^c||,| |v502^d||, if iocc<>nocc(v502) and p(v502) then '<br>' fi),'</td>' fi/
-if p(v504) then '<tr><th width=20%>Nota de Bibliografía</th><td>'(| |v504^a||, if iocc<>nocc(v504) and p(v504) then '<br>' fi),'</td>' fi/
-if p(v505) then '<tr><th width=20%>Nota Conteúdo</th><td>'(| |v505^a||,| |v505^g||,| |v505^r||,| |v505^t||, if iocc<>nocc(v505) and p(v505) then '<br>' fi),'</td>' fi/
-if p(v506) then '<tr><th width=20%>Nota acesso restrito</th><td>'(| |v506^a||, if iocc<>nocc(v506) and p(v506) then '<br>' fi),'</td>' fi/
-if p(v508) then '<tr><th width=20%>Créditos de Criação/Produção Nota</th><td>'(| |v508^a||, if iocc<>nocc(v508) and p(v508) then '<br>' fi),'</td>' fi/
-if p(v511) then '<tr><th width=20%>Nota de participantes ou executor</th><td>'(| |v511^a||, if iocc<>nocc(v511) and p(v511) then '<br>' fi),'</td>' fi/
-if p(v515) then '<tr><th width=20%>Nota sobre Peculiaridades da Numeração</th><td>'(| |v515^a||, if iocc<>nocc(v515) and p(v515) then '<br>' fi),'</td>' fi/
-if p(v516) then '<tr><th width=20%>Tipo de arquivo de computador ou dado</th><td>'(| |v516^a||, if iocc<>nocc(v516) and p(v516) then '<br>' fi),'</td>' fi/
-if p(v520) then '<tr><th width=20%>Nota de Resumo</th><td>'(| |v520^a||, if iocc<>nocc(v520) and p(v520) then '<br>' fi),'</td>' fi/
-if p(v521) then '<tr><th width=20%>Público-alvo</th><td>'(| |v521^a||, if iocc<>nocc(v521) and p(v521) then '<br>' fi),'</td>' fi/
-if p(v525) then '<tr><th width=20%>Nota Complementar</th><td>'(| |v525^a||, if iocc<>nocc(v525) and p(v525) then '<br>' fi),'</td>' fi/
-if p(v530) then '<tr><th width=20%>Nota Adicional de Forma Física Disponível</th><td>'(| |v530^a||, if iocc<>nocc(v530) and p(v530) then '<br>' fi),'</td>' fi/
-if p(v533) then '<tr><th width=20%>Nota de Reprodução</th><td>'(| |v533^a||,| |v533^b||,| |v533^c||,| |v533^d||, if iocc<>nocc(v533) and p(v533) then '<br>' fi),'</td>' fi/
-if p(v534) then '<tr><th width=20%>Nota de Versão Original</th><td>'(| |v534^a||,| |v534^c||,| |v534^m||,| |v534^p||, if iocc<>nocc(v534) and p(v534) then '<br>' fi),'</td>' fi/
-if p(v538) then '<tr><th width=20%>Nota de Detalhes do Sistema</th><td>'(| |v538^a||,| |v538^i||,| |v538^u||,| |v538^3||, if iocc<>nocc(v538) and p(v538) then '<br>' fi),'</td>' fi/
-if p(v546) then '<tr><th width=20%>Nota de idioma</th><td>'(| |v546^a||, if iocc<>nocc(v546) and p(v546) then '<br>' fi),'</td>' fi/
-if p(v547) then '<tr><th width=20%>Antigo Título Nota de Complexidade</th><td>'(| |v547^a||, if iocc<>nocc(v547) and p(v547) then '<br>' fi),'</td>' fi/
-if p(v550) then '<tr><th width=20%>Nota do Órgão Emissor</th><td>'(| |v550^a||, if iocc<>nocc(v550) and p(v550) then '<br>' fi),'</td>' fi/
-if p(v555) then '<tr><th width=20%>Índice cumulativo/Nota de auxílio à pesquisa</th><td>'(| |v555^a||, if iocc<>nocc(v555) and p(v555) then '<br>' fi),'</td>' fi/
-if p(v580) then '<tr><th width=20%>Nota de ligação complexa da entrada</th><td>'(| |v580^a||, if iocc<>nocc(v580) and p(v580) then '<br>' fi),'</td>' fi/
-if p(v585) then '<tr><th width=20%>Nota de exibições/apresentação</th><td>'(| |v585^a||, if iocc<>nocc(v585) and p(v585) then '<br>' fi),'</td>' fi/
-if p(v586) then '<tr><th width=20%>Nota de Premiação</th><td>'(| |v586^a||, if iocc<>nocc(v586) and p(v586) then '<br>' fi),'</td>' fi/
-if p(v600) then '<tr><th width=20%>Nome pessoal como assunto</th><td>'(| |v600^a||,| |v600^b||,| |v600^c||,| |v600^d||,| |v600^q||,| |v600^v||,| |v600^x||,| |v600^y||, if iocc<>nocc(v600) and p(v600) then '<br>' fi),'</td>' fi/
-if p(v610) then '<tr><th width=20%>Nome corporativo como assunto</th><td>'(| |v610^a||,| |v610^b||,| |v610^k||,| |v610^t||,| |v610^v||,| |v610^x||, if iocc<>nocc(v610) and p(v610) then '<br>' fi),'</td>' fi/
-if p(v611) then '<tr><th width=20%>Nome de evento como assunto</th><td>'(| |v611^a||,| |v611^c||,| |v611^d||,| |v611^n||,| |v611^v||,| |v611^x||, if iocc<>nocc(v611) and p(v611) then '<br>' fi),'</td>' fi/
-if p(v630) then '<tr><th width=20%>Assunto - Título Uniforme</th><td>'(| |v630^a||,| |v630^l||,| |v630^v||,| |v630^x||, if iocc<>nocc(v630) and p(v630) then '<br>' fi),'</td>' fi/
-if p(v650) then '<tr><th width=20%>Assunto - Termo Tópico</th><td>'(| |v650^a||,| |v650^v||,| |v650^x||,| |v650^y||,| |v650^z||, if iocc<>nocc(v650) and p(v650) then '<br>' fi),'</td>' fi/
-if p(v651) then '<tr><th width=20%>Assunto Geográfico</th><td>'(| |v651^a||,| |v651^v||,| |v651^x||,| |v651^y||,| |v651^z||, if iocc<>nocc(v651) and p(v651) then '<br>' fi),'</td>' fi/
-if p(v653) then '<tr><th width=20%>Assunto - Termo Não Controlado</th><td>'(| |v653^a||, if iocc<>nocc(v653) and p(v653) then '<br>' fi),'</td>' fi/
-if p(v655) then '<tr><th width=20%>Assunto - Gênero/Forma</th><td>'(| |v655^a||,| |v655^b||,| |v655^c||,| |v655^v||,| |v655^x||,| |v655^y||,| |v655^z||, if iocc<>nocc(v655) and p(v655) then '<br>' fi),'</td>' fi/
-if p(v700) then '<tr><th width=20%>Ent. secundária - Autor pessoal</th><td>'(| |v700^a||,| |v700^b||,| |v700^c||,| |v700^d||,| |v700^q||, if iocc<>nocc(v700) and p(v700) then '<br>' fi),'</td>' fi/
-if p(v710) then '<tr><th width=20%>Ent. secundária - Autor corporativo</th><td>'(| |v710^a||,| |v710^b||, if iocc<>nocc(v710) and p(v710) then '<br>' fi),'</td>' fi/
-if p(v711) then '<tr><th width=20%>Ent. secudária - Nome de evento</th><td>'(| |v711^a||,| |v711^c||,| |v711^d||,| |v711^n||,| |v711^q||, if iocc<>nocc(v711) and p(v711) then '<br>' fi),'</td>' fi/
-if p(v730) then '<tr><th width=20%>Ent. secudária - Título Uniforme</th><td>'(| |v730^a||,| |v730^p||, if iocc<>nocc(v730) and p(v730) then '<br>' fi),'</td>' fi/
-if p(v740) then '<tr><th width=20%>Ent. Secundária - Títulos relacionados/analíticos</th><td>'(| |v740^a||,| |v740^n||,| |v740^p||, if iocc<>nocc(v740) and p(v740) then '<br>' fi),'</td>' fi/
-if p(v752) then '<tr><th width=20%>Ent. Secundária - Lugar/Forma Hierárquica</th><td>'(| |v752^a||,| |v752^b||,| |v752^c||,| |v752^d||, if iocc<>nocc(v752) and p(v752) then '<br>' fi),'</td>' fi/
-if p(v754) then '<tr><th width=20%>Identificação taxonômica</th><td>'(| |v754^a||,| |v754^c||,| |v754^d||,| |v754^2||, if iocc<>nocc(v754) and p(v754) then '<br>' fi),'</td>' fi/
-if p(v773) then '<tr><th width=20%>Entrada Analítica</th><td>'(| |v773^t||,| |v773^d||,| |v773^g||,| |v773^x||,| |v773^w||, if iocc<>nocc(v773) and p(v773) then '<br>' fi),'</td>' fi/
-if p(v776) then '<tr><th width=20%>Entrada de Formulário Físico Adicional</th><td>'(| |v776^i||,| |v776^t||,| |v776^x||,| |v776^z||,| |v776^w||, if iocc<>nocc(v776) and p(v776) then '<br>' fi),'</td>' fi/
-if p(v780) then '<tr><th width=20%>Entrada de Título Anterior</th><td>'(| |v780^t||,| |v780^d||,| |v780^g||,| |v780^x||,| |v780^w||, if iocc<>nocc(v780) and p(v780) then '<br>' fi),'</td>' fi/
-if p(v785) then '<tr><th width=20%>Entrada de Título Posterior</th><td>'(| |v785^t||,| |v785^d||,| |v785^g||,| |v785^x||,| |v785^w||, if iocc<>nocc(v785) and p(v785) then '<br>' fi),'</td>' fi/
-if p(v856) then '<tr><th width=20%>Endereço eletrônico</th><td>'(| |v856^a||,| |v856^u||,| |v856^y||,| |v856^z||,| |v856^2||, if iocc<>nocc(v856) and p(v856) then '<br>' fi),'</td>' fi/
-if p(v866) then '<tr><th width=20%>Coleção</th><td>'(| |v866^a||, if iocc<>nocc(v866) and p(v866) then '<br>' fi),'</td>' fi/
-if p(v900) then '<tr><th width=20%>Itens (Exemplares)</th><td>'(| |v900^n||,| |v900^m||,| |v900^l||,| |v900^o||,| |v900^f||,| |v900^p||,| |v900^r||,| |v900^q||,| |v900^y||,| |v900^k||,| |v900^w||,| |v900^z||, if iocc<>nocc(v900) and p(v900) then '<br>' fi),'</td>' fi/
+if p(v90) then '<tr><th width=300px>Localização</th><td>'(| |v90^a||,| |v90^b||,| |v90^c||,| |v90^d||, if iocc<>nocc(v90) and p(v90) then '<br>' fi),'</td>' fi/
+
+if p(v100) then '<tr><th width=300px>Autor Pessoal</th><td>'(| |v100^a||,| |v100^b||,| |v100^c||,| |v100^d||,| |v100^q||, if iocc<>nocc(v100) and p(v100) then '<br>' fi),'</td>' fi/
+if p(v110) then '<tr><th width=300px>Autor Entidade Coletiva</th><td>'(| |v110^a||,| |v110^b||, if iocc<>nocc(v110) and p(v110) then '<br>' fi),'</td>' fi/
+if p(v111) then '<tr><th width=300px>Autor Nome de evento</th><td>'(| |v111^a||,| |v111^c||,| |v111^d||,| |v111^n||,| |v111^q||, if iocc<>nocc(v111) and p(v111) then '<br>' fi),'</td>' fi/
+if p(v210) then '<tr><th width=300px>Título Abreviado</th><td>'(| |v210^a||,| |v210^b||, if iocc<>nocc(v210) and p(v210) then '<br>' fi),'</td>' fi/
+if p(v222) then '<tr><th width=300px>Título-Chave</th><td>'(| |v222^a||,| |v222^b||, if iocc<>nocc(v222) and p(v222) then '<br>' fi),'</td>' fi/
+if p(v240) then '<tr><th width=300px>Título Uniforme</th><td>'(| |v240^a||,| |v240^m||, if iocc<>nocc(v240) and p(v240) then '<br>' fi),'</td>' fi/
+if p(v242) then '<tr><th width=300px>Título traduzido pela instituição</th><td>'(| |v242^a||,| |v242^b||,| |v242^c||,| |v242^h||, if iocc<>nocc(v242) and p(v242) then '<br>' fi),'</td>' fi/
+if p(v245) then '<tr><th width=300px>Título Principal</th><td>'(| |v245^a||,| |v245^b||,| |v245^c||,| |v245^h||,| |v245^k||,| |v245^n||,| |v245^p||, if iocc<>nocc(v245) and p(v245) then '<br>' fi),'</td>' fi/
+if p(v246) then '<tr><th width=300px>Nome da parte/seção de uma obra</th><td>'(| |v246^a||,| |v246^b||,| |v246^c||,| |v246^i||,| |v246^n||,| |v246^p||, if iocc<>nocc(v246) and p(v246) then '<br>' fi),'</td>' fi/
+
+
+if p(v5) then '<tr><th width=300px>Data da última modificação</th><td>'v5+|<br>|,'</td>' fi/
+if p(v10) then '<tr><th width=300px>Número de controle da LC</th><td>'(| |v10^a||, if iocc<>nocc(v10) and p(v10) then '<br>' fi),'</td>' fi/
+if p(v20) then '<tr><th width=300px>ISBN</th><td>'(| |v20^a||,| |v20^c||,| |v20^q||, if iocc<>nocc(v20) and p(v20) then '<br>' fi),'</td>' fi/
+if p(v22) then '<tr><th width=300px>ISSN</th><td>'(| |v22^a||,| |v22^l||, if iocc<>nocc(v22) and p(v22) then '<br>' fi),'</td>' fi/
+if p(v24) then '<tr><th width=300px>Outro Identificador Padrão</th><td>'(| |v24^a||,| |v24^c||,| |v24^q||, if iocc<>nocc(v24) and p(v24) then '<br>' fi),'</td>' fi/
+if p(v40) then '<tr><th width=300px>Instituição Catalogadora</th><td>'(| |v40^a||,| |v40^b||,| |v40^d||,| |v40^e||, if iocc<>nocc(v40) and p(v40) then '<br>' fi),'</td>' fi/
+if p(v41) then '<tr><th width=300px>Idioma</th><td>'(| |v41^a||,| |v41^b||,| |v41^h||,| |v41^k||, if iocc<>nocc(v41) and p(v41) then '<br>' fi),'</td>' fi/
+if p(v43) then '<tr><th width=300px>Código de Área Geográfica</th><td>'(| |v43^a||, if iocc<>nocc(v43) and p(v43) then '<br>' fi),'</td>' fi/
+if p(v44) then '<tr><th width=300px>Código do país de publicação</th><td>'(| |v44^a||, if iocc<>nocc(v44) and p(v44) then '<br>' fi),'</td>' fi/
+if p(v45) then '<tr><th width=300px>Código do período cronológico</th><td>'(| |v45^a||, if iocc<>nocc(v45) and p(v45) then '<br>' fi),'</td>' fi/
+if p(v80) then '<tr><th width=300px>Classificação CDU</th><td>'(| |v80^a||,| |v80^x||,| |v80^2||, if iocc<>nocc(v80) and p(v80) then '<br>' fi),'</td>' fi/
+if p(v82) then '<tr><th width=300px>Classificação CDD</th><td>'(| |v82^a||,| |v82^b||,| |v82^2||, if iocc<>nocc(v82) and p(v82) then '<br>' fi),'</td>' fi/
+if p(v84) then '<tr><th width=300px>Outra Classificação</th><td>'(| |v84^a||,| |v84^b||,| |v84^2||, if iocc<>nocc(v84) and p(v84) then '<br>' fi),'</td>' fi/
+
+
+if p(v250) then '<tr><th width=300px>Edição</th><td>'(| |v250^a||,| |v250^b||, if iocc<>nocc(v250) and p(v250) then '<br>' fi),'</td>' fi/
+if p(v255) then '<tr><th width=300px>Dados cartográficos matemáticos</th><td>'(| |v255^a||,| |v255^b||,| |v255^c||,| |v255^d||,| |v255^e||,| |v255^f||,| |v255^g||, if iocc<>nocc(v255) and p(v255) then '<br>' fi),'</td>' fi/
+if p(v257) then '<tr><th width=300px>País da entidade produtora</th><td>'(| |v257^a||, if iocc<>nocc(v257) and p(v257) then '<br>' fi),'</td>' fi/
+if p(v260) then '<tr><th width=300px>Publicação (imprenta)</th><td>'(| |v260^a|: |,| |v260^b|, |,| |v260^c||, if iocc<>nocc(v260) and p(v260) then '<br>' fi),'</td>' fi/
+if p(v264) then '<tr><th width=300px>Produção, Publicação...</th><td>'(| |v264^a|:|,| |v264^b|,|,| |v264^c||, if iocc<>nocc(v264) and p(v264) then '<br>' fi),'</td>' fi/
+if p(v300) then '<tr><th width=300px>Descrição física</th><td>'(| |v300^a||,| |v300^b||,| |v300^c||,| |v300^e||, if iocc<>nocc(v300) and p(v300) then '<br>' fi),'</td>' fi/
+if p(v310) then '<tr><th width=300px>Freqüência</th><td>'(| |v310^a||,| |v310^b||, if iocc<>nocc(v310) and p(v310) then '<br>' fi),'</td>' fi/
+if p(v321) then '<tr><th width=300px>Publicação anterior e frequência</th><td>'(| |v321^a||,| |v321^b||, if iocc<>nocc(v321) and p(v321) then '<br>' fi),'</td>' fi/
+if p(v336) then '<tr><th width=300px>Tipo de conteúdo</th><td>'(| |v336^a||,| |v336^b||,| |v336^1||,| |v336^2||, if iocc<>nocc(v336) and p(v336) then '<br>' fi),'</td>' fi/
+if p(v337) then '<tr><th width=300px>Tipo de mídia</th><td>'(| |v337^a||,| |v337^b||,| |v337^1||,| |v337^2||, if iocc<>nocc(v337) and p(v337) then '<br>' fi),'</td>' fi/
+if p(v338) then '<tr><th width=300px>Tipo de Suporte</th><td>'(| |v338^a||,| |v338^b||,| |v338^1||,| |v338^2||, if iocc<>nocc(v338) and p(v338) then '<br>' fi),'</td>' fi/
+if p(v340) then '<tr><th width=300px>Meio físico</th><td>'(| |v340^a||,| |v340^b||,| |v340^e||,| |v340^i||, if iocc<>nocc(v340) and p(v340) then '<br>' fi),'</td>' fi/
+if p(v342) then '<tr><th width=300px>Dados de referência geoespacial</th><td>'(| |v342^a||,| |v342^b||,| |v342^c||,| |v342^d||,| |v342^k||, if iocc<>nocc(v342) and p(v342) then '<br>' fi),'</td>' fi/
+if p(v344) then '<tr><th width=300px>Características do som</th><td>'(| |v344^a||,| |v344^b||,| |v344^c||,| |v344^d||,| |v344^f||,| |v344^2||, if iocc<>nocc(v344) and p(v344) then '<br>' fi),'</td>' fi/
+if p(v345) then '<tr><th width=300px>Características da Imagem em Movimento</th><td>'(| |v345^a||,| |v345^b||,| |v345^2||, if iocc<>nocc(v345) and p(v345) then '<br>' fi),'</td>' fi/
+if p(v346) then '<tr><th width=300px>Características do Vídeo</th><td>'(| |v346^a||,| |v346^b||,| |v346^2||, if iocc<>nocc(v346) and p(v346) then '<br>' fi),'</td>' fi/
+if p(v347) then '<tr><th width=300px>Características do arquivo digital</th><td>'(| |v347^a||,| |v347^b||,| |v347^c||,| |v347^d||,| |v347^e||,| |v347^2||, if iocc<>nocc(v347) and p(v347) then '<br>' fi),'</td>' fi/
+if p(v351) then '<tr><th width=300px>Organização e arranjo de materiais</th><td>'(| |v351^a||,| |v351^b||,| |v351^c||, if iocc<>nocc(v351) and p(v351) then '<br>' fi),'</td>' fi/
+if p(v362) then '<tr><th width=300px>Data de Publicação ou Designação Sequencial</th><td>'(| |v362^a||, if iocc<>nocc(v362) and p(v362) then '<br>' fi),'</td>' fi/
+if p(v490) then '<tr><th width=300px>Informação de série</th><td>'(,| |v490^a||,| |v490^v||, if iocc<>nocc(v490) and p(v490) then '<br>' fi),'</td>' fi/
+if p(v500) then '<tr><th width=300px>Nota Geral</th><td>'(| |v500^a||, if iocc<>nocc(v500) and p(v500) then '<br>' fi),'</td>' fi/
+if p(v502) then '<tr><th width=300px>Nota de Tese/Dissertação</th><td>'(| |v502^a||,| |v502^c||,| |v502^d||, if iocc<>nocc(v502) and p(v502) then '<br>' fi),'</td>' fi/
+if p(v504) then '<tr><th width=300px>Nota de Bibliografía</th><td>'(| |v504^a||, if iocc<>nocc(v504) and p(v504) then '<br>' fi),'</td>' fi/
+if p(v505) then '<tr><th width=300px>Nota Conteúdo</th><td>'(| |v505^a||,| |v505^g||,| |v505^r||,| |v505^t||, if iocc<>nocc(v505) and p(v505) then '<br>' fi),'</td>' fi/
+if p(v506) then '<tr><th width=300px>Nota acesso restrito</th><td>'(| |v506^a||, if iocc<>nocc(v506) and p(v506) then '<br>' fi),'</td>' fi/
+if p(v508) then '<tr><th width=300px>Créditos de Criação/Produção Nota</th><td>'(| |v508^a||, if iocc<>nocc(v508) and p(v508) then '<br>' fi),'</td>' fi/
+if p(v511) then '<tr><th width=300px>Nota de participantes ou executor</th><td>'(| |v511^a||, if iocc<>nocc(v511) and p(v511) then '<br>' fi),'</td>' fi/
+if p(v515) then '<tr><th width=300px>Nota sobre Peculiaridades da Numeração</th><td>'(| |v515^a||, if iocc<>nocc(v515) and p(v515) then '<br>' fi),'</td>' fi/
+if p(v516) then '<tr><th width=300px>Tipo de arquivo de computador ou dado</th><td>'(| |v516^a||, if iocc<>nocc(v516) and p(v516) then '<br>' fi),'</td>' fi/
+if p(v520) then '<tr><th width=300px>Nota de Resumo</th><td>'(| |v520^a||, if iocc<>nocc(v520) and p(v520) then '<br>' fi),'</td>' fi/
+if p(v521) then '<tr><th width=300px>Público-alvo</th><td>'(| |v521^a||, if iocc<>nocc(v521) and p(v521) then '<br>' fi),'</td>' fi/
+if p(v525) then '<tr><th width=300px>Nota Complementar</th><td>'(| |v525^a||, if iocc<>nocc(v525) and p(v525) then '<br>' fi),'</td>' fi/
+if p(v530) then '<tr><th width=300px>Nota Adicional de Forma Física Disponível</th><td>'(| |v530^a||, if iocc<>nocc(v530) and p(v530) then '<br>' fi),'</td>' fi/
+if p(v533) then '<tr><th width=300px>Nota de Reprodução</th><td>'(| |v533^a||,| |v533^b||,| |v533^c||,| |v533^d||, if iocc<>nocc(v533) and p(v533) then '<br>' fi),'</td>' fi/
+if p(v534) then '<tr><th width=300px>Nota de Versão Original</th><td>'(| |v534^a||,| |v534^c||,| |v534^m||,| |v534^p||, if iocc<>nocc(v534) and p(v534) then '<br>' fi),'</td>' fi/
+if p(v538) then '<tr><th width=300px>Nota de Detalhes do Sistema</th><td>'(| |v538^a||,| |v538^i||,| |v538^u||,| |v538^3||, if iocc<>nocc(v538) and p(v538) then '<br>' fi),'</td>' fi/
+if p(v546) then '<tr><th width=300px>Nota de idioma</th><td>'(| |v546^a||, if iocc<>nocc(v546) and p(v546) then '<br>' fi),'</td>' fi/
+if p(v547) then '<tr><th width=300px>Antigo Título Nota de Complexidade</th><td>'(| |v547^a||, if iocc<>nocc(v547) and p(v547) then '<br>' fi),'</td>' fi/
+if p(v550) then '<tr><th width=300px>Nota do Órgão Emissor</th><td>'(| |v550^a||, if iocc<>nocc(v550) and p(v550) then '<br>' fi),'</td>' fi/
+if p(v555) then '<tr><th width=300px>Índice cumulativo/Nota de auxílio à pesquisa</th><td>'(| |v555^a||, if iocc<>nocc(v555) and p(v555) then '<br>' fi),'</td>' fi/
+if p(v580) then '<tr><th width=300px>Nota de ligação complexa da entrada</th><td>'(| |v580^a||, if iocc<>nocc(v580) and p(v580) then '<br>' fi),'</td>' fi/
+if p(v585) then '<tr><th width=300px>Nota de exibições/apresentação</th><td>'(| |v585^a||, if iocc<>nocc(v585) and p(v585) then '<br>' fi),'</td>' fi/
+if p(v586) then '<tr><th width=300px>Nota de Premiação</th><td>'(| |v586^a||, if iocc<>nocc(v586) and p(v586) then '<br>' fi),'</td>' fi/
+if p(v600) then '<tr><th width=300px>Nome pessoal como assunto</th><td>'(| |v600^a||,| |v600^b||,| |v600^c||,| |v600^d||,| |v600^q||,| |v600^v||,| |v600^x||,| |v600^y||, if iocc<>nocc(v600) and p(v600) then '<br>' fi),'</td>' fi/
+if p(v610) then '<tr><th width=300px>Nome corporativo como assunto</th><td>'(| |v610^a||,| |v610^b||,| |v610^k||,| |v610^t||,| |v610^v||,| |v610^x||, if iocc<>nocc(v610) and p(v610) then '<br>' fi),'</td>' fi/
+if p(v611) then '<tr><th width=300px>Nome de evento como assunto</th><td>'(| |v611^a||,| |v611^c||,| |v611^d||,| |v611^n||,| |v611^v||,| |v611^x||, if iocc<>nocc(v611) and p(v611) then '<br>' fi),'</td>' fi/
+if p(v630) then '<tr><th width=300px>Assunto - Título Uniforme</th><td>'(| |v630^a||,| |v630^l||,| |v630^v||,| |v630^x||, if iocc<>nocc(v630) and p(v630) then '<br>' fi),'</td>' fi/
+if p(v650) then '<tr><th width=300px>Assunto - Termo Tópico</th><td>'(| |v650^a||,| |v650^v||,| |v650^x||,| |v650^y||,| |v650^z||, if iocc<>nocc(v650) and p(v650) then '<br>' fi),'</td>' fi/
+if p(v651) then '<tr><th width=300px>Assunto Geográfico</th><td>'(| |v651^a||,| |v651^v||,| |v651^x||,| |v651^y||,| |v651^z||, if iocc<>nocc(v651) and p(v651) then '<br>' fi),'</td>' fi/
+if p(v653) then '<tr><th width=300px>Assunto - Termo Não Controlado</th><td>'(| |v653^a||, if iocc<>nocc(v653) and p(v653) then '<br>' fi),'</td>' fi/
+if p(v655) then '<tr><th width=300px>Assunto - Gênero/Forma</th><td>'(| |v655^a||,| |v655^b||,| |v655^c||,| |v655^v||,| |v655^x||,| |v655^y||,| |v655^z||, if iocc<>nocc(v655) and p(v655) then '<br>' fi),'</td>' fi/
+if p(v700) then '<tr><th width=300px>Ent. secundária - Autor pessoal</th><td>'(| |v700^a||,| |v700^b||,| |v700^c||,| |v700^d||,| |v700^q||, if iocc<>nocc(v700) and p(v700) then '<br>' fi),'</td>' fi/
+if p(v710) then '<tr><th width=300px>Ent. secundária - Autor corporativo</th><td>'(| |v710^a||,| |v710^b||, if iocc<>nocc(v710) and p(v710) then '<br>' fi),'</td>' fi/
+if p(v711) then '<tr><th width=300px>Ent. secudária - Nome de evento</th><td>'(| |v711^a||,| |v711^c||,| |v711^d||,| |v711^n||,| |v711^q||, if iocc<>nocc(v711) and p(v711) then '<br>' fi),'</td>' fi/
+if p(v730) then '<tr><th width=300px>Ent. secudária - Título Uniforme</th><td>'(| |v730^a||,| |v730^p||, if iocc<>nocc(v730) and p(v730) then '<br>' fi),'</td>' fi/
+if p(v740) then '<tr><th width=300px>Ent. Secundária - Títulos relacionados/analíticos</th><td>'(| |v740^a||,| |v740^n||,| |v740^p||, if iocc<>nocc(v740) and p(v740) then '<br>' fi),'</td>' fi/
+if p(v752) then '<tr><th width=300px>Ent. Secundária - Lugar/Forma Hierárquica</th><td>'(| |v752^a||,| |v752^b||,| |v752^c||,| |v752^d||, if iocc<>nocc(v752) and p(v752) then '<br>' fi),'</td>' fi/
+if p(v754) then '<tr><th width=300px>Identificação taxonômica</th><td>'(| |v754^a||,| |v754^c||,| |v754^d||,| |v754^2||, if iocc<>nocc(v754) and p(v754) then '<br>' fi),'</td>' fi/
+if p(v773) then '<tr><th width=300px>Entrada Analítica</th><td>'(| |v773^t||,| |v773^d||,| |v773^g||,| |v773^x||,| |v773^w||, if iocc<>nocc(v773) and p(v773) then '<br>' fi),'</td>' fi/
+if p(v776) then '<tr><th width=300px>Entrada de Formulário Físico Adicional</th><td>'(| |v776^i||,| |v776^t||,| |v776^x||,| |v776^z||,| |v776^w||, if iocc<>nocc(v776) and p(v776) then '<br>' fi),'</td>' fi/
+if p(v780) then '<tr><th width=300px>Entrada de Título Anterior</th><td>'(| |v780^t||,| |v780^d||,| |v780^g||,| |v780^x||,| |v780^w||, if iocc<>nocc(v780) and p(v780) then '<br>' fi),'</td>' fi/
+if p(v785) then '<tr><th width=300px>Entrada de Título Posterior</th><td>'(| |v785^t||,| |v785^d||,| |v785^g||,| |v785^x||,| |v785^w||, if iocc<>nocc(v785) and p(v785) then '<br>' fi),'</td>' fi/
+if p(v856) then '<tr><th width=300px>Endereço eletrônico</th><td>'(| |v856^a||,| |v856^u||,| |v856^y||,| |v856^z||,| |v856^2||, if iocc<>nocc(v856) and p(v856) then '<br>' fi),'</td>' fi/
+if p(v866) then '<tr><th width=300px>Coleção</th><td>'(| |v866^a||, if iocc<>nocc(v866) and p(v866) then '<br>' fi),'</td>' fi/
+if p(v900) then '<tr><th width=300px>Itens (Exemplares)</th><td>'(| |v900^n||,| |v900^m||,| |v900^l||,| |v900^o||,| |v900^f||,| |v900^p||,| |v900^r||,| |v900^q||,| |v900^y||,| |v900^k||,| |v900^w||,| |v900^z||, if iocc<>nocc(v900) and p(v900) then '<br>' fi),'</td>' fi/
 '</table>'
 
-if npost(['copies'],'CN_cipt_acervo_'v1)>0 then
-  '<p><dd><dd><dd>
-  <table width="100%" class="table table-stripped">
+
+
+
+if npost(['copies'],'CN_rda_'v1)>0 then
+  '<table width="100%" class="table table-stripped">
     <tr>
       <td colspan=6><b>Total de exemplares</b>:'                
-          f(npost(['copies'],'CN_cipt_acervo_'v1),1,0)
+          f(npost(['copies'],'CN_rda_'v1),1,0)
      '</td>
     </tr>
     <tr>
         <th>Controle</th>
         <th>Tombo</th>
         <th>Situação</th>
-        <th>No. cópias</th>
+        <th>Exemplares</th>
         <th>Disponibilidade</th>'/   
-       /'$$REF:copies,inven,CN_cipt_acervo_'v1/
+       /'$$REF:copies,inven,CN_rda_'v1/
      '</tr>
   </table>'
 fi,

@@ -1,9 +1,8 @@
-Lugar de publicación|v260^a|PA_|
-Editor/Publicador|v264^b|ED_|
-Año|v264^c|DT_|
-ISBN/ISSN|v20^a|IS_|
-Autor personal|v100^a[1]|AU_|
-Autor institucional|v110^a[1]|AI_|
-Título|v245^a': 'v245^b|TI_|
-Asunto (Tema)|v650^a|MA_|
-
+Lugar de publicación|v260^a|PA_|Q
+Editor/Publicador|v260^b|ED_|Q
+Año|v260^c|DT_|A
+ISBN/ISSN|v20^a|IS_|Q
+Autor personal|v100^a[1]|AU_|Q
+Autor institucional|v110^a[1]|AI_|Q
+Título|v245^a': 'v245^b|TI_|Q
+Asunto (Tema)|v650^a|MA_|Q

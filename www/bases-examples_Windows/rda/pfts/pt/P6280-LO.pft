@@ -1,0 +1,127 @@
+  '<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="/bases/etiquetas/P6280.css" media="all" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Libre+Barcode+39+Text&display=swap" rel="stylesheet">
+
+
+
+<style>
+
+@font-face {
+    font-family: "Barcode 39 e HR";
+    src: url("/assets/barcodefonts/BAR39EH.TTF") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}  
+
+
+@import url("https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Libre+Barcode+39+Text&display=swap");
+
+.tudo {
+    width:101.6mm;
+    height:25.4mm;
+    margin-top:-2mm;
+    background: #ccc;
+    }
+
+.barcodebox {
+	float:left;
+	width:66mm; /* 66.7mm */
+	height:26mm; /* 25.4mm */
+ /*margin:0 0 3mm 0;
+ 	border: inset #fff 00.1em;*/
+ 	margin:0;
+ 	padding: 1mm 0;
+   background-color:#fff;
+	vertical-align: center;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-weight: bold;
+	font-size:10pt;    
+	line-height:12pt;
+	text-align:left;
+	padding-left: 5mm;
+	color: #000;
+	}
+
+/* Topo: dados da institui??o e nome do leitor */
+.topo {
+    text-align:center;
+    font-size:9pt;
+    line-height:9pt; }
+.nome {
+    font-size:12pt;
+    font-weight:bold;}
+
+/* Esquerda: foto */
+.esquerda {
+    position:relative;
+    float:left;
+    width:100px;
+    padding-top:3mm; }
+
+.esquerda img {
+    width:21mm;
+    height:28mm;}
+
+/* Direita: dados do leitor e c?digo de barras */
+
+.direita {
+    position:relative;
+    float:left;
+    padding:3mm;
+    text-align:left; }
+
+
+
+.libre-barcode-39-regular {
+  /*font-family: "Libre Barcode 39", system-ui;*/
+  font-family: "Barcode 39 e HR", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 40px;
+}
+dd {
+    margin: 3px 0;
+}
+.barcodebox {
+    margin: 5px;
+    padding: 5px;
+    width: 100mm;
+    vertical-align: middle;
+}
+</style>
+</head>'
+
+
+
+'<body>'
+if npost(['copies'],'CN_'v5001'_'v1)>0 then
+(
+'<div class="tudo">'
+
+
+
+'<dl class="barcodebox">
+    <dt>Biblioteca</dt>
+        <dd>'v949^a'</dd><br/>
+        <dd class="barcode"><span class="libre-barcode-39-regular">'/'$$REF:copies,cnclean,CN_'v5001'_'v1/'</span></dd>'
+'</dl>'/
+
+
+
+'<dl class="barcodebox">
+    <dd>'v90[1]^a'</dd>
+    <dd>'v90[1]^b'</dd>
+    <dd>'v90[1]^c'</dd>
+    <dd>'v63'</dd>
+    <dd class="serie">'
+    if v993='n1' then 'Educação Infantil' fi, 
+    if v993='n2' then 'Séries Iniciais' fi 
+    '</dd>
+
+</dl>'
+'</div>'
+)
+fi,
+
+'</body>'
