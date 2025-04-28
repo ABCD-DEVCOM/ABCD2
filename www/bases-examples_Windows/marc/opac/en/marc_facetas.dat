@@ -1,8 +1,8 @@
-Place of publication|v260^a|PA_|
-Publisher/Publisher|v264^b|ED_|
-Year|v264^c|DT_|
-ISBN/ISSN|v20^a|IS_|
-Author|v100^a[1]|AU_|
-Institutional author|v110^a[1]|AI_|
-Title|v245^a': 'v245^b|TI_|
-Subject (Subject)|v650^a|MA_|
+Place of publication|v260^a|PA_|Q
+Publisher/Publisher|v260^b|ED_|Q
+Year|v260^c|DT_|A
+ISBN/ISSN|v20^a|IS_|Q
+Author|v100^a[1]|AU_|Q
+Institutional author|v110^a[1]|AI_|Q
+Title|v245^a': 'v245^b|TI_|Q
+Subject (Subject)|v650^a|MA_|Q
