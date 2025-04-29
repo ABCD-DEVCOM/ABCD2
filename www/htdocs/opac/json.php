@@ -18,7 +18,7 @@ function buscarIndiceBase($base, $letra, $db_path, $xWxis, $ABCD_scripts_path, $
     $arrHttp["Opcion"] = "buscar";
 
     $query_param = "&base=" . $arrHttp["base"];
-    $query_param .= "&count=5000";
+    $query_param .= "&count=1000";
     $query_param .= "&cipar=" . $db_path . "par/" . $arrHttp["cipar"];
     $query_param .= "&prefijo=" . $prefixo;
     $query_param .= "&letra=" . $letra;
@@ -105,6 +105,7 @@ $termos_formatados = [];
 
 foreach ($ocurrencias as $termo => $quantidade) {
     $termo_sem_prefixo = preg_replace('/^TW_/', '', $termo); // Remove "TW_"
+    //$termo_sem_prefixo = trim(preg_replace(['/^[^_]*_/', '/[:,\/.]/'], ' ', $termo_sem_prefixo), " )(");
     $termo_formatado = ucfirst(strtolower($termo_sem_prefixo)); // Normaliza capitalização
 
     if (!empty($termo_formatado)) {
@@ -115,6 +116,8 @@ foreach ($ocurrencias as $termo => $quantidade) {
 // Remove duplicates and correct encoding
 $termos_formatados = array_unique($termos_formatados);
 $termos_formatados = utf8ize($termos_formatados);
+
+
 
 echo json_encode(array_values($termos_formatados), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 exit;
