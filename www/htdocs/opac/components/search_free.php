@@ -63,7 +63,7 @@ if (!isset($mostrar_libre) or $mostrar_libre != "N") {
 					<label class="text-secondary"><?php echo $msgstr["front_resultados_inc"] ?> </label>
 
 					<?php
-					$alcance = $_REQUEST['alcance'] ?? 'or'; // Get alcance or default to 'or'
+					$alcance = $_REQUEST['alcance'] ?? 'and'; // Get alcance or default to 'or'
 					?>
 
 					<div class="form-check">

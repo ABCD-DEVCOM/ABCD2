@@ -3,19 +3,20 @@
 function limpar_termo($termo)
 {
     // 1. Remove acentos
-    $termo = iconv('UTF-8', 'ASCII//TRANSLIT', $termo);
+    $termo = removeacentos($termo);
 
-    // 2. Remove caracteres especiais que causam erro na busca
-    $termo = preg_replace('/[^a-zA-Z0-9\s]/', '', $termo);
+    // 2. Substitui pontuações e símbolos por espaço
+    $termo = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $termo);
 
-    // 3. (Opcional) Tudo minúsculo
+    // 3. Deixa tudo minúsculo
     $termo = strtolower($termo);
 
-    // 4. Remove espaços duplicados
-    $termo = preg_replace('/\s+/', '', $termo);
+    // 4. Substitui múltiplos espaços por um único espaço
+    $termo = preg_replace('/\s+/', ' ', $termo);
 
     return trim($termo);
 }
+
 
 
 function construir_expresion()
@@ -26,11 +27,11 @@ function construir_expresion()
 
         $sub_expresion = trim($_REQUEST['Sub_Expresion']); // Remove espaços extras
 
-        $busqueda_decode = mb_convert_encoding($sub_expresion, 'ISO-8859-1', 'UTF-8');
+        // Primeiro limpar toda a expressão
+        $sub_expresion_limpa = limpar_termo($sub_expresion);
 
-        //$termos = explode(" ", $busqueda_decode);
-        $termos_brutos = explode(" ", $busqueda_decode);
-        $termos = array_map('limpar_termo', $termos_brutos);
+        // Agora sim explodir
+        $termos = explode(' ', $sub_expresion_limpa);
 
         $total_termos = count($termos);
 
@@ -43,7 +44,13 @@ function construir_expresion()
 
         switch ($_REQUEST["Opcion"]) {
             case "directa":
+                if (isset($_REQUEST['Sub_Expresion'])) {
+                $expresion = $_REQUEST["prefijo"].urldecode($_REQUEST["Sub_Expresion"]);
+            } else {
                 $expresion = urldecode($_REQUEST["Expresion"]);
+            }
+
+            
                 if (isset($_REQUEST["titulo_c"]))
                     $_REQUEST["titulo_c"] = urldecode($_REQUEST["titulo_c"]);
                 $afinarBusqueda = "N";
@@ -169,7 +176,6 @@ function construir_expresion()
 
                 foreach ($termos as $indice => $termo) {
                     $expresion .= $prefixo . $termo;
-                    //$expresion .= 'TW_maria"*"TW_oliveira"*"TW_eduardo"*"TW_alunos"';
                     if ($indice < $total_termos - 1) { // Verifica se não é o último termo
                         $expresion .= " " . $operador . " ";
                     }

@@ -84,9 +84,11 @@ function facetas()
                             $negrito = 'font-weight: bold;';
                         }
 
+                        $termoFaceta = trim(preg_replace(['/^[^_]*_/', '/[:\/.]/'], '', $termo), " )(");
+
                         echo '<li class="list-group-item py-1 px-2 d-flex justify-content-between align-items-center" style="border: none; border-bottom: 1px solid #eee;">';
                         echo '<a href="javascript:RefinF(\'' . $faceta_atual . '\', \'' . $expresionClean . '\',\'' . $base_atual . '\')" style="text-decoration: none; color: inherit; ' . $negrito . '">';
-                        echo '<span class="text-secondary" style="font-size: 1rem;">➕</span> ' . htmlspecialchars($termo) . ' (' . $quantidade . ')';
+                        echo '<span class="text-secondary" style="font-size: 1rem;">➕</span> ' . htmlspecialchars($termoFaceta) . ' (' . $quantidade . ')';
                         echo '</a>';
                         echo '</li>';
                     }
