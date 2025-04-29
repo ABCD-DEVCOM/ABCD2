@@ -2,30 +2,86 @@
 include("conf_opac_top.php");
 $wiki_help = "OPAC-ABCD DCXML";
 include "../../common/inc_div-helper.php";
-?>
 
-<script>
-    var idPage = "general";
-</script>
+// Função para obter localização via ip-api.com
+function geoLocalizacao($ip)
+{
+    $url = "http://ip-api.com/json/{$ip}?fields=status,message,lat,lon,city,regionName,country";
+    $resposta = @file_get_contents($url);
+    if ($resposta === FALSE) {
+        return false;
+    }
+    $dados = json_decode($resposta, true);
+    if ($dados && $dados['status'] === 'success') {
+        return [
+            'local' => $dados['city'] . ", " . $dados['regionName'] . ", " . $dados['country'],
+            'lat' => $dados['lat'],
+            'lon' => $dados['lon']
+        ];
+    }
+    return false;
+}
 
-<?php
+// Lendo o log
 $arquivo = $db_path . "/opac_conf/logs/log_opac.txt";
 $linhas = file_exists($arquivo) ? file($arquivo) : [];
 
 $registros = [];
+$contagem_termos = [];
+$contagem_cidades = [];
+$ips_unicos = [];
 
 foreach ($linhas as $linha) {
     $dados = explode("\t", trim($linha));
     if (count($dados) >= 3) {
+        $datahora = $dados[0];
+        $ip = $dados[1];
+        $termo = strtolower(trim($dados[2]));
+
+        if (!isset($ips_unicos[$ip])) {
+            $geo = geoLocalizacao($ip);
+            $ips_unicos[$ip] = $geo ?: ['local' => 'Desconhecido', 'lat' => null, 'lon' => null];
+        }
+
+        $local = $ips_unicos[$ip]['local'];
+
+        if ($local !== 'Desconhecido') {
+            if (!isset($contagem_cidades[$local])) {
+                $contagem_cidades[$local] = 1;
+            } else {
+                $contagem_cidades[$local]++;
+            }
+        }
+
         $registros[] = [
-            'datahora' => $dados[0],
-            'ip' => $dados[1],
-            'termo' => htmlspecialchars($dados[2])
+            'datahora' => $datahora,
+            'ip' => $ip,
+            'local' => $local,
+            'termo' => htmlspecialchars($termo)
         ];
+
+        if ($termo != '') {
+            if (!isset($contagem_termos[$termo])) {
+                $contagem_termos[$termo] = 1;
+            } else {
+                $contagem_termos[$termo]++;
+            }
+        }
     }
 }
-?>
 
+// Ordenar registros do mais recente para o mais antigo
+usort($registros, function ($a, $b) {
+    return strtotime($b['datahora']) - strtotime($a['datahora']);
+});
+
+// Top 5 termos e cidades
+arsort($contagem_termos);
+$top_termos = array_slice($contagem_termos, 0, 5, true);
+
+arsort($contagem_cidades);
+$top_cidades = array_slice($contagem_cidades, 0, 5, true);
+?>
 <div class="middle form row m-0">
     <div class="formContent col-2 m-2">
         <?php include("conf_opac_menu.php"); ?>
@@ -47,51 +103,129 @@ foreach ($linhas as $linha) {
                 <input type="text" id="filtroTermo" class="form-control" style="max-width: 300px; display: inline-block;">
             </div>
 
-            <table class="table striped" id="tabelaLog">
+            <h5>Listagem de Pesquisas:</h5>
+            <table class="table striped w-10" id="tabelaLog">
                 <thead>
                     <tr>
-                        <th id="thData" style="cursor: pointer;">Data/Hora <span id="iconData"></span></th>
-                        <th>IP</th>
-                        <th id="thTermo" style="cursor: pointer;">Termo Pesquisado <span id="iconTermo"></span></th>
+                        <th class="w-1">Data/Hora</th>
+                        <th class="w-2">IP</th>
+                        <th class="w-3">Localização</th>
+                        <th class="w-3">Termo Pesquisado</th>
                     </tr>
                 </thead>
                 <tbody id="corpoTabela">
                     <?php foreach ($registros as $registro): ?>
                         <tr>
-                            <td><?= $registro['datahora'] ?></td>
-                            <td><?= $registro['ip'] ?></td>
-                            <td><?= $registro['termo'] ?></td>
+                            <td><?php echo $registro['datahora']; ?></td>
+                            <td><?php echo $registro['ip']; ?></td>
+                            <td><?php echo htmlspecialchars($ips_unicos[$registro['ip']]['local'] ?? 'Desconhecido'); ?></td>
+                            <td><?php echo $registro['termo']; ?></td>
                         </tr>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <div id="paginacaoTabelaLog" class="mt-2">
+                <button id="anteriorTabelaLog" class="btn btn-primary btn-sm me-2">Anterior</button>
+                <span id="paginaAtualTabelaLog"></span>
+                <button id="proximoTabelaLog" class="btn btn-primary btn-sm ms-2">Próximo</button>
+            </div>
+
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <h5>Top 5 Termos Pesquisados</h5>
+                    <table class="table striped w-10">
+                        <thead>
+                            <tr>
+                                <th>Termo</th>
+                                <th>Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($top_termos as $termo => $qtd): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($termo); ?></td>
+                                    <td><?php echo $qtd; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <h5>Top 5 Cidades</h5>
+                    <table class="table striped">
+                        <thead>
+                            <tr>
+                                <th>Cidade</th>
+                                <th>Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($top_cidades as $cidade => $qtd): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($cidade); ?></td>
+                                    <td><?php echo $qtd; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h5 class="mt-5">Mapa de Localizações</h5>
+            <div id="mapa" style="height: 500px;"></div>
+
         </div>
     </div>
 </div>
 
 <?php include("../../common/footer.php"); ?>
 
+<!-- Leaflet CSS e JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-    const tabela = document.getElementById('tabelaLog');
-    const corpoTabela = document.getElementById('corpoTabela');
+    document.addEventListener('DOMContentLoaded', function() {
+        const mapa = L.map('mapa').setView([-15, -47], 3); // Brasil centrado
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(mapa);
+
+        const marcadores = [
+            <?php foreach ($ips_unicos as $ip => $dados): ?>
+                <?php if ($dados['lat'] !== null && $dados['lon'] !== null): ?> {
+                        lat: <?php echo $dados['lat']; ?>,
+                        lon: <?php echo $dados['lon']; ?>,
+                        local: "<?php echo htmlspecialchars($dados['local'], ENT_QUOTES); ?>",
+                        ip: "<?php echo $ip; ?>"
+                    },
+                <?php endif; ?>
+            <?php endforeach; ?>
+        ];
+
+        marcadores.forEach(m => {
+            L.marker([m.lat, m.lon])
+                .addTo(mapa)
+                .bindPopup(`<b>${m.local}</b><br>IP: ${m.ip}`);
+        });
+    });
+
+    // Filtros de data/termo
     const filtroData = document.getElementById('filtroData');
     const filtroTermo = document.getElementById('filtroTermo');
-
-    let linhasOriginais = Array.from(corpoTabela.querySelectorAll('tr'));
-    let ordemDataAsc = true;
-    let ordemTermoAsc = true;
+    const corpoTabela = document.getElementById('corpoTabela');
+    const linhasOriginais = Array.from(corpoTabela.querySelectorAll('tr'));
 
     function parseDataHora(texto) {
-        if (!texto) return null;
         var partes = texto.split(' ');
-        if (partes.length === 0) return null;
-        var dataPartes = partes[0].split('-'); // yyyy-mm-dd
-        if (dataPartes.length < 3) return null;
-        return new Date(
-            parseInt(dataPartes[0], 10),
-            parseInt(dataPartes[1], 10) - 1,
-            parseInt(dataPartes[2], 10)
-        );
+        if (partes.length < 2) return null;
+        var dataPartes = partes[0].split('-');
+        return new Date(dataPartes[0], dataPartes[1] - 1, dataPartes[2]);
     }
 
     function aplicarFiltros() {
@@ -100,11 +234,9 @@ foreach ($linhas as $linha) {
 
         let hoje = new Date();
         let dataInicioFiltro = null;
-        let dataFimFiltro = null;
 
         if (periodo === "hoje") {
-            dataInicioFiltro = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate(), 0, 0, 0);
-            dataFimFiltro = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate(), 23, 59, 59);
+            dataInicioFiltro = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
         } else if (periodo === "7dias") {
             dataInicioFiltro = new Date();
             dataInicioFiltro.setDate(hoje.getDate() - 7);
@@ -118,21 +250,16 @@ foreach ($linhas as $linha) {
         linhasOriginais.forEach(linha => {
             const td = linha.querySelectorAll('td');
             const dataTexto = td[0].textContent.trim();
-            const termoTexto = td[2].textContent.trim().toLowerCase();
+            const termoTexto = td[3].textContent.trim().toLowerCase();
 
             let mostrar = true;
-
             const dataRegistro = parseDataHora(dataTexto);
 
             if (periodo !== "todos" && dataRegistro) {
-                if (periodo === "hoje") {
-                    mostrar = dataRegistro >= dataInicioFiltro && dataRegistro <= dataFimFiltro;
-                } else {
-                    mostrar = dataRegistro >= dataInicioFiltro;
-                }
+                mostrar = dataRegistro >= dataInicioFiltro;
             }
 
-            if (mostrar && termoBusca) {
+            if (mostrar && termoBusca.length > 0) {
                 mostrar = termoTexto.includes(termoBusca);
             }
 
@@ -144,40 +271,102 @@ foreach ($linhas as $linha) {
 
     filtroData.addEventListener('change', aplicarFiltros);
     filtroTermo.addEventListener('input', aplicarFiltros);
+</script>
 
-    function ordenarTabela(coluna, ascendente) {
-        const linhas = Array.from(corpoTabela.querySelectorAll('tr'));
-        linhas.sort((a, b) => {
-            const valA = a.children[coluna].textContent.trim().toLowerCase();
-            const valB = b.children[coluna].textContent.trim().toLowerCase();
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtroData = document.getElementById('filtroData');
+        const filtroTermo = document.getElementById('filtroTermo');
+        const corpoTabela = document.getElementById('corpoTabela');
+        const todasLinhas = Array.from(corpoTabela.querySelectorAll('tr'));
 
-            if (coluna === 0) { // Data
-                return ascendente ? new Date(valA) - new Date(valB) : new Date(valB) - new Date(valA);
-            } else { // Termo
-                return ascendente ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        const linhasPorPagina = 20;
+        let paginaAtual = 1;
+        let linhasFiltradas = [...todasLinhas]; // Começa com tudo
+
+        function parseDataHora(texto) {
+            const partes = texto.split(' ');
+            if (partes.length < 2) return null;
+            const dataPartes = partes[0].split('-');
+            return new Date(dataPartes[0], dataPartes[1] - 1, dataPartes[2]);
+        }
+
+        function aplicarFiltros() {
+            const periodo = filtroData.value;
+            const termoBusca = filtroTermo.value.trim().toLowerCase();
+            const hoje = new Date();
+            let dataInicioFiltro = null;
+
+            if (periodo === "hoje") {
+                dataInicioFiltro = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+            } else if (periodo === "7dias") {
+                dataInicioFiltro = new Date();
+                dataInicioFiltro.setDate(hoje.getDate() - 7);
+            } else if (periodo === "30dias") {
+                dataInicioFiltro = new Date();
+                dataInicioFiltro.setDate(hoje.getDate() - 30);
+            }
+
+            linhasFiltradas = todasLinhas.filter(linha => {
+                const td = linha.querySelectorAll('td');
+                const dataTexto = td[0].textContent.trim();
+                const termoTexto = td[3].textContent.trim().toLowerCase();
+
+                let mostrar = true;
+                const dataRegistro = parseDataHora(dataTexto);
+
+                if (periodo !== "todos" && dataRegistro) {
+                    mostrar = dataRegistro >= dataInicioFiltro;
+                }
+
+                if (mostrar && termoBusca.length > 0) {
+                    mostrar = termoTexto.includes(termoBusca);
+                }
+
+                return mostrar;
+            });
+
+            paginaAtual = 1; // Sempre voltar para a página 1 após filtro
+            exibirPagina();
+        }
+
+        function exibirPagina() {
+            corpoTabela.innerHTML = '';
+
+            const inicio = (paginaAtual - 1) * linhasPorPagina;
+            const fim = inicio + linhasPorPagina;
+            const linhasPagina = linhasFiltradas.slice(inicio, fim);
+
+            linhasPagina.forEach(linha => {
+                corpoTabela.appendChild(linha);
+            });
+
+            const totalPaginas = Math.max(1, Math.ceil(linhasFiltradas.length / linhasPorPagina));
+            document.getElementById('paginaAtualTabelaLog').textContent = `Página ${paginaAtual} de ${totalPaginas}`;
+
+            // Desabilitar botões se necessário
+            document.getElementById('anteriorTabelaLog').disabled = paginaAtual <= 1;
+            document.getElementById('proximoTabelaLog').disabled = paginaAtual >= totalPaginas;
+        }
+
+        document.getElementById('anteriorTabelaLog').addEventListener('click', () => {
+            if (paginaAtual > 1) {
+                paginaAtual--;
+                exibirPagina();
             }
         });
 
-        linhas.forEach(linha => corpoTabela.appendChild(linha));
-    }
+        document.getElementById('proximoTabelaLog').addEventListener('click', () => {
+            const totalPaginas = Math.ceil(linhasFiltradas.length / linhasPorPagina);
+            if (paginaAtual < totalPaginas) {
+                paginaAtual++;
+                exibirPagina();
+            }
+        });
 
-    document.getElementById('thData').addEventListener('click', () => {
-        ordenarTabela(0, ordemDataAsc);
-        ordemDataAsc = !ordemDataAsc;
-        atualizarIcones();
+        filtroData.addEventListener('change', aplicarFiltros);
+        filtroTermo.addEventListener('input', aplicarFiltros);
+
+        aplicarFiltros(); // Primeira carga
     });
-
-    document.getElementById('thTermo').addEventListener('click', () => {
-        ordenarTabela(2, ordemTermoAsc);
-        ordemTermoAsc = !ordemTermoAsc;
-        atualizarIcones();
-    });
-
-    function atualizarIcones() {
-        document.getElementById('iconData').textContent = ordemDataAsc ? '↑' : '↓';
-        document.getElementById('iconTermo').textContent = ordemTermoAsc ? '↑' : '↓';
-    }
-
-    // Inicializa ícones
-    atualizarIcones();
 </script>
