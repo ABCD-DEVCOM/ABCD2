@@ -12,6 +12,9 @@ if (basename($_SERVER["SCRIPT_FILENAME"]) == "index.php"){
 	<input type="hidden" name="page" value="startsearch" >
 	<?php if (isset($_REQUEST["alcance"])) echo	'<input type="hidden" name="alcance" value="'.$_REQUEST["alcance"].'">';?>
 <?php if (isset($_REQUEST["Formato"])) echo "<input type=hidden name=Formato value=\"" . $_REQUEST["Formato"] . "\">\n"; ?>
+<?php if (isset($_REQUEST["pagina"])) echo "<input type=hidden name=pagina value=\"" . $_REQUEST["pagina"] . "\">\n"; ?>
+<?php if (isset($_REQUEST["desde"])) echo "<input type=hidden name=desde value=\"" . $_REQUEST["desde"] . "\">\n"; ?>
+<?php if (isset($_REQUEST["count"])) echo "<input type=hidden name=count value=\"" . $_REQUEST["count"] . "\">\n"; ?>
 
 	<input type="hidden" name="integrada" value="<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"] ?>">
 	<input type="hidden" name="modo" value="1B0" >
@@ -212,7 +215,7 @@ if (isset($_REQUEST["prefijo"])) {
 		echo '<input type=hidden name="'.$key.'" value="'.$value.'">';
 	}
 	if (!isset($lang))
-		echo "<input type=hidden name=lang value=''>\n";
+		echo "<input type='hidden' name='lang'>\n";
 	?>
 </form>
 
