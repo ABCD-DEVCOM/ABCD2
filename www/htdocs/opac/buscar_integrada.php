@@ -367,7 +367,7 @@ if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 			
 		}
 
-		echo '<input type="hidden" name="Expresion" value="'.urlencode($Expresion).'">';
+		echo '<input type="hidden" name="Expresion" value="'.$Expresion.'">';
 		NavegarPaginas($contador,$count,$desde,$select_formato); 
 	?>
 

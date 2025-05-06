@@ -714,5 +714,15 @@ function removerTermo(termoRemover) {
 
 function clearAndRedirect(link) {
 	deleteAllCookies();
-	document.location = link;
+
+	// Tenta obter o parâmetro lang da URL atual
+	const urlParams = new URLSearchParams(window.location.search);
+	const lang = urlParams.get("lang");
+
+	const hasQuery = link.includes("?");
+	const separator = hasQuery ? "&" : "?";
+
+	// Redireciona com o parâmetro lang atual (se houver)
+	const finalLink = lang ? link + separator + "lang=" + encodeURIComponent(lang) : link;
+	document.location = finalLink;
 }
