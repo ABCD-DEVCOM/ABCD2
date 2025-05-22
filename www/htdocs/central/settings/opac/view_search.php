@@ -88,29 +88,29 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
     </div>
     <div class="formContent col-9 m-2">
         <div class="container">
-            <h3>Análise de Pesquisas</h3>
+            <h3><?php echo $msgstr['cfg_Research_Analysis']; ?></h3>
 
             <div class="mb-3">
-                <label for="filtroData">Filtrar por período:</label>
+                <label for="filtroData"><?php echo $msgstr['cfg_filter']; ?></label>
                 <select id="filtroData" class="form-select" style="max-width: 200px; display: inline-block;">
-                    <option value="todos">Todos</option>
-                    <option value="hoje">Hoje</option>
-                    <option value="7dias">Últimos 7 dias</option>
-                    <option value="30dias">Últimos 30 dias</option>
+                    <option value="todos"><?php echo $msgstr['cfg_all']; ?></option>
+                    <option value="hoje"><?php echo $msgstr['cfg_today']; ?></option>
+                    <option value="7dias"><?php echo $msgstr['cfg_last_7days']; ?></option>
+                    <option value="30dias"><?php echo $msgstr['cfg_last_30days']; ?></option>
                 </select>
 
-                <label for="filtroTermo" class="ms-4">Buscar termo:</label>
+                <label for="filtroTermo" class="ms-4"><?php echo $msgstr['cfg_search_term']; ?></label>
                 <input type="text" id="filtroTermo" class="form-control" style="max-width: 300px; display: inline-block;">
             </div>
 
-            <h5>Listagem de Pesquisas:</h5>
+            <h5><?php echo $msgstr['cfg_search_list'] ?></h5>
             <table class="table striped w-10" id="tabelaLog">
                 <thead>
                     <tr>
-                        <th class="w-1">Data/Hora</th>
-                        <th class="w-2">IP</th>
-                        <th class="w-3">Localização</th>
-                        <th class="w-3">Termo Pesquisado</th>
+                        <th class="w-1"><?php echo $msgstr['cfg_date_hour']; ?></th>
+                        <th class="w-2"><?php echo $msgstr['cfg_ip']; ?></th>
+                        <th class="w-3"><?php echo $msgstr['cfg_location']; ?></th>
+                        <th class="w-3"><?php echo $msgstr['cfg_search_term']; ?></th>
                     </tr>
                 </thead>
                 <tbody id="corpoTabela">
@@ -126,20 +126,24 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
             </table>
 
             <div id="paginacaoTabelaLog" class="mt-2">
-                <button id="anteriorTabelaLog" class="btn btn-primary btn-sm me-2">Anterior</button>
+                <button id="anteriorTabelaLog" class="bt bt-green"><i class="fas fa-chevron-left"></i> <?php echo $msgstr['previous']; ?> </button>
                 <span id="paginaAtualTabelaLog"></span>
-                <button id="proximoTabelaLog" class="btn btn-primary btn-sm ms-2">Próximo</button>
+                <button id="proximoTabelaLog" class="bt bt-green"><?php echo $msgstr['next']; ?> <i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="mt-3">
+                <button id="btnExportarCSV" class="bt bt-blue"><i class="far fa-file-excel"></i> <?php echo $msgstr['export_csv']; ?></button>
             </div>
 
 
             <div class="row mt-5">
                 <div class="col-md-6">
-                    <h5>Top 5 Termos Pesquisados</h5>
+                    <h5><?php echo $msgstr['cfg_top5']; ?></h5>
                     <table class="table striped w-10">
                         <thead>
                             <tr>
-                                <th>Termo</th>
-                                <th>Quantidade</th>
+                                <th><?php echo $msgstr['cfg_search_term']; ?></th>
+                                <th><?php echo $msgstr['cfg_quantity']; ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -156,12 +160,12 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
 
             <div class="row mt-5">
                 <div class="col-md-6">
-                    <h5>Top 5 Cidades</h5>
+                    <h5><?php echo $msgstr['cfg_top_cities']; ?></h5>
                     <table class="table striped">
                         <thead>
                             <tr>
-                                <th>Cidade</th>
-                                <th>Quantidade</th>
+                                <th><?php echo $msgstr['cfg_city']; ?></th>
+                                <th><?php echo $msgstr['cfg_quantity']; ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -176,7 +180,7 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
                 </div>
             </div>
 
-            <h5 class="mt-5">Mapa de Localizações</h5>
+            <h5 class="mt-5"><?php echo $msgstr['cfg_map']; ?></h5>
             <div id="mapa" style="height: 500px;"></div>
 
         </div>
@@ -186,8 +190,8 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
 <?php include("../../common/footer.php"); ?>
 
 <!-- Leaflet CSS e JS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="/assets/css/leaflet.css" />
+<script src="/assets/js/leaflet.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -368,5 +372,45 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
         filtroTermo.addEventListener('input', aplicarFiltros);
 
         aplicarFiltros(); // Primeira carga
+    });
+</script>
+
+<script>
+    document.getElementById('btnExportarCSV').addEventListener('click', function() {
+        const tabela = document.getElementById('tabelaLog');
+        let csv = [];
+
+        const linhas = tabela.querySelectorAll('tr');
+        linhas.forEach(linha => {
+            const colunas = linha.querySelectorAll('th, td');
+            let linhaCSV = [];
+            colunas.forEach(celula => {
+                // Escapar aspas duplas e encapsular o valor
+                const texto = celula.textContent.replace(/"/g, '""');
+                linhaCSV.push(`"${texto}"`);
+            });
+            csv.push(linhaCSV.join(','));
+        });
+
+        const conteudoCSV = csv.join('\n');
+
+        // Gerar nome de arquivo com data/hora atual
+        const agora = new Date();
+        const pad = n => n.toString().padStart(2, '0');
+        const data = `${agora.getFullYear()}${pad(agora.getMonth()+1)}${pad(agora.getDate())}`;
+        const hora = `${pad(agora.getHours())}${pad(agora.getMinutes())}`;
+        const nomeArquivo = `opac_analytics_${data}-${hora}.csv`;
+
+        // Criar e disparar download
+        const blob = new Blob([conteudoCSV], {
+            type: 'text/csv;charset=utf-8;'
+        });
+        const link = document.createElement("a");
+        link.setAttribute("href", URL.createObjectURL(blob));
+        link.setAttribute("download", nomeArquivo);
+        link.style.display = "none";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
 </script>
