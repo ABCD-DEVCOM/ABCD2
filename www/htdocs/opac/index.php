@@ -38,6 +38,8 @@ include("head.php");
 
 if (isset($_REQUEST["cookie"])) {
 	include("views/view_selection.php");
+}  elseif (isset($_REQUEST["k"])) {
+	include("components/permalink.php");
 }  elseif ((isset($_REQUEST["indice"])) and  $_REQUEST["indice"]==="yes" ){
 	$startpage="N";
 	include("views/alfabetico.php");

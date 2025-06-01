@@ -1,3 +1,14 @@
+<!-- Bibliotecas necessárias -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#tabelaLog').DataTable();
+    });
+</script>
+
+
 <?php
 include("conf_opac_top.php");
 $wiki_help = "OPAC-ABCD DCXML";
@@ -125,8 +136,13 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
                 </tbody>
             </table>
 
+            <script>
+                const dadosCSV = <?php echo json_encode($registros, JSON_UNESCAPED_UNICODE); ?>;
+            </script>
+
+
             <div id="paginacaoTabelaLog" class="mt-2">
-                <button id="anteriorTabelaLog" class="bt bt-green"><i class="fas fa-chevron-left"></i> <?php echo $msgstr['previous']; ?> </button>
+                <button id="anteriorTabelaLog" class="bt bt-green"><i class="fas fa-chevron-left"></i> <?php echo $msgstr['previous']; ?></button>
                 <span id="paginaAtualTabelaLog"></span>
                 <button id="proximoTabelaLog" class="bt bt-green"><?php echo $msgstr['next']; ?> <i class="fas fa-chevron-right"></i></button>
             </div>
@@ -375,24 +391,21 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
     });
 </script>
 
+<!-- Botão Exportar CSV -->
 <script>
     document.getElementById('btnExportarCSV').addEventListener('click', function() {
-        const tabela = document.getElementById('tabelaLog');
-        let csv = [];
+        let csv = 'Data/Hora;IP;Localização;Termo Pesquisado\n';
 
-        const linhas = tabela.querySelectorAll('tr');
-        linhas.forEach(linha => {
-            const colunas = linha.querySelectorAll('th, td');
-            let linhaCSV = [];
-            colunas.forEach(celula => {
-                // Escapar aspas duplas e encapsular o valor
-                const texto = celula.textContent.replace(/"/g, '""');
-                linhaCSV.push(`"${texto}"`);
-            });
-            csv.push(linhaCSV.join(','));
+        dadosCSV.forEach(linha => {
+            const linhaCSV = [
+                linha.datahora,
+                linha.ip,
+                linha.local,
+                linha.termo.replace(/;/g, ',') // evita quebra do CSV
+            ].join(';');
+            csv += linhaCSV + '\n';
         });
 
-        const conteudoCSV = csv.join('\n');
 
         // Gerar nome de arquivo com data/hora atual
         const agora = new Date();
@@ -401,14 +414,12 @@ $top_cidades = array_slice($contagem_cidades, 0, 5, true);
         const hora = `${pad(agora.getHours())}${pad(agora.getMinutes())}`;
         const nomeArquivo = `opac_analytics_${data}-${hora}.csv`;
 
-        // Criar e disparar download
-        const blob = new Blob([conteudoCSV], {
+        const blob = new Blob([csv], {
             type: 'text/csv;charset=utf-8;'
         });
-        const link = document.createElement("a");
-        link.setAttribute("href", URL.createObjectURL(blob));
-        link.setAttribute("download", nomeArquivo);
-        link.style.display = "none";
+        const link = document.createElement('a');
+        link.setAttribute('href', URL.createObjectURL(blob));
+        link.setAttribute('download', nomeArquivo);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

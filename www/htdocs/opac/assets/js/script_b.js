@@ -476,21 +476,29 @@ function SendTo(Accion,Data){
 	document.buscar.submit()
 }
 
-function ChangeLanguage(){
-
-	var lang = document.getElementById("lang");
+function ChangeLanguage() {
+	var langSelect = document.getElementById("lang");
+	var langcode = langSelect.options[langSelect.selectedIndex].value;
 	var actualScript = window.location.pathname;
-	langcode=lang.options[lang.selectedIndex].value
-	for (i=0;i<document.forms.length;i++){
-		document.forms[i].lang.value=langcode
+
+	// Atualiza todos os formulários que tenham campo "lang"
+	for (var i = 0; i < document.forms.length; i++) {
+		if (document.forms[i].elements["lang"]) {
+			document.forms[i].elements["lang"].value = langcode;
+		}
 	}
 
-
-	document.changelanguage.action=actualScript
-	document.changelanguage.submit()
-	console.log("The opac is in language:"+langcode);
-
+	// Verifica se o formulário changelanguage existe
+	if (document.forms["changelanguage"]) {
+		document.forms["changelanguage"].elements["lang"].value = langcode;
+		document.forms["changelanguage"].action = actualScript;
+		document.forms["changelanguage"].submit();
+		console.log("The OPAC is in language: " + langcode);
+	} else {
+		console.warn("Formulário 'changelanguage' não encontrado.");
+	}
 }
+
 /*
 function openNavFacetas() {
   document.getElementById("SidenavFacetas").style.width = "200px";
@@ -726,3 +734,32 @@ function clearAndRedirect(link) {
 	const finalLink = lang ? link + separator + "lang=" + encodeURIComponent(lang) : link;
 	document.location = finalLink;
 }
+
+
+// MODAL PERMALINK
+
+	document.addEventListener('DOMContentLoaded', function () {
+        var modal = new bootstrap.Modal(document.getElementById('registroModal'));
+	modal.show();
+    });
+
+	function copiarLink() {
+        const url = window.location.href;
+	const btn = document.getElementById('btnCopiar');
+	const originalHTML = btn.innerHTML;
+
+        navigator.clipboard.writeText(url).then(() => {
+		// Feedback visual com ícone de check
+			btn.innerHTML = '<i class="fas fa-clipboard"></i> Copiado!';
+			btn.classList.remove('btn-outline-primary');
+			btn.classList.add('btn-success');
+
+            setTimeout(() => {
+				btn.innerHTML = '<i class="far fa-clipboard"></i> Copiar link direto';
+				btn.classList.remove('btn-success');
+				btn.classList.add('btn-outline-primary');
+            }, 2000);
+        }).catch(err => {
+		alert("Erro ao copiar: " + err);
+        });
+    }
