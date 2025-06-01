@@ -36,7 +36,6 @@ $contador=0;
 $control_entrada=0;
 foreach ($list as $value){
 	$value=trim($value);
-	echo $value;
 	if ($value!="")	{
 		$x=explode('_=',$value);
 		$seleccion[$x[1]][]=$x[2];
