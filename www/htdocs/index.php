@@ -13,6 +13,7 @@
 20230223 fho4abcd Check for existence of config.php
 20230602 fho4abcd Add captcha
 20250305 fho4abcd Use current username: makes filling login form more easy
+20250801 fho4abcd Do not rely on existence HTTP_ACCEPT_LANGUAGE: some browsers do not send it
 */
 session_start();
 $_SESSION=array();
@@ -24,7 +25,10 @@ $new_window=time();
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
 $lang_config=$lang; // save the configured language to preset it later
-$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])){
+    $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+    //echo "HTTP_ACCEPT_LANGUAGE=$lang<br>";
+}
 
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
