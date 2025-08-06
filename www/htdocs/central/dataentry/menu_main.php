@@ -14,6 +14,7 @@
 2024-04-02 fho4abcd More translations, layout
 2024-06-06 fho4abcd Free search->Search, result in list
 2025-02-12 rogercgui Check if the.fst file exists before trying to open it
+2025-08-05 fho4abcd Store fst data in array (corrupted by last change), add minimal comment
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -34,9 +35,10 @@ if (file_exists($fst_path)) {
   $fst_file = file($fst_path);
 
   $prefix_W="";
+  // Store fst lines in array
   foreach ($fst_file as $value){
       if (trim($value)!=""){
-          $fst=trim($value);
+          $fst[]=trim($value);
       }
   }
 } else {
@@ -216,8 +218,8 @@ function GenerarWks(){
                             $y[2]=$y[2].'|';
                             $linea=str_replace("  "," ",$linea);
                             $it=explode(" ",$linea);
-                            if ($it[1]==8)
-                                $y[2].='W';
+			    // If fst inedx is "by word" add 'W'"
+                            if ($it[1]==8) $y[2].='W';
                             break;
                         }
                     }

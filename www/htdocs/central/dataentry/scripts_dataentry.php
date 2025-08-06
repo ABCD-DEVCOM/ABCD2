@@ -10,6 +10,7 @@
 20230210 fho4abcd Improve text in breadcrumb
 20240103 fho4abcd Add leading zero's to tag if necessary in function Ayuda
 20250221 fho4abcd Check password extended with check for wrong characters (like in change_password.php)
+20250805 fho4abcd Removed unused statement in function toggle
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -163,7 +164,8 @@ function switchMenu(obj,ixsec) {
 
 	function toggle(showHideDiv, switchTextDiv) {
 		var ele = document.getElementById(showHideDiv);
-		var text = document.getElementById(switchTextDiv);
+		/* next variable is not used (since ABCD 1.4)
+		var text = document.getElementById(switchTextDiv);*/
 		if(ele.style.display == "block") {
 	    	ele.style.display = "none";
 	  	}

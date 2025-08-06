@@ -1,4 +1,7 @@
 <?php
+/* modifications
+20250806 fho4abcd Improved html code
+*/
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -6,8 +9,8 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../config.php");
 include("../lang/admin.php");
-echo "<html><title>Test FDT</title>
-<script language=javascript src=js/popcalendar.js></script>\n";
+include("../common/header.php");
+// This script runs always inside a frame: no institutional info
 unset ($_SESSION["valdef"]);
 echo "<br><br><center><h4>".$msgstr["valdef"]." ".$msgstr["eliminados"];
 
