@@ -1,5 +1,6 @@
 biblo.*=%path_database%biblo/data/biblo.*
 marc.*=%path_database%marc/data/marc.*
+htmlgizmo.*=%path_database%biblo/data/htmlgizmo.*
 copies.*=%path_database%copies/data/copies.*
 biblo.pft=c%path_database%biblo/www/biblo.pft
 prologoact.pft=%path_database%www/prologoact.pft

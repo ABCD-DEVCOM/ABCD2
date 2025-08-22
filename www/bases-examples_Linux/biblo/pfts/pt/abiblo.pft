@@ -7,7 +7,7 @@
 '<tr>'
 '<td valign=top  class=td colspan=2>',/
 '<br>'/ 
- (if p(v800) then '<img src="../../bases/biblo/imagen/'v800^*'"  width=150><br>' else '<ximg src=../imagenes/blank.gif width=150>' / fi/)
+ (if p(v800) then '<img src="/docs/biblo/collection/imagen/'v800^*'"  width=150><br>' else '<ximg src=../imagenes/blank.gif width=150>' / fi/)
 '</td>'
 '<td width=1%  align=center> </td>'
 '<td   align=left valign=top width=84% class=td>'/
@@ -231,8 +231,8 @@ if  p(v36)  then
  '</div></div>'/    
    fi/
 '<p>'
-	(if p(v810) then '<a href="../../bases/biblo/texto/'v810^*'" target=top>'/if p(v810^d) then v810^d else v810^* fi'</a><br>' fi/)/
-	(if p(v800) then '<a href="../../bases/biblo/imagen/'v800^*'" target=top>'/if p(v800^d) then v800^d else v800^* fi'</a><br>' fi/)/
+	(if p(v810) then '<a href="/docs/biblo/collection/texto/'v810^*'" target=top>'/if p(v810^d) then v810^d else v810^* fi'</a><br>' fi/)/
+	(if p(v800) then '<a href="/docs/biblo/collection/imagen/'v800^*'" target=top>'/if p(v800^d) then v800^d else v800^* fi'</a><br>' fi/)/
 	(if p(v840) then '<a href="'v840^*'" target=top>'/if p(v840^d) then v840^d else v840^* fi'</a><br>' fi/)/
 
 '</center>'
