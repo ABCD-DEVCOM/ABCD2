@@ -1,131 +1,125 @@
 <?php
+
 /**
  * @program:   ABCD - ABCD-Central - https://abcd-community.org/
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      sanctions_inc.php
  * @desc:      Calculate suspenctions and fines
  * @author:    Guilda Ascencio
+ * @contributor: Roger Craveiro Guilherme
  * @since:     20091203
  * @version:   2.2
  * 
- * 20230414 rogercgui Field 50 of the suspml database now stores the information available in field 85 of the Trans database and no longer from the Lending Policies as in previous versions.
-*/
+ * CHANGE LOG:
+ * 2023-04-14 rogercgui Field 50 of the suspml database now stores the information available in field 85 of the Trans database and no longer from the Lending Policies as in previous versions.
+ * 2025-08-23 rogercgui Fix TypeError and Undefined array key errors.
+ */
 
 include("functions.php");
 require_once("fecha_de_devolucion.php");
 
 
-function AcumularSuspensiones(){
-global $Wxis,$xWxis,$wxisUrl,$db_path,$locales,$arrHttp,$msgstr;
-	$formato_obj="v1'|',v10'|',v20'|',v30'|',v40'|',v50'|',v60'|',mhl,v100'|',f(mfn,1,0)/";
-	$Expresion="TR_S_".$arrHttp["usuario"]." and ST_0";
-	$query = "&Expresion=$Expresion"."&base=suspml&cipar=$db_path"."par/suspml.par&Pft=".$formato_obj;
-	$IsisScript=$xWxis."cipres_usuario.xis";
+function AcumularSuspensiones()
+{
+	global $Wxis, $xWxis, $wxisUrl, $db_path, $locales, $arrHttp, $msgstr;
+	$formato_obj = "v1'|',v10'|',v20'|',v30'|',v40'|',v50'|',v60'|',mhl,v100'|',f(mfn,1,0)/";
+	$Expresion = "TR_S_" . $arrHttp["usuario"] . " and ST_0";
+	$query = "&Expresion=$Expresion" . "&base=suspml&cipar=$db_path" . "par/suspml.par&Pft=" . $formato_obj;
 	include("../common/wxis_llamar.php");
-	$susp=array();
-	$multa=array();
-	$nota=array();
-	$fecha_desde=date("Ymd");
-	foreach ($contenido as $linea){
-		$p=explode('|',$linea);
-		if (isset($p[6])and $p[6]!=""){
-			if ($p[6]>$fecha_desde)
-				$fecha_desde=$p[6];
+	return $contenido;
+}
+
+
+function Sanciones($fecha_d, $atraso, $cod_usuario, $inventario, $ppres, $ncontrol, $bd, $tipo_usuario, $tipo_objeto, $politica_str, $referencia, $Mfn_reserva = "", $reservado = "")
+{
+	global $Wxis, $xWxis, $wxisUrl, $db_path, $locales, $arrHttp, $msgstr;
+
+	$p = explode('|', $ppres);
+	$u_multa = 0;
+	$u_suspension = 0;
+	$u_multa_r = 0;
+	$u_suspension_r = 0;
+
+	if (isset($p[7])) $u_multa = (int)$p[7];
+	if (isset($p[8])) $u_multa_r = (int)$p[8];
+	if (isset($p[9])) $u_suspension = (int)$p[9];
+	if (isset($p[10])) $u_suspension_r = (int)$p[10];
+	$fine_value = 0;
+	if ($Mfn_reserva != "" or $reservado != "") {
+		if ($u_suspension_r > 0) $u_suspension = $u_suspension_r;
+		if ($u_multa_r > 0)      $u_multa = $u_multa_r;
+	}
+	if (isset($locales['FINE_VAL']))
+		$fine_value = trim($locales['FINE_VAL']);
+	else
+		$fine_value = 0;
+	$ValorCapturado = "";
+	$total_fine = 0;
+	$total_susp = 0;
+	$ixdiv = 1;
+	if (isset($locales["decimals"])) $ixdiv = $locales["decimals"];
+	if ($u_multa > 0 and $fine_value > 0) {
+		$total_fine = $atraso * $fine_value;
+		$total_fine = $total_fine / $ixdiv;
+	}
+
+	$concepto = $politica_str;
+	if ($u_suspension > 0)
+		$total_susp = $atraso * $u_suspension;
+	$fecha_v = "";
+	$fecha_inicio = date("Ymd");
+	$unidad = 'D';
+	$fecha_v = FechaDevolucion($total_susp, $unidad, date("Ymd"), $tipo_usuario);
+	if (strlen($fecha_v) > 8) $fecha_v = substr($fecha_v, 0, 8);
+	$Mfn = "";
+
+	// CORREÇÃO: Verifica se a chave 'APPLY_SANCTION' existe antes de usá-la.
+	if (isset($locales["APPLY_SANCTION"])) {
+		switch ($locales["APPLY_SANCTION"]) {
+			case "A":  //se aplican multas y suspensiones
+				if ($total_fine > 0) {
+					$ValorCapturado = "<1 0>M</1><10 0>TR_M_" . $cod_usuario . "</10><20 0>" . $cod_usuario . "</20><30 0>" . $fecha_inicio . "</30><40 0>" . $concepto . "</40><50 0>" . $total_fine . "</50>";
+				}
+				if ($total_susp > 0) {
+					if ($ValorCapturado != "") $ValorCapturado .= "\n";
+					$ValorCapturado .= "<1 0>S</1><10 0>TR_S_" . $cod_usuario . "</10><20 0>" . $cod_usuario . "</20><30 0>" . $fecha_inicio . "</30><40 0>" . $concepto . "</40><60 0>" . $fecha_v . "</60>";
+				}
+				break;
+			case "F":  //solo multas
+				if ($total_fine > 0) {
+					$ValorCapturado = "<1 0>M</1><10 0>TR_M_" . $cod_usuario . "</10><20 0>" . $cod_usuario . "</20><30 0>" . $fecha_inicio . "</30><40 0>" . $concepto . "</40><50 0>" . $total_fine . "</50>";
+				}
+				break;
+			case "S":  //solo suspensiones
+				if ($total_susp > 0) {
+					$ValorCapturado = "<1 0>S</1><10 0>TR_S_" . $cod_usuario . "</10><20 0>" . $cod_usuario . "</20><30 0>" . $fecha_inicio . "</30><40 0>" . $concepto . "</40><60 0>" . $fecha_v . "</60>";
+				}
+				break;
+			default:
+				// Se a chave existe mas tem um valor inesperado, não faz nada.
+				break;
 		}
 	}
-	return $fecha_desde;
-}
-function Sanciones($fecha_d,$atraso,$cod_usuario,$inventario,$politica,$ncontrol,$bd,$tipo_usuario,$tipo_objeto,$politica_str,$referencia="",$Mfn_reserva="",$reservado=""){
-global $Wxis,$xWxis,$wxisUrl,$db_path,$locales,$arrHttp,$msgstr,$AC_SUSP;
-	$p=explode('|',$politica);
-	$multa=trim($p[7]);
-	$multa_reserva=trim($p[8]);
-	$suspension=trim($p[9]);
-	$suspension_reserva=trim($p[10]);
-	$sancion="";
-	$ValorCapturado="";
-	if ($Mfn_reserva!="" or $reservado!=""){
-		if ($suspension_reserva>0)
-			$suspension=$suspension_reserva;
-		else
-			if ($multa_reserva>0)
-				$multa=$multa_reserva;
-	}
-	if ($multa!=0 and $multa!="") $sancion="M";
-	if ($suspension!=0 and $suspension!="") $sancion="S";
-	if ($sancion=="") return;
-	switch ($sancion){
-		case "M":
-			$tipor="M";                                     		//v1
-			$cod_trans="I";
-			$status="0";	                                  		//v10
-			//cod_usuario                                     		//v20
-  			$concepto=$msgstr["fine"]." (".$inventario.")";    		//v40
-     		$fecha=date("Ymd");
 
-			$monto=$atraso*$politica_str;      //v50
-
-			$ValorCapturado="<1 0>". $tipor."</1>";
-			$ValorCapturado.="<10 0>".$status."</10>";
-			$ValorCapturado.="<20 0>".$cod_usuario."</20>";
-			$ValorCapturado.="<30 0>".$fecha."</30>";
-			$ValorCapturado.="<40 0>".$concepto."</40>";
-			$ValorCapturado.="<50 0>".$monto."</50>";
-			$ValorCapturado.="<100 0>$referencia</100>";
-			break;
-		case "S":                                                   //v1
-			$tipor="S";
-			$cod_trans="M";
-			$status="0";	                 						//v10
-			//cod_usuario                    						//v20
-  			$concepto="Suspensión por atraso (".$inventario.")";    //v40
-     		$fecha=date("Ymd");
-     		if (trim($suspension)!=""){
-     			$lapso=$atraso*$suspension;
-     			if ($lapso>365){
-     				$lapso=365;
-     			}
-     			$fecha_inicio=date("Ymd");
-     			if ($AC_SUSP=="Y")
-     				$fecha_inicio=AcumularSuspensiones();
-     			$fecha_v=FechaDevolucion($lapso,"D",$fecha_inicio);
-     			$fecha_v=substr($fecha_v,0,8);
-     			$ValorCapturado="<1 0>".$tipor."</1><10 0>".$status."</10><20 0>".$cod_usuario."</20><30 0>".$fecha_inicio."</30><40 0>".$concepto."</40><60 0>".$fecha_v."</60>";
-			}
-			break;
-		default:
-			return;
-			break;
-	}
-	if ($ValorCapturado!=""){
-		$ValorCapturado.="<120>".$_SESSION["login"]."^d".date("Ymd h:s:i")."</120>";
-		$ValorCapturado=urlencode($ValorCapturado);
-		$IsisScript=$xWxis."actualizar_registro.xis";
-   		$query = "&base=suspml&cipar=$db_path"."par/suspml.par&lang=".$_SESSION['lang']."&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado;
-
-//        foreach ($contenido as $value) echo "$value<br>";
+	if ($ValorCapturado != "") {
+		$ValorCapturado .= "<120>" . $_SESSION["login"] . "^d" . date("Ymd h:s:i") . "</120>";
+		$ValorCapturado = urlencode($ValorCapturado);
+		$IsisScript = $xWxis . "actualizar_registro.xis";
+		$query = "&base=suspml&cipar=$db_path" . "par/suspml.par&lang=" . $_SESSION['lang'] . "&login=" . $_SESSION["login"] . "&Mfn=New&Opcion=crear&ValorCapturado=" . $ValorCapturado;
 	}
 
-	if (file_exists($db_path."logtrans/data/logtrans.mst")){
+	if (file_exists($db_path . "logtrans/data/logtrans.mst")) {
 		require_once("../circulation/grabar_log.php");
-		$datos_trans["CODIGO_USUARIO"]=$cod_usuario;
-		$datos_trans["BD"]=$bd;
-		$datos_trans["NUM_CONTROL"]=$ncontrol;
-		$datos_trans["NUM_INVENTARIO"]=trim($inventario);
-		$datos_trans["TIPO_OBJETO"]=$tipo_objeto;
-		$datos_trans["TIPO_USUARIO"]=$tipo_usuario;
-		if (isset($fecha_v))
-			$datos_trans["FECHA_DEVOLUCION"]=$fecha_v;
-		if (isset($unidades_multa))
-			$datos_trans["UNIDADES_MULTA"]=$unidades_multa;
-		if (isset($monto))
-			$datos_trans["MONTO_MULTA"]=$monto;
-		if (isset($unidades_suspension))
-			$datos_trans["UNIDADES_SUSPENSION"]=$unidades_suspension;
-		$ValorCapturado=GrabarLog($cod_trans,$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,"RETORNAR");
-		if ($ValorCapturado!="") $query.="&logtrans=".$ValorCapturado;
-
+		$datos_trans["CODIGO_USUARIO"] = $cod_usuario;
+		$datos_trans["BD"] = $bd;
+		$datos_trans["NUM_CONTROL"] = $ncontrol;
+		$datos_trans["NUM_INVENTARIO"] = trim($inventario);
+		$datos_trans["TIPO_OBJETO"] = $tipo_objeto;
+		$datos_trans["FECHA_PROGRAMADA"] = $fecha_d;
+		$datos_trans["DIAS_ATRASO"] = $atraso;
+		$datos_trans["MULTA"] = $total_fine;
+		$datos_trans["DIAS_SUSPENSION"] = $total_susp;
+		GrabarLog("S", $datos_trans, $Wxis, $xWxis, $wxisUrl, $db_path, "RETORNAR");
 	}
-	include("../common/wxis_llamar.php");
+	if (isset($query))
+		include("../common/wxis_llamar.php");
 }
-?>
