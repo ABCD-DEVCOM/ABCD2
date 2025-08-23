@@ -1,0 +1,41 @@
+F|1|Título|1|0|||X|||D||TI_|v1|||0||0|0|||
+F|2|Creador|0|1|||X||||||||||0||0|0|||
+F|3|Asunto|0|1|||X||||||||||0||0|||
+F|4|Descripción|0|0|||X||||||||||0||0|||
+F|5|Editorial|0|0|||X||||||||||0||0|||
+F|6|Colaboradores|0|1|||X||||||||||0||0|||
+F|7|Fecha|0|0|||X||||||||||0||0||| 
+F|8|Tipo|0|0|||X||||||||||0||0|0|||
+F|9|Formato|0|0|||X||||||||||0||0|||
+F|10|Identificador|0|0|||X||||||||||0||0|||
+F|11|Origen|0|0|||X||||||||||0||0|||
+F|12|Idioma|0|1|||X||||||||||0||0|||
+F|13|Relación|0|1|||X||||||||||0||0|||
+F|14|Cobertura|0|0|||X|||||||||||0||0||| 
+F|15|Gestión de derechos|0|1|||X||||||||||0||0|0|||
+F|50|Altura de la imagen|0|0|||X||||||||||0||0|||
+F|51|Ancho de la imagen|0|0|||X||||||||||0||0|||
+F|52|Resolución X|0|0|||X|||||||||0||0|||
+F|53|Resolución Y|0|0|||X||||||||||0||0|||
+F|54|Tipo de escena|0|0|||X||||||||||0||0|||
+F|56|Comentario del usuario|0|0|||X||||||||||0||0||| 
+F|57|Artista|0|0|||X||||||||||0||0|0|||
+F|58|Copyright|0|0|||X||||||||||0||0|||
+F|59|Marca|0|0|||X||||||||||0||0|||
+F|60|Modelo|0|0|||X||||||||||0||0|||
+F|61|Referencia de altitud GPS|0|0|||X||||||||||0||0|||
+F|62|Altitud GPS|0|0|||X||||||||||0||0||| 
+F|63|Referencia de latitud GPS|0|0|||X||||||||||0||0|0|||
+F|64|Latitud GPS|0|0|||X||||||||||0||0|||
+F|65|Referencia de longitud GPS|0|0|||X||||||||||0||0|||
+F|66|Longitud GPS|0|0|||X||||||||||0||0|||
+F|94|Etiquetas|0|1|||X|||D||SE_|v97|v97||0||0|||
+F|95|URL HTML|0||||H||||||||||0||0||| 
+F|96|Tipo de registro|0|0|||XF||10|||||||0||0|0|||
+F|97|Sección|0|1|||X|||D||SE_|v97|v97||0||0|0|||
+F|98|URL del documento|0|0|||H|||||||||0||0|||
+F|99|Texto del documento|0|0|||A|||||||||0||0|||
+F|110|N.º de pieza|0|0|||RO|||||||||0||0|||
+F|111|ID|0|0|||||||||||0||0||| 
+F|112|Fecha de añadido|0|0|||D|||||||||0||0|0|||
+F|997|Tamaño del archivo HTML|0|0|||RO|||||||||0||0|||

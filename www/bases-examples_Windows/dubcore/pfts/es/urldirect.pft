@@ -1,0 +1,50 @@
+'
+<script language=javascript>
+  function DisplayURL(id)
+  {
+    var loginto=document.getElementById("into").value;
+	if (loginto=="no")
+	{
+	var posicion_x; 
+	var posicion_y; 
+	posicion_x=(screen.width/2)-(315); 
+	posicion_y=(screen.height/2)-(235);
+	sel = window.open("/site/login.php?id="+id, "ABCD Log In Windows", "width=630,height=470,menubar=0,toolbar=0,directories=0,scrollbars=no,resizable=no,left="+posicion_x+",top="+posicion_y+"");
+	}
+	else
+	{
+	document.getElementById("divurld"+id).style.display="none";
+	document.getElementById("divurl"+id).style.display="block";
+	}
+  }
+</script>
+<table border=0 width=90%>'
+If p(v111) then '<tr><td width=20% valign=top><font face=arial size=2><b>ID</b></td><td valign=top><font face=arial size=2>'v111+|<br>|,'</td>' fi/
+If p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+If p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Creador</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+If p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>Asunto</b></td><td valign=top><font face=arial size=2>'v3+|<br>|,'</td>' fi/
+If p(v4) then '<tr><td width=20% valign=top><font face=arial size=2><b>Descripción</b></td><td valign=top><font face=arial size=2>'v4+|<br>|,'</td>' fi/
+If p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><b>Editorial</b></td><td valign=top><font face=arial size=2>'v5+|<br>|,'</td>' fi/
+If p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><b>Colaboradores</b></td><td valign=top><font face=arial size=2>'v6+|<br>|,'</td>' fi/
+If p(v7) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha</b></td><td valign=top><font face=arial size=2>'v7+|<br>|,'</td>' fi/
+If p(v8) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo</b></td><td valign=top><font face=arial size=2>'v8+|<br>|,'</td>' fi/
+If p(v9) then '<tr><td width=20% valign=top><font face=arial size=2><b>Formato</b></td><td valign=top><font face=arial size=2>'v9+|<br>|,'</td>' fi/
+If p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Identificador</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+If p(v11) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fuente</b></td><td valign=top><font face=arial size=2>'v11+|<br>|,'</td>' fi/
+If p(v12) then '<tr><td width=20% valign=top><font face=arial size=2><b>Idioma</b></td><td valign=top><font face=arial size=2>'v12+|<br>|,'</td>' fi/
+If p(v13) then '<tr><td width=20% valign=top><font face=arial size=2><b>Relación</b></td><td valign=top><font face=arial size=2>'v13+|<br>|,'</td>' fi/
+If p(v14) then '<tr><td width=20% valign=top><font face=arial size=2><b>Cobertura</b></td><td valign=top><font face=arial size=2>'v14+|<br>|,'</td>' fi/
+If p(v15) then '<tr><td width=20% valign=top><font face=arial size=2><b>Administración de derechos</b></td><td valign=top><font face=arial size=2>'v15+|<br>|,'</td>' fi/
+If p(v97) y v97<>'colección' then '<tr><td width=20% valign=top><font face=arial size=2><b>Secciones</b></td><td valign=top><font face=arial size=2>'replace(v97,'/',' , '),'</td>' fi/
+If p(v112) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha de adición</b></td><td valign=top><font face=arial size=2>'v112+|<br>|,'</td>' fi/
+If p(v99) then '<tr><td width=20% valign=top><font face=arial size=2><b>DocText</b></td><td valign=top bgcolor="antiquewhite"><font face=arial size=2>'v99+|<br>|,'</td>' fi/
+If p(v777) then '<tr><td width=20% valign=top><font face=arial size=2><b>RPC</b></td><td valign=top><font face=arial size=2>'v777+|<br>|,'</td>' fi
+
+if p(v96) then '<tr><td width=20% valign=top><font face=arial
+size=2><b>Text-source </b></td><td valign=top><font face=arial size=2><iframe
+height=200 width=800  scrolling=yes
+src=http://127.0.0.1:9090//',replace(v96,'/var/opt/ABCD/bases/collections/',s('collection/')),'></iframe></td></tr>' fi
+
+if p(v98) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL</b></td><td valign=top>
+<A HREF="http://127.0.0.1:9090//collection/',v5001,'/'v98'" target=new>'v98+|<br>|,'</A></div></td>' fi/
+'</table><p>'

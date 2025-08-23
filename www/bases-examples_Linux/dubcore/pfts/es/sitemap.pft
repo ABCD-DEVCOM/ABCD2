@@ -1,0 +1,9 @@
+'<head>'
+'<meta name="DC.Title" content="',v1,'"/>',
+(if p(v2) then '<meta name="DC.Creator" content="',v2,'"/>' '<br>' fi),
+'</head>',
+
+'<body>'
+'Tìtulo : 'v1/
+('Autor : 'v2+|<br>|)
+'</body>'
