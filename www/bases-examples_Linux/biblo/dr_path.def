@@ -1,1 +1,1 @@
-ROOT=/var/opt/ABCD/bases/biblo/dr/
+ROOT=%path_database%biblo/collection/
