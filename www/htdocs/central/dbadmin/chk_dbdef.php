@@ -8,6 +8,7 @@ if (!isset($_SESSION["permiso"])){
 }
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
+if (!isset($arrHttp)) $arrHttp = array();
 include ("../config.php");
 $lang=$_SESSION["lang"];
 include("../common/header.php");
@@ -52,7 +53,6 @@ function Update(Option){
 </script>
 
 
-<body>
 	<?php include("../common/institutional_info.php");?>
 
 	<div class="sectionInfo">
@@ -464,6 +464,7 @@ function copy_directory($src,$dst) {
 }
 
 function reload_dbdef() {
+    global $arrHttp;
 	$_POST['base'] = $arrHttp["base"];
 	$_POST['encabezado '] = "s";
 	$_POST['folder']="";
