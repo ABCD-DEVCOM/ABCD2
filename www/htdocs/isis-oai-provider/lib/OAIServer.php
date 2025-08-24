@@ -38,10 +38,12 @@ class OAIServer {
         # start with empty list of formats
         $this->FormatDescrs = array();
     }
+
+    /*
     function OAIServer($RepDescr, $ItemFactory, $SetsSupported = TRUE, $OaisqSupported = FALSE)
     {
     self:: __construct($RepDescr, $ItemFactory, $SetsSupported = TRUE, $OaisqSupported = FALSE);
-    }
+    }*/
 
     # add metadata format to export
     function AddFormat($Name, $TagName, $SchemaNamespace, $SchemaDefinition,
@@ -733,82 +735,73 @@ class OAIServer {
 
     private function GetRecordTags($Item, $MetadataFormat, $IncludeMetadata = TRUE)
     {
-        # if more than identifiers requested
-        if ($IncludeMetadata)
-        {
-            # open record tag
+        # se for solicitado mais do que apenas os identificadores
+        if ($IncludeMetadata) {
+            # abre a tag record
             $Tags = $this->FormatTag("record");
-        }
-        else
-        {
-            # just initialize tag string with empty value
+        } else {
+            # apenas inicializa a string de tags com valor vazio
             $Tags = "";
         }
 
-        # add header with identifier, datestamp, and set tags
+        # adiciona o cabeçalho com identificador, data e sets
         $Tags .= $this->FormatTag("header");
-        $Tags .= $this->FormatTag("identifier",
-                                  $this->EncodeIdentifier($Item->GetId()));
+        $Tags .= $this->FormatTag(
+            "identifier",
+            $this->EncodeIdentifier($Item->GetId())
+        );
         $Tags .= $this->FormatTag("datestamp", $Item->GetDatestamp());
+
+        // **CORREÇÃO:** Define a variável $Sets e depois verifica se é um array antes de usá-la.
         $Sets = $Item->GetSets();
-        foreach ($Sets as $Set)
-        {
-            $Tags .= $this->FormatTag("setSpec", $Set);
-        }
-        $Tags .= $this->FormatTag();
-
-        # if more than identifiers requested
-        if ($IncludeMetadata)
-        {
-            # open metadata tag
-            $Tags .= $this->FormatTag("metadata");
-            $Tags .= $Item->GetMetadata($MetadataFormat);
-
-            // DELETED HANDLE OF OAI FIELDS
-
-            # close metadata format tag
-            $Tags .= $this->FormatTag();
-
-            # close metadata tag
-            $Tags .= $this->FormatTag();
-
-            # if there is additional search info about this item
-            $SearchInfo = $Item->GetSearchInfo();
-            if (count($SearchInfo))
-            {
-                # open about and search info tags
-                $Tags .= $this->FormatTag("about");
-                $Attribs = array(
-                        "xmlns" => "http://scout.wisc.edu/XML/searchInfo/",
-                        "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance",
-                        "xsi:schemaLocation" => "http://scout.wisc.edu/XML/searchInfo/ http://scout.wisc.edu/XML/searchInfo.xsd",
-                        );
-                $Tags .= $this->FormatTag("searchInfo", NULL, $Attribs);
-
-                # for each piece of additional info
-                foreach ($SearchInfo as $InfoName => $InfoValue)
-                {
-                    # add tag for info
-                    $Tags .= $this->FormatTag($InfoName,
-                            utf8_encode(htmlspecialchars(preg_replace("/[\\x00-\\x1F]+/", "", $InfoValue))));
-                }
-
-                # close about and search info tags
-                $Tags .= $this->FormatTag();
-                $Tags .= $this->FormatTag();
+        if (is_array($Sets)) {
+            foreach ($Sets as $Set) {
+                $Tags .= $this->FormatTag("setSpec", $Set);
             }
         }
 
-        # if more than identifiers requested
-        /* FIX: uncomented will close ListRecords element
-        if ($IncludeMetadata)
-        {
-            # close record tag
-            $Tags .= $this->FormatTag();
-        }
-        */
+        $Tags .= $this->FormatTag(); // Fecha </header>
 
-        # return tags to caller
+        # se for solicitado mais do que apenas os identificadores
+        if ($IncludeMetadata) {
+            # abre a tag metadata
+            $Tags .= $this->FormatTag("metadata");
+            $Tags .= $Item->GetMetadata($MetadataFormat);
+            $Tags .= $this->FormatTag(); // Fecha </metadata>
+
+            # se houver informação de busca adicional sobre este item
+            $SearchInfo = $Item->GetSearchInfo();
+            if (is_array($SearchInfo) && count($SearchInfo) > 0) {
+                # abre as tags about e searchInfo
+                $Tags .= $this->FormatTag("about");
+                $Attribs = array(
+                    "xmlns" => "http://scout.wisc.edu/XML/searchInfo/",
+                    "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance",
+                    "xsi:schemaLocation" => "http://scout.wisc.edu/XML/searchInfo/ http://scout.wisc.edu/XML/searchInfo.xsd",
+                );
+                $Tags .= $this->FormatTag("searchInfo", NULL, $Attribs);
+
+                # para cada parte da informação adicional
+                foreach ($SearchInfo as $InfoName => $InfoValue) {
+                    # adiciona a tag para a informação
+                    $Tags .= $this->FormatTag(
+                        $InfoName,
+                        htmlspecialchars(preg_replace("/[\\x00-\\x1F]+/", "", $InfoValue))
+                    );
+                }
+
+                # fecha as tags about e searchInfo
+                $Tags .= $this->FormatTag(); // Fecha </searchInfo>
+                $Tags .= $this->FormatTag(); // Fecha </about>
+            }
+        }
+
+        if ($IncludeMetadata) {
+            # fecha a tag record
+            $Tags .= $this->FormatTag(); // Fecha </record>
+        }
+
+        # retorna as tags para o chamador
         return $Tags;
     }
 
@@ -821,62 +814,47 @@ class OAIServer {
 
     private function DecodeIdentifier($Identifier)
     {
-        # assume that decode will fail
-        $Id = NULL;
-
-        # split ID into component pieces
-        $Pieces = explode(":", $Identifier);
-
-        # if pieces look okay
-        if (($Pieces[0] == "oai") && ($Pieces[1] == $this->RepDescr["IDDomain"]))
-        {
-            # split final piece
-            $Pieces = explode("-", $Pieces[2]);
-
-            # if identifier prefix looks okay
-            if ($Pieces[0] == $this->RepDescr["IDPrefix"])
-            {
-                # decoded value is final piece
-                $Id = $Pieces[2];
-            }
+        // Exemplo de entrada: "oai:abcd-community:br-marc-1"
+        if ($Identifier === NULL) {
+            return NULL;
         }
 
-        # return decoded value to caller
-        return $Id;
+        $parts = explode(':', $Identifier);
+        if (count($parts) < 3) return NULL;
+
+        return $parts[2]; // Retorna a parte principal: "br-marc-1"
     }
 
     private function DecodeDatabaseIdentifier($Identifier)
     {
-        # assume that decode will fail
-        $Id = NULL;
-
-        # split ID into component pieces
-//        echo "identifier=$Identifier<BR>";    die;
-        $Pieces = explode(":", $Identifier);
-
-        # if pieces look okay
-        if (($Pieces[0] == "oai") && ($Pieces[1] == $this->RepDescr["IDDomain"]))
-        {
-            # split final piece
-            $Pieces = explode("-", $Pieces[2]);
-
-            # if identifier prefix looks okay
-            if ($Pieces[0] == $this->RepDescr["IDPrefix"])
-            {
-                $id_prefix = array_shift($Pieces);     //get and remove first element of array (prefix)
-                $id_value = array_pop($Pieces);        //get and remove last element of array  (identifier)
-                $database_name = implode('-',$Pieces); //databasename
-
-                # decoded value is final piece  (database_name + id + datestamp)
-                //$IdDB = $Pieces[1]."@".$Pieces[2] . '^' . date("Y-m-d") ;
-                $IdDB = $database_name."@". $id_value . '^' . date("Y-m-d") ;
-//                echo "IdDB=$IdDB<BR>";die;
-            }
+        // Exemplo de entrada: "oai:abcd-community:br-marc-1" ou "oai:abcd-community:br-meu-set-com-hifen-123"
+        if ($Identifier === NULL) {
+            return NULL;
         }
 
-        # return decoded value to caller
-        return $IdDB;
+        $id_part = $this->DecodeIdentifier($Identifier); // Pega "br-marc-1" ou "br-meu-set-com-hifen-123"
+        if ($id_part === NULL) return NULL;
+
+        $pieces = explode('-', $id_part);
+
+        if (count($pieces) < 3) {
+            // Formato inválido ou simples (ex: marc-1) - pode precisar de ajuste se não tiver prefixo de país
+            return NULL;
+        }
+
+        // O último elemento é sempre o MFN (ID do registro)
+        $mfn = array_pop($pieces);
+
+        // Remove o prefixo do país (primeiro elemento)
+        array_shift($pieces);
+
+        // O que sobra no meio é o nome do set (pode ter hífens)
+        $setSpec = implode('-', $pieces);
+
+        // Retorna no formato que o ISISItem espera: "set@mfn"
+        return $setSpec . '@' . $mfn;
     }
+
 
     private function EncodeResumptionToken($StartingDate, $EndingDate, $MetadataFormat, $SetSpec, $ListStartPoint)
     {

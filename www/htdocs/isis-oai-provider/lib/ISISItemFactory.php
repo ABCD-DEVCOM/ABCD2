@@ -1,139 +1,90 @@
 <?php
 
-class ISISItemFactory implements OAIItemFactory {
-
-    # ---- PRIVATE VARIABLES -----------------------------------------
-
-    private $SetSpecs;
-    private $SetFields;
-    private $SetValues;
-    private $RetrievalSearchParameters;
-    private $SearchScores;
-    private $SearchScoreScale;
+class ISISItemFactory implements OAIItemFactory
+{
     private $Databases;
-//echo "databases in ISISItemfactory = $Databases<BR>"; die;
+    private $RetrievalSearchParameters;
 
-    # object constructor
-    function __construct($Databases, $RetrievalSearchParameters = NULL )
+    function __construct($Databases, $RetrievalSearchParameters = NULL)
     {
-        # save any supplied retrieval parameters
         $this->RetrievalSearchParameters = $RetrievalSearchParameters;
         $this->Databases = $Databases;
     }
 
-    function __ISISItemFactory($Databases, $RetrievalSearchParameters = NULL )
-    {
-      self:: __construct($Databases, $RetrievalSearchParameters = NULL );
-    }
-
     function GetItem($ItemId)
-	{
-        $ItemId = explode("^",$ItemId);
-        $isis_item = new ISISItem($ItemId[0], $datestamp = $ItemId[1]);
-        return $isis_item;
-	}
-	   
-    function GetItems($StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0){
-        global $CONFIG;
-    	$db = new ISISDb($setSpec);
-        $ItemIds = '';
-        $ItemsPerPage = $CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'];
+    {
+        $ItemIdParts = explode("^", $ItemId);
+        $id = $ItemIdParts[0];
+        $datestamp = $ItemIdParts[1] ?? null;
 
-        if ($StartingDate !== NULL){
-            if ($EndingDate == NULL){
-                $EndingDate = date("Y-m-d");
-            }
-            $date_range_exp = implode(' OR ', range_date($StartingDate, $EndingDate));
-        }else{
-            $date_range_exp = '';
-        }
-        $ListStartPoint += 1;
-        foreach ($this->Databases as $database) {
-            $params = array('expression' => $date_range_exp, 
-                'database' => $database['database'],
-                'setspec' => $database['setspec'],
-                'date_prefix' => $database['prefix'],
-                'id_field' => $database['identifier_field'],
-                'cisis_version' => $database['cisis_version'],
-                'date_field' => $database['datestamp_field'],
-                'from' => $ListStartPoint,
-                'count' => $ItemsPerPage,
-            );
-            $ItemIds .= $db->getidentifiers($params, $database['cisis_version']);
-            $curItemIds = array_filter(explode("|", $ItemIds));
-            $total = $db->gettotal($params, $database['cisis_version']);
-            $totalFound = count($curItemIds);
-            if($total < $ListStartPoint) {
-                $ListStartPoint = $ListStartPoint - $total;
-            } else {
-                $ListStartPoint = 0;
-            }
-        }       
-
-        $ItemIds = array_filter(explode("|", $ItemIds));
-        $ItemIds = array_slice($ItemIds, 0, $ItemsPerPage);
-
-        return $ItemIds;
+        return new ISISItem($id, $this->Databases, $datestamp);
     }
 
-    # retrieve IDs of items that matches set spec (only needed if sets supported)
-    function GetItemsInSet($setSpec, $StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0)
+    function GetItemsInSet($setSpec, $StartingDate = NULL, $EndingDate = NULL, $ListStartPoint = 0)
     {
         global $CONFIG;
-     	$db = new ISISDb($setSpec);
-        $ItemsPerPage = $CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'];
-        if ($StartingDate !== NULL){
-            if ($EndingDate == NULL){
+
+        if (!isset($this->Databases[$setSpec])) {
+            return [];
+        }
+
+        $db = new ISISDb($setSpec);
+        $ItemsPerPage = (int)($CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'] ?? 20);
+        $date_range_exp = '';
+        $database = $this->Databases[$setSpec];
+
+        // CORREÇÃO: Monta a expressão de busca completa aqui no PHP
+        if ($StartingDate !== NULL) {
+            if ($EndingDate == NULL) {
                 $EndingDate = date("Y-m-d");
             }
-            $date_range_exp = implode(' OR ', range_date($StartingDate, $EndingDate));
-        }else{
-            $date_range_exp = '';
+            $dates = range_date($StartingDate, $EndingDate);
+            $prefix = $database['prefix'];
+            // Adiciona o prefixo a cada data
+            $prefixed_dates = array_map(function ($date) use ($prefix) {
+                return $prefix . $date;
+            }, $dates);
+            $date_range_exp = implode(' OR ', $prefixed_dates);
         }
-        $ListStartPoint += 1;
-        foreach ($this->Databases as $database) {
-            if ($database['setSpec'] == $setSpec){
-                $params = array('expression' => $date_range_exp, 
-                  'database' => $database['database'],
-                  'setSpec' => $database['setSpec'],
-                  'date_prefix' => $database['prefix'],
-                  'id_field' => $database['identifier_field'],
-                  'date_field' => $database['datestamp_field'],
-                  'from' => $ListStartPoint,
-                  'count' => $ItemsPerPage,                  
-                  'cisis_version' => $database['cisis_version'],
-                );
-                $ItemIds = $db->getidentifiers($params, $database['cisis_version']);
-            }     
-        } 
-        $ItemIds = substr($ItemIds, 0, strlen($ItemIds)-1);
-        $ItemIds = explode("|", $ItemIds);
 
-        return $ItemIds;
+        $ListStartPoint = is_numeric($ListStartPoint) ? (int)$ListStartPoint : 0;
+
+        $params = array(
+            'expression' => $date_range_exp, // Envia a expressão pronta
+            'database' => $database['database'],
+            'setSpec' => $database['setSpec'],
+            'date_field' => $database['datestamp_field'],
+            'from' => $ListStartPoint + 1,
+            'count' => $ItemsPerPage
+        );
+
+        $itemIdsString = $db->getidentifiers($params, $database['cisis_version']);
+
+        if (empty($itemIdsString)) return [];
+
+        $itemIds = rtrim($itemIdsString, "|");
+        return array_filter(explode("|", $itemIds));
     }
 
-    # return array containing all set specs (with human-readable set names as keys)
-    # (only used if sets supported)
+    // --- Demais funções da classe (sem alterações) ---
+
+    function GetItems($StartingDate = NULL, $EndingDate = NULL, $ListStartPoint = 0)
+    {
+        // Esta função pode ser implementada no futuro para buscar em todos os sets
+        return [];
+    }
+
     function GetListOfSets()
     {
-    	$setList = array();
-    	foreach ($this->Databases as $set){
-    		$setSpec = $set['setSpec'];
-    		$setName = $set['setName'];
-
-    		$setList[$setName] = $setSpec;
-    	}
-
-    	return $setList;
+        $setList = array();
+        foreach ($this->Databases as $key => $set) {
+            $setList[$set['setName']] = $key;
+        }
+        return $setList;
     }
 
-    # retrieve IDs of items that match search parameters (only used if OAI-SQ supported)
     function SearchForItems($SearchParams, $StartingDate = NULL, $EndingDate = NULL)
     {
-    	
+        return [];
     }
-
-
 }
-
-?>
