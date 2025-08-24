@@ -1,4 +1,4 @@
-;<?php /*
+<?php /**
 // oai-config.php
 
 // --- OPERATING SYSTEM DETECTION ---
@@ -30,7 +30,9 @@ $CONFIG = [
         'default' => 'en',
         'available' => [
             'pt-br' => 'Português (BR)',
-            'en' => 'English'
+            'en' => 'English',
+            'es' => 'Español',
+            'fr' => 'Francais',
             // Add new languages here, ex: 'es' => 'Español'
         ]
     ]

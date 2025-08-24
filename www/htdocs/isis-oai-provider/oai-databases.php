@@ -20,7 +20,7 @@ $DATABASES_CONFIG = [
         'database' => IS_WINDOWS ? 'C:/xampp/htdocs/ABCD2/www/bases-examples_Windows/dubcore/data/dubcore' : '/ABCD2/www/bases-examples_Linux/dubcore/data/dubcore',
         'mapping' => 'dubcore.i2x',
         'prefix' => 'oai_date_',
-        'cisis_version' => IS_WINDOWS ? 'utf8/bigisis/' : 'utf8/bigisis',
+        'cisis_version' => IS_WINDOWS ? 'utf8/bigisis/' : 'utf8/bigisis/',
         'identifier_field' => '111',
         'datestamp_field' => '507'
     ]

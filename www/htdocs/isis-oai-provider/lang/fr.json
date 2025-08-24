@@ -1,0 +1,24 @@
+{
+    "title": "ABCD | Explorateur de l'API OAI-PMH",
+    "header": "Explorateur de l'API OAI-PMH",
+    "baseUrl": "URL de base :",
+    "endpoints": "Points d'accès (Verbes)",
+    "parameters": "Paramètres",
+    "selectEndpoint": "Sélectionnez un point d'accès à gauche pour voir les paramètres.",
+    "execute": "Exécuter",
+    "requestUrl": "URL de la requête",
+    "copyUrl": "Copier",
+    "copied": "Copié !",
+    "serverResponse": "Réponse du serveur (XML)",
+    "loading": "Chargement...",
+    "requestFail": "La requête a échoué :",
+    "noParams": "Ce point d'accès ne nécessite aucun paramètre supplémentaire.",
+    "placeholders": {
+        "metadataPrefix": "Ex: oai_dc (obligatoire)",
+        "from": "AAAA-MM-JJ (optionnel)",
+        "until": "AAAA-MM-JJ (optionnel)",
+        "set": "Nom du set (ex: marc)",
+        "identifier": "ID de l'enregistrement dans la base (ex: 1)",
+        "resumptionToken": "Jeton de reprise (exclusif)"
+    }
+}
