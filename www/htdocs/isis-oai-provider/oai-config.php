@@ -1,24 +1,37 @@
-;<?php /*
-[ENVIRONMENT]
-; Set the directory of application. The effect will be http://your-site.org/DIRECTORY
-DIRECTORY=/isis-oai-provider
-; Full path to folder 'site' in folder bases. Windows users must NOT put letter unit in path
-DATABASE_PATH=/var/opt/ABCD/bases/
-;DATABASE_PATH=/ABCD/www/bases/
-EXE_EXTENSION=
-;EXE_EXTENSION=.exe
-; Set the directory configured to execute cgi-bin applications.
-CGI-BIN_DIRECTORY=/cgi-bin/
+<?php
+// oai-config.php
 
-[INFORMATION]
-; Set the repository's name.
-NAME=ABCD
-; Set the email of the system admin
-EMAIL=egbert.desmet@uantwerpen.be
-IDPREFIX=be
-IDDOMAIN=netcat
-EARLIESTDATESTAMP=2011-01-01
-MAX_ITEMS_PER_PASS=20
+// --- OPERATING SYSTEM DETECTION ---
+define('IS_WINDOWS', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
 
+// --- BASIC PATHS FOR EACH ENVIRONMENT ---
+// Change these paths to match your installation
+$database_path_win = "C:/xampp/htdocs/ABCD2/www/bases-examples_Windows/";
+$database_path_lin = "/var/opt/ABCD/bases/";
 
-;*/ ?>
+// --- GLOBAL CONFIGURATION ARRAY ---
+$CONFIG = [
+    'ENVIRONMENT' => [
+        'DATABASE_PATH' => IS_WINDOWS ? $database_path_win : $database_path_lin,
+        'DIRECTORY' => '/isis-oai-provider',
+        'EXE_EXTENSION' => IS_WINDOWS ? '.exe' : '',
+        'CGI-BIN_DIRECTORY' => '/cgi-bin/'
+    ],
+    'INFORMATION' => [
+        'NAME' => 'ABCD',
+        'EMAIL' => 'contact@abcd-community.org',
+        'IDPREFIX' => 'org',
+        'IDDOMAIN' => 'abcd-community',
+        'EARLIESTDATESTAMP' => '2025-01-01',
+        'MAX_ITEMS_PER_PASS' => 20
+    ],
+    // NEW LANGUAGE SECTION
+    'LANGUAGES' => [
+        'default' => 'en',
+        'available' => [
+            'pt-br' => 'Português (BR)',
+            'en' => 'English'
+            // Add new languages here, ex: 'es' => 'Español'
+        ]
+    ]
+];

@@ -1,30 +1,37 @@
 ;<?php /*
+// oai-config.php
 
-[ENVIRONMENT]
+// --- OPERATING SYSTEM DETECTION ---
+define('IS_WINDOWS', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
 
-; Set the directory of application. The effect will be http://your-site.org/DIRECTORY
-DIRECTORY=/isis-oai-provider/
-	
-; Full path to folder 'site' in folder bases. Windows users must NOT put letter unit in path
-DATABASE_PATH=/home/bvs/bases/
+// --- BASIC PATHS FOR EACH ENVIRONMENT ---
+// Change these paths to match your installation
+$database_path_win = "C:/xampp/htdocs/ABCD2/www/bases-examples_Windows/";
+$database_path_lin = "/var/opt/ABCD/bases/";
 
-; Set the directory configured to execute cgi-bin applications. 
-CGI-BIN_DIRECTORY=/cgi-bin/
-
-[INFORMATION]
-
-; Set the repository's name.
-NAME=Bilbioteca Virtual de Saúde
-
-; Set the email of the system admin
-EMAIL=online@bireme.org
-
-IDPREFIX=org
-
-IDDOMAIN=bvs
-
-EARLIESTDATESTAMP=2011-01-01
-
-MAX_ITEMS_PER_PASS=20
-
-;*/ ?>
+// --- GLOBAL CONFIGURATION ARRAY ---
+$CONFIG = [
+    'ENVIRONMENT' => [
+        'DATABASE_PATH' => IS_WINDOWS ? $database_path_win : $database_path_lin,
+        'DIRECTORY' => '/isis-oai-provider',
+        'EXE_EXTENSION' => IS_WINDOWS ? '.exe' : '',
+        'CGI-BIN_DIRECTORY' => '/cgi-bin/'
+    ],
+    'INFORMATION' => [
+        'NAME' => 'ABCD',
+        'EMAIL' => 'contact@abcd-community.org',
+        'IDPREFIX' => 'org',
+        'IDDOMAIN' => 'abcd-community',
+        'EARLIESTDATESTAMP' => '2025-01-01',
+        'MAX_ITEMS_PER_PASS' => 20
+    ],
+    // NEW LANGUAGE SECTION
+    'LANGUAGES' => [
+        'default' => 'en',
+        'available' => [
+            'pt-br' => 'Português (BR)',
+            'en' => 'English'
+            // Add new languages here, ex: 'es' => 'Español'
+        ]
+    ]
+];

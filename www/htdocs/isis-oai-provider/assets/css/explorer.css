@@ -1,0 +1,236 @@
+/* Reset básico e fontes */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f7f9;
+    color: #333;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* Cabeçalho */
+.main-header {
+    background-color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.main-header h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #364C6C;
+}
+
+.repo-url {
+    font-size: 0.8rem;
+    color: #555;
+    font-family: monospace;
+    background-color: #e9ecef;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+}
+
+/* Container principal com Flexbox */
+.explorer-container {
+    display: flex;
+    margin: 1rem;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+/* Coluna da Esquerda (Sidebar) */
+.sidebar {
+    flex: 0 0 250px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #364C6C;
+    padding-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: #364C6C;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav a {
+    display: block;
+    padding: 0.5rem 0.8rem;
+    text-decoration: none;
+    color: #007bff;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    margin-bottom: 0.2rem;
+    font-weight: 500;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Conteúdo Principal */
+.main-content {
+    flex-grow: 1;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    min-width: 0;
+    /* Previne que o conteúdo force a largura */
+}
+
+h3 {
+    margin-top: 0;
+    color: #364C6C;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+section {
+    margin-bottom: 1.5rem;
+}
+
+#params-form-container .param-row {
+    margin-bottom: 1rem;
+}
+
+#params-form-container label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    color: #555;
+}
+
+#params-form-container input[type="text"],
+#params-form-container input[type="date"],
+#params-form-container select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+#execute-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+#execute-btn:hover {
+    background-color: #218838;
+}
+
+pre,
+code {
+    white-space: pre-wrap !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 0.85rem;
+}
+
+pre {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    border-radius: 5px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.section-header h3 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin: 0;
+}
+
+#copy-url-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+#copy-url-btn:hover {
+    background-color: #0056b3;
+}
+
+/* --- NOVOS ESTILOS PARA O RODAPÉ --- */
+.main-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    color: #6c757d;
+    /* Cor de texto suave */
+    font-size: 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.main-footer img {
+    height: 40px;
+    /* Altura da logo */
+    margin-bottom: 0.75rem;
+}
+
+.main-footer p {
+    margin: 0.25rem 0;
+}
+
+/* ... (todo o seu CSS existente) ... */
+
+/* Estilos para o Seletor de Idiomas */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* Espaçamento entre o seletor e a URL */
+}
+
+.lang-selector select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.4rem 0.6rem;
+    background-color: #fff;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+}

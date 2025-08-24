@@ -1,99 +1,88 @@
 <?php
 
-class ISISDb{
-
+class ISISDb
+{
   var $dbname;
   var $wxis_host;
-  var $wxis_action;
+  var $wxis_action_base;
+  var $dbpath;
+  var $app_path;
 
-
-  function ISISDb($dbname) {
+  function __construct($dbname)
+  {
     global $CONFIG, $DATABASES;
+
+    if (!isset($DATABASES[$dbname])) {
+      return;
+    }
+
     $this->wxis_host = $_SERVER['HTTP_HOST'];
     $this->dbname = $dbname;
-    $this->dbpath = $DATABASES[$dbname]['path'];
-    $this->wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] . 
-     $DATABASES[$dbname]['cisis_version'] . 'wxis' . $CONFIG['ENVIRONMENT']['EXE_EXTENSION'] . '/wxis/';
     $this->app_path = APPLICATION_PATH;
-    $this->wxis_action=$wxis_action.$this->app_path;
-  }
-  
- function __construct($dbname) {
-  $this->dbname = $dbname;
-  self:: ISISDb($this->dbname);
- }
 
-  function get_list($params){
-    return wxis_list($params);
-  }
-  
-  function getrecord($params, $key_length){
-    return utf8_encode ($this->wxis_document_get( $this->wxis_url("getrecord.xis", $params, $key_length) ));
+    // CORREÇÃO: Usa a chave 'database' que é definida em parse_databases.php
+    $this->dbpath = $DATABASES[$dbname]['database'];
+
+    // Monta apenas a parte base da ação, o resto será adicionado dinamicamente
+    $this->wxis_action_base = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] .
+      $DATABASES[$dbname]['cisis_version'] .
+      'wxis' .
+      $CONFIG['ENVIRONMENT']['EXE_EXTENSION'];
   }
 
-  function getidentifiers($params, $key_length){
-    return $this->wxis_document_post( $this->wxis_url("getidentifiers.xis",$params, $key_length) );
-  }
+  private function wxis_url($IsisScript, $params, $key_length)
+  {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 
-  function gettotal($params, $key_length){
-    return $this->wxis_document_post( $this->wxis_url("gettotal.xis",$params, $key_length) );
-  }
-  
-  function index($params){
-    return wxis_index($params);
-  }
-  
-  function wxis_document_get($url){
-    return file_get_contents($url);
-  }
+    $request = $protocol . $this->wxis_host . $this->wxis_action_base . "/wxis/?IsisScript=" . $this->app_path . "/wxis/" . $IsisScript;
 
-  function wxis_url ( $IsisScript, $params, $key_length ) {
-  global $CONFIG;
-     if ($key_length <> '') $key_length .= '/';
-     $wxis_action = "/cgi-bin/" . $key_length . "wxis" . $exe_extension . $CONFIG['ENVIRONMENT']['EXE_EXTENSION'];
-    $request = "http://" . $this->wxis_host . $wxis_action . "?" . "IsisScript=" . $this->app_path . "/wxis/" . $IsisScript   ;
-    foreach ($params as $key => $value){
-        $request .= "&" . $key . "=" . $value;
+    foreach ($params as $key => $value) {
+      $request .= "&" . $key . "=" . urlencode($value);
     }
     return $request;
- }
+  }
 
+  public function getrecord($params, $key_length)
+  {
+    $url = $this->wxis_url("getrecord.xis", $params, $key_length);
+    $response = @file_get_contents($url);
 
-  function wxis_document_post( $url, $content = "" ) {
-
-    $content = str_replace("\\\"","\"",$content);
-    $content = str_replace("\n","",$content);
-    $content = str_replace("\r","",$content);
-    $content = str_replace("\\\\","\\",$content);
-
-    // Strip URL  
-    $url_parts = parse_url($url);
-    $host = $url_parts["host"];
-    $port = ($url_parts["port"]) ? $url_parts["port"] : 80;
-    $path= $url_parts["path"];
-    $query = $url_parts["query"];
-    if ( $content != "" )
-    {
-      $query .= "&content=" . urlencode($content);
+    if (function_exists('mb_convert_encoding')) {
+      return mb_convert_encoding($response, 'UTF-8', 'ISO-8859-1');
     }
-    $timeout = 10;
-    $contentLength = strlen($query);
-                 parse_str($query, $arr_url);
-		$postdata = http_build_query($arr_url);
-		$opts = array('http' =>
-    				array(
-        					'method'  => 'POST',
-        					'header'  => 'Content-type: application/x-www-form-urlencoded',
-        					'content' => $postdata
-    				     )
-					);
-		$context = stream_context_create($opts);
-    $result=file_get_contents($url, false, $context);
-#error_log("url=$url\n\r", 3 , "/ABCD/www/bases/log/OAIError.log");
-    $response = trim($result);
     return $response;
   }
 
-}
+  public function getidentifiers($params, $key_length)
+  {
+    $url = $this->wxis_url("getidentifiers.xis", $params, $key_length);
+    return $this->wxis_document_post($url);
+  }
 
-?>
+  public function gettotal($params, $key_length)
+  {
+    $url = $this->wxis_url("gettotal.xis", $params, $key_length);
+    return $this->wxis_document_post($url);
+  }
+
+  private function wxis_document_post($url)
+  {
+    $url_parts = parse_url($url);
+    $query = $url_parts["query"] ?? '';
+
+    parse_str($query, $arr_url);
+    $postdata = http_build_query($arr_url);
+
+    $opts = [
+      'http' => [
+        'method'  => 'POST',
+        'header'  => 'Content-type: application/x-www-form-urlencoded',
+        'content' => $postdata
+      ]
+    ];
+    $context = stream_context_create($opts);
+    $result = @file_get_contents($url, false, $context);
+
+    return trim($result);
+  }
+}
