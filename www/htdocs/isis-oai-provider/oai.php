@@ -1,5 +1,7 @@
 <?php
 
+define('APPLICATION_PATH', dirname(__FILE__));
+
 $startdate = time();
 
 require_once(APPLICATION_PATH . '/lib/parse_config.php');
