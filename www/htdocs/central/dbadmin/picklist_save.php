@@ -2,9 +2,8 @@
 /*
 20220202 fho4abcd back button, div-helper
 20240422 fho4abcd return title
-*/
-/*
-** Note that setting a value via the dataentry screen closes the pop-up window without any positive feedback
+20250824 fho4abcd Add messages for footer+ add close button+ correct action on empty table
+20250824 fho4abcd Always feedback + Close window after delay
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -14,6 +13,7 @@ include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../common/header.php");
 ?>
@@ -27,6 +27,10 @@ if (isset($arrHttp["encabezado"])){
 }
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 //die;
+$tag="";
+if (isset($arrHttp["tag"]))$tag=$arrHttp["tag"];
+$subfield="";
+if (isset($arrHttp["subfield"]))$subfield=$arrHttp["subfield"];
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -39,11 +43,16 @@ if (isset($arrHttp["encabezado"])){
 				include "../common/inc_back.php";
 			}else{
 				if (!isset($arrHttp["desde"])){
-					$backtoscript="picklist.php?base=". $arrHttp["base"]."&row=".$arrHttp["row"]."&picklist=".$arrHttp["picklist"];
+					$backtoscript="picklist.php?base=". $arrHttp["base"];
+					$backtoscript=$backtoscript."&row=".$arrHttp["row"];
+					$backtoscript=$backtoscript."&picklist=".$arrHttp["picklist"];
 					$backtoscript=$backtoscript."&title=".$arrHttp["title"];
+					$backtoscript=$backtoscript."&tag=".$tag;
+					$backtoscript=$backtoscript."&subfield=".$subfield;
 					include "../common/inc_back.php";
 				}
 			}
+			include "../common/inc_close.php";
 		?>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -60,48 +69,24 @@ if (strpos($arrHttp["picklist"],"%path_database%")===false){
 }else{
 	$archivo=str_replace("%path_database%",$db_path,$arrHttp["picklist"]);
 }
-$fp=false;
-$fp=fopen($archivo,"w");
-if (!$fp){
-//	echo $archivo.": ".$msgstr["nopudoseractualizado"];
-//	die;
+if (!isset($arrHttp["ValorCapturado"]) || $arrHttp["ValorCapturado"]=="" ) {
+	echo "<h3 style=color:red>".$msgstr["nopicklistvalues"]."</h3>";
+} else {
+	$fp=false;
+	$fp=fopen($archivo,"w");
+	if (!$fp){
+		echo $archivo.": ".$msgstr["nopudoseractualizado"];
+		die;
+	}
+	fwrite($fp,$arrHttp["ValorCapturado"]);
+	fclose($fp);
+	echo "<h3>".$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["picklist"]." ".$msgstr["updated"]."</h3>";
 }
-fwrite($fp,$arrHttp["ValorCapturado"]);
-fclose($fp);
-$Opciones="";
-$VC=explode("\n",$arrHttp["ValorCapturado"]);
-foreach ($VC as $value){
-	$value=trim($value);
-	if ($Opciones=="")
-		$Opciones=$value;
-	else
-		$Opciones.='$$$$'.$value;
-}
-echo "<h3>".$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["picklist"]." ".$msgstr["updated"]."</h3>";
-if (!isset($arrHttp["desde"]) or $arrHttp["desde"]!="dataentry"){
+/*
+Delete this pop-up window after 4 seconds. Just in case the close button is not hit
+*/
 ?>
-
-<script>
-	row=<?php if (isset($arrHttp["row"])) echo $arrHttp["row"]."\n"?>
-	name="<?php echo $arrHttp["picklist"]?>"
-	window.opener.valor=name
-	window.opener.Asignar()
-	self.close()
-</script>
-
+<script>setTimeout("window.close()",4000)</script>
 <?php
-}
-
-if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry"){
-?>
-
-<script>
-	window.opener.ValorTabla="<?php echo $Opciones?>"
-	window.opener.SelectName='<?php echo $arrHttp["Ctrl"]?>'
-	window.opener.AsignarTabla()
-	self.close()
-</script>
-<?php
-}
 echo "</div></div>";
 include("../common/footer.php");?>

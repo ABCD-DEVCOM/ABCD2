@@ -5,6 +5,8 @@
 2022-02-02 fho4abcd back button, div-helper
 2024-04-01 fho4abcd css from /assets, remove wrong imagepath (was not used)
 2024-04-22 fho4abcd return title info,Improve buttons
+2025-08-24 fho4abcd Allow correct edit from dataentry: send "desde" also to save script.
+2025-08-24 fho4abcd Show message if the file is missing
 */
 /* See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html
 */
@@ -113,10 +115,15 @@ if (strpos($arrHttp["picklist"],'../')!==false){
     }else{
         // This thread is in a pop-up window
         // The close button is large but does only close.
-		echo "<a class='bt bt-red' href=javascript:Cancelar()>". $msgstr["cancel"]."</a>";
-   }
-	echo "<a class='bt bt-green' href=javascript:Enviar()>". $msgstr["save"]."</a>";    ?>
-	</div>
+        if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry"){
+            include "../common/inc_close.php";
+	} else {
+            echo "<a class='bt bt-red' href=javascript:Cancelar()>". $msgstr["cancel"]."</a>";
+	}
+    }
+    echo "<a class='bt bt-green' href=javascript:Enviar()>". $msgstr["save"]."</a>";
+    ?>
+    </div>
     <div class="spacer">&#160;</div>
 </div>
 <?php
@@ -127,29 +134,29 @@ include "../common/inc_div-helper.php";
 <div class="formContent">
 	<table width="100%">
         <tr>
-			<td>
-				<b><?php echo $msgstr["picklistname"].": " .$arrHttp["picklist"]?></b> &nbsp; &nbsp;
-			</td>
+		<td>
+			<b><?php echo $msgstr["picklistname"].": " .$arrHttp["picklist"]?></b> &nbsp; &nbsp;
+		</td>
         </tr><tr>
-			<td>
-				<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
-				<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-				<a class="bt bt-red" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a><br>
-				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span><br>
-				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_sort']?></span><br>
-				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_move']?></span><br>
-			</td>
-		</tr><tr>
-			<td>
-				<div id="gridbox" xwidth="780px" height="200px" style="background-color:white;overflow:hidden"></div>
-			</td>
-		</tr>
+		<td>
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
+			<a class="bt bt-red" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a><br>
+			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span><br>
+			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_sort']?></span><br>
+			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_move']?></span><br>
+		</td>
+	</tr><tr>
+		<td>
+			<div id="gridbox" xwidth="780px" height="200px" style="background-color:white;overflow:hidden"></div>
+		</td>
+	</tr>
 	</table>
 <script>
 	<?php echo "type=\"".$arrHttp["picklist"]."\"\n"?>
 	mygrid = new dhtmlXGridObject('gridbox');
 	switch (type){
-     	case "ldr_06.tab":
+		case "ldr_06.tab":
 			mygrid.setHeader("Code, Term, Fixed field structure");
 			mygrid.setInitWidths("70,380,100")
 			mygrid.setColAlign("left,left,left")
@@ -164,16 +171,16 @@ include "../common/inc_div-helper.php";
 			mygrid.setColSorting("str,str,num")
 			break
 		default:
-		    mygrid.setHeader("Code, Term");
+			mygrid.setHeader("Code, Term");
 			mygrid.setInitWidths("70,280")
 			mygrid.setColAlign("left,left")
 			mygrid.setColTypes("ed,ed");
 			mygrid.setColSorting("str,str")
 			break
-    }
-    mygrid.enableAutoHeigth(true,300);
+	}
+	mygrid.enableAutoHeigth(true,300);
 	mygrid.enableAutoWidth(true);
-    mygrid.enableDragAndDrop(true);
+	mygrid.enableDragAndDrop(true);
 	mygrid.init();
 	index=-1;
 <?php
@@ -187,7 +194,7 @@ include "../common/inc_div-helper.php";
 				$t=explode('|',$value);
 				if (!isset($t[1])) $t[1]="";
 				if (!isset($t[2])) $t[2]="";
-                if (!isset($t[2]) and $arrHttp["picklist"]=="ldr_06.tab") $t[2]="";
+				if (!isset($t[2]) and $arrHttp["picklist"]=="ldr_06.tab") $t[2]="";
 				$t[0]=trim($t[0]);
 				$t[1]=trim($t[1]);
 				$t[2]=trim($t[2]);
@@ -199,7 +206,7 @@ include "../common/inc_div-helper.php";
 			}
 		}
 	}else{
-
+		/* no message here as it is hidden in the grid processing*/
  	}
 ?>
 	mygrid.clearSelection()
@@ -213,6 +220,9 @@ include "../common/inc_div-helper.php";
 <input type=hidden name=picklist value="<?php echo $arrHttp["picklist"]?>">
 <input type=hidden name=row value=<?php if (isset($arrHttp["row"])) echo $arrHttp["row"]?>>
 <input type=hidden name=title value="<?php if (isset($arrHttp["title"])) echo $arrHttp["title"]?>">
+<input type=hidden name=desde value="<?php if (isset($arrHttp["desde"])) echo $arrHttp["desde"]?>">
+<input type=hidden name=tag value="<?php if (isset($arrHttp["tag"])) echo $arrHttp["tag"]?>">
+<input type=hidden name=subfield value="<?php if (isset($arrHttp["subfield"])) echo $arrHttp["subfield"]?>">
 <?php
 if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado value=".$arrHttp["encabezado"].">\n";
 ?>
@@ -222,7 +232,15 @@ if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado val
 <input type=hidden name=picklist value="<?php echo $arrHttp["picklist"]?>">
 <input type=hidden name=row value=<?php if (isset($arrHttp["row"])) echo $arrHttp["row"]?>>
 <input type=hidden name=title value="<?php if (isset($arrHttp["title"])) echo $arrHttp["title"]?>">
+<input type=hidden name=tag value="<?php if (isset($arrHttp["tag"])) echo $arrHttp["tag"]?>">
+<input type=hidden name=subfield value="<?php if (isset($arrHttp["subfield"])) echo $arrHttp["subfield"]?>">
 </form>
+<?php
+if (!file_exists($archivo)){
+	echo "<span class=\"bt-disabled\"><i class=\"fas fa-info-circle\"></i></span>&nbsp;";
+	echo $msgstr["emptytablenofile"]." ".$archivo."<br>";
+}
+?>
 </div>
 </div>
 <?php include("../common/footer.php"); ?>

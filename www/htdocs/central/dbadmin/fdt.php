@@ -9,6 +9,7 @@
 2024-04-22 fho4abcd Send title to picklist edit
 2025-02-09 fho4abcd Tests for Simple/Multiple picklist added. Moved displayed errors before the table display
 2025-02-11 fho4abcd replace browse by translated message
+2025-08-24 fho4abcd Add tagnumber and subfields for edit text table
 */
 /*
 ** See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html / https://docs.dhtmlx.com/grid__styling.html for grid details
@@ -797,6 +798,7 @@ if (!isset($fp)) echo "<p style='color:red'>".$msgstr["file"].": ".$archivo." &r
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <?php if (isset($arrHttp["UNICODE"]))  echo "<input type=hidden name=UNICODE value=\"".$arrHttp["UNICODE"]."\">\n"; ?>
 <input type=hidden name=tag>
+<input type=hidden name=subfield>
 </form>
 <form name=edit_picklist method=post target=PL action=picklist.php>
 <?php if (isset($arrHttp["UNICODE"]))  echo "<input type=hidden name=UNICODE value=\"".$arrHttp["UNICODE"]."\">\n"; ?>
@@ -805,6 +807,8 @@ if (!isset($fp)) echo "<p style='color:red'>".$msgstr["file"].": ".$archivo." &r
 <input type=hidden name=picklist>
 <input type=hidden name=row>
 <input type=hidden name=title>
+<input type=hidden name=tag>
+<input type=hidden name=subfield>
 </form>
 <script>
 <?php
