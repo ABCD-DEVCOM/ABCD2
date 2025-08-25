@@ -6,6 +6,7 @@
 2024-04-22 fho4abcd Correct pl_type, send also title of field, Add function AsignarTxtPicklistValues (was removed by accident)
 2025-02-09 fho4abcd bgcolor in HeadRowsForValidate set to LightBlue
 2025-02-11 fho4abcd replace browse by translated message
+2025-08-24 fho4abcd Add tagnumber and subfield for edit text table
 */
 /*
 ** Scripts common and equal for fdt processing
@@ -92,6 +93,8 @@ function Picklist(name,row,base){
 			document.edit_picklist.picklist.value=pl_name
 			document.edit_picklist.row.value=fila
 			document.edit_picklist.title.value=mygrid.cells2(fila,3).getValue()
+			document.edit_picklist.tag.value=mygrid.cells2(fila,2).getValue()
+			document.edit_picklist.subfield.value=mygrid.cells2(fila,6).getValue()
 			//Url="picklist.php?base=&picklist="+pl_name+"&row="+fila+"&pl_type="
 			break
 		case "D":
