@@ -1,4 +1,7 @@
 <?php
+/*
+20250109 fho4abcd Standard helper. Add breadcrumb. Replace all buttons by new style buttons, improve error message
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -7,14 +10,34 @@ include("../common/get_post.php");
 include("../config.php");
 
 include ("../lang/admin.php");
+include ("../lang/dbadmin.php");
 include("../lang/soporte.php");
+include("../common/header.php");
+$pl_tag=substr($arrHttp["Tag"],3);
+?>
+<body>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["edit"]." ".$msgstr["ft_mf"].": ".$pl_tag?>
+    </div>
+    <div class="actions">
+	<a class="bt bt-green" href=javascript:ActualizarForma() title="<?php echo $msgstr["updatedeform"]?>">
+		<i class="fas fa-share"></i> <?php echo $msgstr["actualizar"]?></a>
+	<a class="bt bt-red" href="javascript:self.close()">
+		<i class="fas fa-times"></i> <?php echo $msgstr["cancelar"]?></a>
+	&nbsp;
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
 
-//foreach ($arrHttp as $var=>$value)  echo "$var=>$value";
+//foreach ($arrHttp as $var=>$value) echo "<xmp>$var=$value</xmp>";
 unset($fp_leader);
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/ldr_06.tab" ;
 if (!file_exists($archivo)){	$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/ldr_06.tab" ;
 }
-if (!file_exists($archivo)){	echo $arrHttp["falta"].": ".$archivo;
+if (!file_exists($archivo)){	echo "<font color=red>".$msgstr["misfile"].": ".$archivo."</font>";
 	die;}
 $fp_leader=file($archivo);
 $ix=0;
@@ -28,8 +51,7 @@ foreach ($fp_leader as $value){	$value=trim($value);
 	}
 }
 //echo $titulo;
-$pl_tag=substr($arrHttp["Tag"],3);
-echo $pl_tag;
+//echo $pl_tag;
 $fp=array();
 if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pll[1]))
 	$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pll[1]);
@@ -68,7 +90,6 @@ foreach ($fp as $value) {	$value=rtrim($value);
 		}
 	}}
 echo "</script>\n";
-include("../common/header.php");
 ?>
 
 <script language="JavaScript" type="text/javascript" src=js/lr_trim.js></script>
@@ -126,16 +147,9 @@ function ActualizarForma(){
 	self.close()
 }
 
-</script></head>
-<body>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/campofijo.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/campofijo.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: campofijo.php" ?>
-</font>
-	</div>
- <div class="middle form">
-			<div class="formContent">
+</script>
+<div class="middle form">
+	<div class="formContent">
 <?php echo "<h4>".$titulo."</h4>"?>
 <form name=forma1><script language=javascript>
 
@@ -190,9 +204,10 @@ for (i=1;i<nSC;i++) {
         if (isset($_SESSION["permiso"])){
     		if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$base."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$base."_CENTRAL_ACTPICKLIST"])){
         ?>
-        document.writeln(" <a href=\"javascript:AgregarPicklist('"+picklist_name+"','"+NombreCampo+"','')\"><img src=img/s2.gif alt='"+mod_picklist+"' title='"+mod_picklist+"' border=0></a>")
-		<?php } }?>
-		document.writeln(" <a href=\"javascript:RefrescarPicklist('"+picklist_name+"','"+NombreCampo+"','')\"><img src=img/reset.gif alt='"+reload_picklist+"' title='"+reload_picklist+"' border=0></a>")
+		document.writeln(" <a class='bt-fdt' href=\"javascript:AgregarPicklist('"+picklist_name+"','"+NombreCampo+"','')\"><i class='fas fa-edit' alt='"+mod_picklist+"' title='"+mod_picklist+"' ></i></a>")
+	<?php } }?>
+		document.writeln(" <a class='bt-fdt' href=\"javascript:RefrescarPicklist('"+picklist_name+"','"+NombreCampo+"','')\"><i class='fas fa-redo' alt='"+reload_picklist+"' title='"+reload_picklist+"' ></i></a>")
+
 	}
 	document.writeln("</td>")
 	Contenido=Contenido.substr(s[9])
@@ -265,13 +280,7 @@ function AsignarTabla(){
 </script>
 
 <input type=hidden name=occur><input type=hidden name=ep><input type=hidden name=NoVar><input type=hidden name=Indice value=""><input type=hidden name=base><input type=hidden name=cipar>
-<input type=hidden name=Formato><input type=hidden name=Indice>
-<br><br>
-<table width=200 bgcolor=#FFFFFF border=0 cellspacing=5>	<td align=center><a href=javascript:ActualizarForma()><img src=img/pasaraldocumento.gif  border=0><br><?php echo $msgstr["actualizar"]?></a>	</td>
-	<td align=center>
-		<a href="javascript:self.close()"><img src=img/cancelar.gif  border=0><br><?php echo $msgstr["cancelar"]?></a>
-	</td></table><script language=javascript>
-</script></form>
+<input type=hidden name=Formato><input type=hidden name=Indice></form>
 
 <form name=agregarpicklist action=../dbadmin/picklist_edit.php method=post target=Picklist>
    <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
