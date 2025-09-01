@@ -16,6 +16,7 @@
 20250213 fho4abcd Replaced links by buttons, adde translation
 202503xx rogercgui Improves the Autoincrement field by displaying the number that will be previously saved in the record.
 20250330 fho4abcd Encode quotes in variable $linea01 for $tipo_e=E to get correct value for <input name=eti... value=..>
+20250901 fho4abcd Edit button for edit picklists
 */
 require_once("combo_inc.php");
 require_once("../common/inc_calendar.php");
@@ -266,7 +267,7 @@ global $msgstr,$base;
     if (isset($_SESSION["permiso"])){
 
     	if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$base."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$base."_CENTRAL_ACTPICKLIST"])){
-			echo " <a class=\"bt-fdt\" href=\"javascript:AgregarPicklist('$picklist','$nombrec','$campo')\"><i class=\"fas fa-plus\" alt='".$msgstr["mod_picklist"]."' title='".$msgstr["mod_picklist"]."' ></i></a>";
+			echo " <a class=\"bt-fdt\" href=\"javascript:AgregarPicklist('$picklist','$nombrec','$campo')\"><i class=\"fas fa-edit\" alt='".$msgstr["mod_picklist"]."' title='".$msgstr["mod_picklist"]."' ></i></a>";
 		}
 		echo " <a class=\"bt-fdt\" href=\"javascript:RefrescarPicklist('$picklist','$nombrec','$campo')\"><i class=\"fas fa-redo\" alt='".$msgstr["reload_picklist"]."' title='".$msgstr["reload_picklist"]."'></i></a> &nbsp; ";
 	}
@@ -855,7 +856,7 @@ global $ver,$base,$arrHttp,$Path,$Tabla_sel,$db_path,$lang_db,$msgstr;
 			$opciones=urlencode ( $opciones);
 			if (isset($_SESSION["permiso"])){
 				if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$base."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$base."_CENTRAL_ACTPICKLIST"])){
-	        		echo " <a class=\"bt-fdt\" href=\"javascript:AgregarPicklist('$opciones','tag$tag','$check')\"><i class=\"fas fa-plus\" alt='".$msgstr["mod_picklist"]."' title='".$msgstr["mod_picklist"]."' ></i></a>";
+	        		echo " <a class=\"bt-fdt\" href=\"javascript:AgregarPicklist('$opciones','tag$tag','$check')\"><i class=\"fas fa-edit\" alt='".$msgstr["mod_picklist"]."' title='".$msgstr["mod_picklist"]."' ></i></a>";
 	        	}
 				echo " <a class=\"bt-fdt\" href=\"javascript:RefrescarPicklist('$opciones','tag$tag','$check')\"><i class=\"fas fa-redo\" alt='".$msgstr["reload_picklist"]."' title='".$msgstr["reload_picklist"]."' ></i></a> &nbsp; ";
 			}
@@ -1586,7 +1587,7 @@ Function PrepararFormato() {
 									echo  "</select>";
 									if (isset($_SESSION["permiso"])){
 										if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$base."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$base."_CENTRAL_ACTPICKLIST"])){
-											echo " <a class=\"bt-fdt\" href=\"javascript:AgregarPicklist('".$ld[11]."','tag".$ld[1]."','')\"><i class=\"fas fa-plus\" alt='".$msgstr["mod_picklist"]."' title='".$msgstr["mod_picklist"]."'></i></a>";
+											echo " <a class=\"bt-fdt\" href=\"javascript:AgregarPicklist('".$ld[11]."','tag".$ld[1]."','')\"><i class=\"fas fa-edit\" alt='".$msgstr["mod_picklist"]."' title='".$msgstr["mod_picklist"]."'></i></a>";
 										}
 										echo " <a class=\"bt-fdt\" href=\"javascript:RefrescarPicklist('".$ld[11]."','tag".$ld[1]."','')\"><i class=\"fas fa-redo\" alt='".$msgstr["reload_picklist"]."' title='".$msgstr["reload_picklist"]."' ></i></a> &nbsp; ";
 									}

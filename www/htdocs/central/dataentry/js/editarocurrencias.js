@@ -1,6 +1,7 @@
 /*
 20250402 fho4abcd More readable code, improve generated html, add translation and hovered texts
 20250402 fho4abcd Copy default from worksheet to <input value=...>, replace dropdown by button
+20250901 fho4abcd Copy default from worksheet for dropdown list in case of redraw command
 */
 // The occurrences of the field / para colocar las ocurrencias del campo
 var valoresCampo=new Array(200)
@@ -310,6 +311,7 @@ function Redraw(xsalida,newSc,add_name){
 		html+=" <select name="+TagCampo+" id=t"+C_Sc+"_"+M+"><option value=' '> </option>\n"
 		opt=pick.split('$$$$')
 		selected=""
+		if (orgxsalida=="") valor=sc[15] // set default
 		for (var ixopt in opt){
 			if (Trim(opt[ixopt])!=""){
 				o=opt[ixopt].split('|')
