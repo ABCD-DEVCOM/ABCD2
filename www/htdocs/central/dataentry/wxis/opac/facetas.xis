@@ -1,4 +1,4 @@
-<IsisScript><display><pft>'THEO'</pft></display>
+<IsisScript>
 	<trace>br</trace>
 	<section>
 		<field action=cgi tag=5001>base</field>
@@ -21,7 +21,6 @@
 		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
     	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
 		<parm name="buffersize">500000</parm>
-
 
           <do task=search>
              <parm name=db><pft>v5001</pft></parm>
