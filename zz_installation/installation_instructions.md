@@ -39,6 +39,7 @@ The default loaded extensions depend on the actual PHP processor. ABCD requires 
   - Extension `xmlrpc`: Required if Site is used
   - Extension `xsl`   : Required if Site is used
   - Extension `yaz`   : Required if `Z39.50` client is used (to download records via the Z39.50 communication protocol)
+  - Extension `zip`   : Required to update the system.
 - Apache Tika. This content analysis toolkit is required by the Digital Document functionality in ABCD.
 ABCD uses the archive `tika-app***.jar` and `java` to execute this jar.
 Download the `tika` archive from https://tika.apache.org/download.html
