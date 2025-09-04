@@ -5,19 +5,19 @@
     <img src="https://abcd-community.org/wp-content/uploads/2021/06/ABCD_logo_rasterizado-02.png" alt="Logo" width="400" >
   </a>
 
-  <h3 align="center">ABCD v2.x based on CISIS</h3>
+  <h3 align="center">ABCD based on CISIS</h3>
 
   <p align="center">
     Welcome to the development of the ABCD!
     <br />
-    <a href="https://github.com/ABCD-DEVCOM/ABCD2/blob/master/ABCofABCD_2.0f.pdf" target="_blank"><strong>Explore the ABC of ABCD »</strong></a>
+    <a href="https://github.com/ABCD-DEVCOM/ABCD/blob/master/ABCofABCD_2.0f.pdf" target="_blank"><strong>Explore the ABC of ABCD »</strong></a>
     <br />
     <br />
     <a href="https://demo.abcd-community.org/" target="_blank">View Demo</a>
     ·
-    <a href="https://github.com/ABCD-DEVCOM/ABCD2/issues">Report Bug</a>
+    <a href="https://github.com/ABCD-DEVCOM/ABCD/issues">Report Bug</a>
     ·
-    <a href="https://github.com/ABCD-DEVCOM/ABCD2/issues">Request Feature</a>
+    <a href="https://github.com/ABCD-DEVCOM/ABCD/issues">Request Feature</a>
   </p>
 </p>
 
@@ -95,11 +95,11 @@ ABCD is being written using the languages.
 ## Installation
 ABCD is supported on **Windows** and **Linux**  
 [Download the latest ABCD release](https://abcd-community.org/dowloads/)  
-[Download all code from GitHub ABCD-DEVCOM / ABCD2](https://github.com/ABCD-DEVCOM/ABCD2)  
+[Download all code from GitHub ABCD-DEVCOM / ABCD](https://github.com/ABCD-DEVCOM/ABCD)  
  
 
 Installation prerequisites and installation procedure vary by version and by installed components.
-See [Installation folder](https://github.com/ABCD-DEVCOM/ABCD2/tree/master/zz_installation) for detailed instructions and material.
+See [Installation folder](https://github.com/ABCD-DEVCOM/ABCD/tree/master/zz_installation) for detailed instructions and material.
 Note that the ABCD downloads do not include software prerequisites
 
 [Download EmpWeb](https://github.com/ABCD-Community/EmpWeb)
@@ -146,7 +146,7 @@ User: adm
 Password: x
  ```  
 
-_For more examples, please refer to the [Documentation](https://github.com/ABCD-DEVCOM/ABCD2/blob/master/ABCofABCD_2.0f.pdf)_
+_For more examples, please refer to the [Documentation](https://github.com/ABCD-DEVCOM/ABCD/blob/master/ABCofABCD_2.0f.pdf)_
 
 
 <!-- CONTRIBUTING -->
@@ -155,9 +155,9 @@ _For more examples, please refer to the [Documentation](https://github.com/ABCD-
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/ABCD2`)
-3. Change or create a file (`git add [files changed]  or : git add . `(for all files))
-4. Commit your Changes (`git commit -m 'Add some ABCD2Feature'`)
+2. Create your Feature Branch (`git checkout -b feature/ABCD`)
+3. Change or create a file (`git add [files changed]  or : git add . `(f or all files))
+4. Commit your Changes (`git commit -m 'Add some ABCD Feature'`)
 5. Push to the Branch (`git push -u origin master`)
 6. Open a Pull Request
 
@@ -184,7 +184,7 @@ For a comparisom between software licenses, check http://en.wikipedia.org/wiki/C
 
 E-mail - [contact@abcd-community.org](contact@abcd-community.org)
 
-Project Link: [https://github.com/ABCD-DEVCOM/ABCD2/](https://github.com/ABCD-DEVCOM/ABCD2/)
+Project Link: [https://github.com/ABCD-DEVCOM/ABCD/](https://github.com/ABCD-DEVCOM/ABCD/)
 
 Website: https://abcd-community.org/
 
