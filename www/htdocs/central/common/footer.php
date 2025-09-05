@@ -70,7 +70,7 @@ $update_info = checkForABCDUpdate(ABCD_VERSION);
         } else {
             $text2 = "TEXT2";
         }
-        $versioninfo = $msgstr["version"] . ": " . ABCD_VERSION . " + ... &rarr; 2025-08-24";
+        $versioninfo = $msgstr["version"] . ": " . ABCD_VERSION . " + ... &rarr; " . DATE_VERSION;
         ?>
 
         <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a> - <?php echo $versioninfo ?> </small></span>
