@@ -19,7 +19,7 @@ set_time_limit(600);
 
 
 // --- General Settings ---
-define('GITHUB_REPOSITORY', 'ABCD-DEVCOM/ABCD2');
+define('GITHUB_REPOSITORY', 'ABCD-DEVCOM/ABCD');
 require_once(__DIR__ . '/version.php');
 define('LOCAL_VERSION', ABCD_VERSION);
 define('USER_CONFIG_FILE', 'htdocs/central/config.php');
