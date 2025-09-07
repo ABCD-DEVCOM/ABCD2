@@ -6,13 +6,14 @@ require_once($xmlRootPath . '../admin/auth_check.php');
 require_once($xmlRootPath . '../php/include.php');
 require_once($xmlRootPath . "./xmlRoot_functions.php");
 
-$xml = ( $xml != "" ? $xml : $_REQUEST['xml'] );
-$xsl = ( $xsl != "" ? $xsl : $_REQUEST['xsl'] );
-$lang = ( $lang != "" ? $lang : $_REQUEST['lang'] );
-$page = ( $page != "" ? $page : $_REQUEST['page'] );
+$xml = $_REQUEST['xml'] ?? null;
+$xsl = $_REQUEST['xsl'] ?? null;
+$lang = $_REQUEST['lang'] ?? null;
+$page = $_REQUEST['page'] ?? null;
+$debug = $_REQUEST['debug'] ?? null; 
 
-$xslSave = $_REQUEST['xslSave'];
-$xmlSave = $_REQUEST['xmlSave'];
+$xslSave = $_REQUEST['xslSave'] ?? null;
+$xmlSave = $_REQUEST['xmlSave'] ?? null;
 
 check_parameters();
 
