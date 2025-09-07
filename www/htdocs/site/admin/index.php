@@ -3,7 +3,9 @@
 require("../php/include.php");
 require("php/functions.php");
 
-$texts = SITE_PATH."admin/defaultXml/en/texts.xml";
+$language = 'en';
+$texts = __DIR__ . "/defaultXml/" . $language . "/texts.xml";
+
 if(file_exists($localPath['xml'].'texts.xml')){
     $texts = $localPath['xml'].'texts.xml';
 } else if(file_exists(SITE_PATH."admin/defaultXml/".$lang."/texts.xml")) {
@@ -12,7 +14,8 @@ if(file_exists($localPath['xml'].'texts.xml')){
 
 $label = loadLabels($texts);
 $langs = loadLangs(DATABASE_PATH.'xml/');
-$error = preg_replace('/[^A-Z_]/', '', $_REQUEST['error']);
+		$error_from_request = $_REQUEST['error'] ?? '';
+		$error = preg_replace('/[^A-Z_]/', '', $error_from_request);
     
 echo'<?xml version="1.0" encoding="utf-8"?>';?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
