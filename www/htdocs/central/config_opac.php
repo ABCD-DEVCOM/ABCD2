@@ -29,8 +29,12 @@ $lang_config = $lang; // save the configured language to preset it later
 
 if (isset($_REQUEST["lang"])){
 	$lang = $_REQUEST["lang"];
-}else{
+} else if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+	// If the browser language is informed, use it
 	$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+} else {
+	// Otherwise, use the default language defined in config.php
+	$lang = $lang_config;
 }
 
 include ($CentralPath."/lang/opac.php");
