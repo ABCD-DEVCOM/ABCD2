@@ -1,0 +1,2716 @@
+/* ** Histórico de Alterações (Mantido do Original)
+** 2021-03-01 fho4abcd : deleted overruled font-family, font-size
+** 2021-06-26 fho4abcd Move distributor logo to php
+** 2021-12-23 fho4abcd Restored background mydiv (line 1577) to view the action buttons in fmt (disappeared after previous commit)
+** 2022-12-11 fho4abcd Add moduleButton
+** 2023-01-16 fho4abcd InstitutionalInfo:removed width. heading-database:improved layout and added attention entry. table.toolbar-dataentry:increased width
+** 2023-01-19 fho4abcd Removed unknown -webkit-text-size-adjust,-moz-box-shadow. bad !important
+** 2023-01-22 fho4abcd iframe settings in this file + adjust size of table-fdt-three
+** 2023-01-27 fho4abcd split table.toolbar-dataentry, remove commented style entries
+** 2023-01-27 fho4abcd typo, remove invalid options
+** 2023-03-16 fho4abcd moved some px to rem, small enhancements
+** 2025-09-12 rogercgui Unifies CSS files in a single Main.CSS file
+*/
+
+/* ==========================================================================
+   1. GENERAL STYLES AND RESET
+   ========================================================================== */
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body,
+html {
+    margin: 0px;
+}
+
+body {
+    margin: 0;
+    font-family: var(--abcd-body-font-family);
+    font-size: var(--abcd-body-font-size);
+    font-weight: var(--abcd-body-font-weight);
+    line-height: var(--abcd-body-line-height);
+    color: var(--abcd-body-color);
+    text-align: var(--abcd-body-text-align);
+}
+
+a {
+    color: var(--abcd-steel-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--abcd-steel-blue);
+    text-decoration: underline;
+}
+
+a img {
+    border: 0px;
+}
+
+label {
+    cursor: pointer;
+}
+
+form {
+    margin: 0px;
+    padding: 0px;
+}
+
+h4 {
+    color: #3D5D8A;
+}
+
+/* ==========================================================================
+   2. FORM ELEMENTS
+   ========================================================================== */
+
+/* --- Base forInputs, Buttons, Textareas, Selects --- */
+input,
+button,
+optgroup,
+textarea,
+select {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    border-radius: 3px;
+    border-width: 0;
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+}
+
+select.textEntry,
+input.textEntry,
+textarea,
+input[type=text],
+input[type=number],
+input[type=password],
+select {
+    border: 1px solid #a7a6aa;
+    padding: 3px;
+    box-sizing: border-box;
+    margin: 1px 0;
+    color: var(--abcd-gray-900);
+    box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+    -webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+}
+
+input[type=text],
+input[type=password],
+input[type=number],
+textarea.par {
+    -webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
+    box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
+}
+
+input.textEntryFocus,
+textarea.textEntryFocus {
+    border-color: #5e88b6;
+    background: var(--abcd-white);
+}
+
+/* --- Variações de Tamanho e Estilo de Inputs --- */
+.textEntry {
+    width: 180px;
+}
+
+input.textEntry,
+textarea.textEntry {
+    padding: 2px;
+}
+
+textarea.textEntry {
+    height: 70px;
+}
+
+input.smallTextEntry,
+textarea.smallTextEntry {
+    width: 100px;
+}
+
+select.smallTextEntry {
+    width: 120px;
+}
+
+input.superTextEntry,
+textarea.superTextEntry,
+select.superTextEntry,
+input.singleTextEntry,
+textarea.singleTextEntry,
+select.singleTextEntry {
+    height: 2.3rem;
+    width: 90%;
+    margin: 2px;
+}
+
+textarea.tooltip {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* --- Form structure --- */
+.formContent {
+    padding: 20px;
+    justify-content: flex-start;
+    background-color: var(--abcd-white);
+    border: 1px solid var(--abcd-gray-200);
+    border-radius: 0.3rem;
+}
+
+.formContent>*>.formContent,
+.middle.form>*>.middle.form {
+    border: none;
+    border-width: 0;
+    box-shadow: none;
+    background: var(--abcd-white);
+}
+
+.formHead {
+    background: #d8dade;
+    padding: 20px;
+    justify-content: flex-start;
+}
+
+.formHead h4 {
+    color: #3d5d8a;
+    margin: 0px 0px 15px 0px;
+}
+
+.formRow {
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+.formRow label {
+    color: #000;
+    display: block;
+    float: left;
+    width: 30%;
+}
+
+.formRow label.inline {
+    display: inline;
+    float: none;
+    width: auto;
+}
+
+.formRow .frDataFields {
+    float: right;
+    width: 67%;
+}
+
+.formRow .frDataFields .helper {
+    margin-top: 10px;
+    visibility: hidden;
+}
+
+.formRowFocus .frDataFields .helper {
+    visibility: visible;
+}
+
+.formRow .fieldBlock {
+    float: left;
+    width: 33.3%;
+}
+
+.formFoot {
+    padding: 16px 0;
+    background: var(--abcd-light);
+}
+
+.formFoot .helper {
+    float: left;
+    margin-top: 10px;
+    margin-left: 25px;
+    margin-bottom: 10px;
+    padding: 0px 10px 0px 20px;
+    width: 45%;
+    color: var(--abcd-white);
+    border-right: 1px solid #8da2c1;
+}
+
+.formFoot .pagination {
+    float: right;
+    width: 40%;
+    margin: 10px 15px 0px 0px;
+}
+
+.group-fields {
+    background-color: var(--abcd-white);
+    border: 1px solid var(--abcd-light);
+    box-sizing: border-box;
+    padding: 10px 15px;
+    margin: 10px 0;
+}
+
+.panel table    {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   3. UI COMPONENTS
+   ========================================================================== */
+
+/* --- 3.1. Buttons --- */
+
+/* Default button (Classic) */
+a.defaultButton {
+    text-decoration: none;
+    color: var(--abcd-white);
+    display: block;
+    float: left;
+    width: 200px;
+    height: 32px;
+    margin-right: 1px;
+    text-align: left;
+}
+
+a.defaultButton img {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    margin-right: 7px;
+    float: left;
+}
+
+a.defaultButton:hover img {
+    background-color: #4E617C;
+}
+
+a.defaultButton span {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    width: 150px;
+    padding: 0px;
+    float: left;
+}
+
+a.defaultButton strong {
+    display: block;
+}
+
+a.multiLine span {
+    padding-top: 5px;
+}
+
+body:first-of-type a.multiLine span {
+    padding-top: 10px;
+}
+
+/* Menu button (Homepage) */
+a.menuButton {
+    text-align: right;
+    border: 1px solid var(--abcd-info);
+    padding: 8px;
+    width: 200px;
+    margin: 5px;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    border-radius: 0.3rem;
+    display: block;
+    float: left;
+    height: 50px;
+    margin-right: 1px;
+}
+
+a.menuButton:hover {
+    background-color: var(--abcd-info);
+    color: var(--abcd-blue);
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    transform: translateY(-2px);
+}
+
+a.menuButton span {
+    padding: 4px;
+    height: 100%;
+    width: 150px;
+    float: left;
+    text-align: left;
+    margin: auto 50px;
+    font-size: 85%;
+    color: var(--abcd-steel-blue);
+}
+
+a.menuButton img {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 7px;
+    float: left;
+}
+
+/* Simple button and advanced submit(Base Comum) */
+a.singleButton,
+.submitAdvanced,
+.button_browse,
+a.button_browse,
+.submit {
+    border-radius: 3px;
+    text-decoration: none;
+    box-sizing: border-box;
+    color: var(--abcd-white);
+    cursor: pointer;
+    outline: 0;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button_browse:hover,
+a.button_browse:hover,
+a.singleButton:hover {
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    transform: translateY(-2px);
+}
+
+/* Estilos Específicos */
+a.singleButton {
+    display: block;
+    float: left;
+    position: relative;
+    vertical-align: middle;
+    margin-right: 3px;
+    padding: 10px 15px;
+    background-color: var(--abcd-blue);
+}
+
+a.singleButton img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+a.singleButton span.sb_lb,
+a.singleButton span.sb_rb {
+    position: absolute;
+    top: 0px;
+    width: 2px;
+    height: 22px;
+}
+
+a.singleButton span.sb_lb {
+    left: 0px;
+    background: url('../images/singleButton_lb.gif') no-repeat top left;
+}
+
+a.singleButton span.sb_rb {
+    right: 0px;
+    background: url('../images/singleButton_rb.gif') no-repeat top right;
+}
+
+.submit {
+    padding: 5px 13px;
+    margin: 3px;
+}
+
+.button_browse {
+    padding: 4px 8px;
+    margin: 3px;
+}
+
+a.button_browse img {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.button_browse.show {
+    color: var(--abcd-white);
+}
+
+.button_browse.edit {
+    background: var(--abcd-success);
+    color: var(--abcd-white);
+}
+
+.button_browse.delete {
+    background: var(--abcd-red);
+    color: var(--abcd-white);
+}
+
+/* Other generic buttons */
+a.button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+a.button:hover {
+    opacity: 1;
+}
+
+.btn_ok {
+    width: 50%;
+}
+
+.f_right button.showdeleted {
+    border: 1px solid #000;
+}
+
+.f_right button.showdeleted_on {
+    background: var(--abcd-success);
+    color: var(--abcd-white);
+    border: 1px solid #000;
+}
+
+/* --- 3.2. Warning, Helpers, Badges --- */
+
+.alert {
+    color: #664d03;
+    background-color: var(--abcd-warning);
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.alert:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f071";
+    color: #664d03;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+table.alert:before {
+    display: none;
+    /* Override for tables */
+}
+
+.success {
+    color: var(--abcd-white);
+    background-color: var(--abcd-success);
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.success:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f071";
+    color: var(--abcd-yellow);
+    margin-right: 10px;
+}
+
+.helper {
+    padding: 8px 3px 3px 20px;
+}
+
+.helper,
+.helper a {
+    color: var(--abcd-gray);
+}
+
+.helper:before {
+    font-weight: 600;
+    font-family: "Font Awesome 5 Free";
+    content: "\f05a";
+    color: var(--abcd-gray);
+}
+
+.inputAlert {
+    background: #f3eeb5 url('../images/icon/singleButton_alert.gif') no-repeat center right !important;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--abcd-dark);
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+/* --- 3.3. Other components --- */
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding-top: 50px;
+}
+
+.modal-content {
+    border-radius: 4px;
+    background-color: var(--abcd-white);
+    margin: 5% auto 15% auto;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.container {
+    padding: 45px 16px;
+    text-align: center;
+}
+
+/* Tooltip */
+div.tooltip-data {
+    margin: 16px 0;
+    padding: 4px 0;
+}
+
+div.tooltip-data label {
+    line-height: 1.5rem;
+}
+
+/* Loading */
+.loading {
+    padding: 5px;
+}
+
+.loading div {
+    width: 280px;
+    margin: 14% auto 14% auto;
+    padding-top: 24px;
+    text-align: center;
+    background: url('../images/loading.gif') no-repeat top center;
+}
+
+/* ==========================================================================
+   4. LAYOUT AND MAIN STRUCTURE
+   ========================================================================== */
+
+/* --- 4.1. General structure --- */
+.middle {
+    background: var(--abcd-gray-100);
+    min-height: 50vh;
+}
+
+.row {
+    --abcd-gutter-x: 1.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-content: center;
+}
+
+.row>* {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* --- 4.2. Header (.heading) --- */
+.heading {
+    display: flex;
+    background-color: var(--abcd-steel-blue);
+    height: 45px;
+    width: 100%;
+}
+
+.institutionalInfo {
+    float: left;
+    padding: 2px 10px;
+    height: 40px;
+}
+
+.institutionalInfo img {
+    float: left;
+    margin: 2px 8px 0 0;
+    display: inline-block;
+    height: 32px;
+}
+
+.heading-database {
+    display: inline-block;
+}
+
+.heading-database form {
+    margin-right: 15%;
+    padding: 0;
+    height: 45px;
+    position: absolute;
+    width: 39%;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.heading-database form label {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 12px 10px 0 30px;
+    font-size: 1rem;
+}
+
+select.heading-database {
+    display: block;
+    margin-top: 5px;
+    vertical-align: top;
+    background: var(--abcd-gray-200);
+    color: var(--abcd-steel-blue);
+    width: 60%;
+    border: none;
+    border-radius: inherit;
+    float: right;
+    padding: 8px;
+    height: 35px;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: left;
+}
+
+select.heading-database-att {
+    background: var(--abcd-yellow);
+    color: var(--abcd-red);
+}
+
+select.heading-database option {
+    background: var(--abcd-white);
+    color: var(--abcd-steel-blue);
+}
+
+.userInfo {
+    float: right;
+    text-align: right;
+    white-space: nowrap;
+    padding: 15px 15px 0px 0px;
+}
+
+.userInfo a.button_logout {
+    display: -moz-inline-box;
+    display: inline-block;
+    padding: 6px 32px 6px 0px;
+    vertical-align: middle;
+}
+
+.language {
+    float: right;
+    width: 30%;
+    text-align: right;
+    white-space: nowrap;
+    padding: 0px 47px 0px 0px;
+}
+
+/* --- 4.3. Section Information Bar (.sectionInfo) --- */
+
+.breadcrumb {
+    float: left;
+    width: 45%;
+    padding: 5px 0px 5px 15px;
+    display: inline;
+    color: var(--abcd-white);
+    font-size: 150%;
+}
+
+.breadcrumb a {
+    color: var(--abcd-white);
+    font-weight: 600;
+}
+
+.actions {
+    float: right;
+    width: 50%;
+    text-align: right;
+    padding: 8px 0px 0px 0px;
+    vertical-align: middle;
+}
+
+.actions,
+.actions a {
+    color: var(--abcd-white);
+    text-decoration: none;
+}
+
+.actions a.defaultButton {
+    float: right;
+    margin-top: 3px;
+}
+
+/* --- 4.4. Footer (.footer) --- */
+.footer {
+    border-top: 1px solid var(--abcd-light);
+    color: var(--abcd-light);
+    padding: .8rem;
+    -webkit-box-shadow: inset -1px 15px 5px -12px rgba(0, 0, 0, 0.32);
+    box-shadow: inset -1px 15px 5px -12px rgba(0, 0, 0, 0.32);
+    position: relative;
+    bottom: 0;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+}
+
+.footer a {
+    color: var(--abcd-light);
+}
+
+.footer span.institutionName a {
+    text-decoration: none;
+    font-size: 1.0rem;
+    font-weight: 500;
+    padding: 3px 0;
+}
+
+.footer span.institutionName a:hover {
+    text-decoration: underline;
+}
+
+.systemInfo {
+    float: left;
+    width: 70%;
+    padding: 11px 0px 11px 15px;
+}
+
+.systemInfo strong,
+.systemInfo span {
+    display: block;
+}
+
+.distributorLogo {
+    float: right;
+    width: 25%;
+    text-align: right;
+    padding: 11px 15px 11px 0px;
+}
+
+.distributorLogo img {
+    display: inline-block;
+    height: 40px;
+}
+
+.ActionFooter {
+    display: inline-flex;
+    width: 100%;
+    margin: 20px 10px;
+}
+
+.ActionFooter a {
+    margin: 2px;
+}
+
+/* ==========================================================================
+   5. NAVIGATION
+   ========================================================================== */
+
+/* --- 5.1. Main header navigation(nav.heading-nav) --- */
+nav.heading-nav ul {
+    float: right;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+    list-style: none;
+    position: relative;
+    overflow: hidden;
+    height: 45px;
+}
+
+nav.heading-nav ul li {
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+}
+
+nav.heading-nav a {
+    display: flex;
+    color: var(--abcd-white);
+    height: 45px;
+    line-height: 60px;
+    text-decoration: none;
+    border: none;
+    padding: 0 8px;
+    vertical-align: top;
+    box-shadow: none;
+    align-items: center;
+}
+
+nav.heading-nav a:hover,
+nav.heading-nav button:hover,
+nav.heading-nav select:hover {
+    background-color: var(--abcd-steel-blue);
+}
+
+nav.heading-nav a img {
+    margin-top: 0;
+    vertical-align: middle;
+}
+
+nav.heading-nav select {
+    text-transform: uppercase;
+    display: block;
+    color: var(--abcd-white);
+    height: 43px;
+    width: 60px;
+    text-decoration: none;
+    border: none;
+    padding: 8px;
+    vertical-align: middle;
+    box-shadow: none;
+    line-height: 60px;
+}
+
+nav.heading-nav select option {
+    padding: 5px;
+}
+
+.lang:active {
+    border: 1px solid #000;
+    pointer-events: initial;
+}
+
+/* ---Main navigation dropdowns --- */
+nav.heading-nav ul ul {
+    z-index: 999999999;
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    left: 200px;
+    /* Adjust as needed */
+}
+
+nav.heading-nav ul li:hover>ul {
+    display: inherit;
+}
+
+nav.heading-nav ul ul li {
+    float: none;
+    display: list-item;
+    position: relative;
+    margin-left: -80px;
+    /* Adjust as needed */
+}
+
+nav.heading-nav ul ul ul li {
+    position: relative;
+    top: -60px;
+}
+
+/* --- Module buttons on the main navigation --- */
+.bt-mod {
+    margin: 4px 0 0 0;
+    height: 42px;
+    width: 42px;
+    border-radius: 0px;
+    box-sizing: border-box;
+    cursor: pointer;
+    outline: 0;
+    padding: 10px;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-top-right-radius: 0.3rem;
+    border-top-left-radius: 0.3rem;
+    box-shadow: none;
+}
+
+.bt-cat {
+    background-image: url(../svg/ic_fluent_book_database_24_regular.svg);
+}
+
+.bt-cat.active {
+    box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;
+    background-image: url(../svg/ic_fluent_book_database_24_filled.svg);
+}
+
+.bt-loan {
+    background-image: url(../svg/ic_fluent_people_swap_24_regular.svg);
+}
+
+.bt-loan.active {
+    background-image: url(../svg/ic_fluent_people_swap_24_filled.svg);
+}
+
+.bt-acq {
+    background-image: url(../svg/ic_fluent_cart_24_regular.svg);
+}
+
+.bt-acq.active {
+    background-image: url(../svg/ic_fluent_cart_24_filled.svg);
+}
+
+nav.heading-nav a.bt-exit {
+    background-color: var(--abcd-danger);
+    border: none;
+    border-radius: 0;
+}
+
+li a.bt-exit:hover {
+    background-color: var(--abcd-danger);
+    border: none;
+}
+
+
+/* --- 5.2. Generic navigation (Menu de Manutenção) --- */
+nav {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav a {
+    display: block;
+    background: var(--abcd-blue);
+    color: var(--abcd-white);
+    text-decoration: none;
+    padding: 0.8em 1.8em;
+    font-size: 90%;
+    position: relative;
+}
+
+.nav {
+    vertical-align: top;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.nav li {
+    position: relative;
+}
+
+.nav>li {
+    float: left;
+    margin-right: 1px;
+}
+
+.nav>li>a {
+    margin-bottom: 1px;
+}
+
+.nav>li:hover,
+.nav>li:hover>a {
+    border-bottom-color: var(--abcd-orange);
+    background-color: var(--abcd-indigo);
+    color: var(--abcd-white);
+}
+
+.nav>li:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.nav>li:first-child>a {
+    border-radius: 4px 0 0 0;
+}
+
+.nav>li:last-child {
+    border-radius: 0 0 4px 0;
+    margin-right: 0;
+}
+
+.nav>li:last-child>a {
+    border-radius: 0 4px 0 0;
+}
+
+.nav li li a {
+    background: var(--abcd-white);
+    color: var(--abcd-gray-dark);
+    border-bottom: 1px solid #a7a6aa;
+}
+
+.nav li li a:hover {
+    background-color: var(--abcd-light);
+}
+
+.nav li a:first-child:nth-last-child(2):before {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 0;
+    border: 5px solid transparent;
+    top: 50%;
+    right: 5px;
+}
+
+/* Submenu positioning */
+.nav ul {
+    position: absolute;
+    white-space: nowrap;
+    z-index: 1;
+    left: -99999em;
+}
+
+.nav>li:hover>ul {
+    left: auto;
+    margin-top: 1px;
+    min-width: 100%;
+    border: 1px solid #a7a6aa;
+    border-radius: 3px;
+}
+
+.nav>li li:hover>ul {
+    left: 100%;
+    margin-left: 0px;
+    top: -6px;
+}
+
+/* Arrow styling */
+.nav>li>a:first-child:nth-last-child(2):before {
+    border-top-color: #aaa;
+}
+
+.nav>li:hover>a:first-child:nth-last-child(2):before {
+    border: 5px solid transparent;
+    margin-top: -5px;
+}
+
+.nav li li>a:first-child:nth-last-child(2):before {
+    border-left-color: #aaa;
+    margin-top: -5px;
+}
+
+.nav li li:hover>a:first-child:nth-last-child(2):before {
+    border: 5px solid transparent;
+    border-right-color: orange;
+    right: 10px;
+}
+
+/* --- 5.3. Pagination (Recorder) --- */
+.navpage {
+    float: right;
+    margin-right: 50px;
+    display: inline-block;
+}
+
+.navpage span {
+    float: left;
+    padding: 10px 5px;
+}
+
+.navpage span.current {
+    float: left;
+    padding: 10px 15px;
+    border-radius: 3px;
+    background-color: var(--abcd-success);
+    color: var(--abcd-white);
+    font-weight: bold;
+    border: 1px solid var(--abcd-white);
+}
+
+.navpage span a {
+    padding: 10px 15px;
+    border-color: var(--abcd-light);
+    border-style: solid;
+    border-width: 1px;
+    color: black;
+    text-decoration: none;
+}
+
+.navpage span:hover:not(.current) {
+    background-color: #ddd;
+    border-radius: 3px;
+}
+
+/* --- 5.4. Sidebar --- */
+.abcd-sidebar {
+    box-sizing: inherit;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    overflow: initial;
+}
+
+.abcd-bar-block .abcd-bar-item {
+    width: 100%;
+    display: block;
+    padding: 8px 2px;
+    text-align: left;
+    border: none;
+    white-space: normal;
+    float: none;
+    outline: 0;
+    border-right: solid 0.1rem var(--light);
+}
+
+.abcd-bar-block.abcd-center .abcd-bar-item {
+    text-align: center;
+}
+
+.abcd-block {
+    display: block;
+    width: 100%;
+}
+
+.abcd-btn,
+.abcd-button {
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.abcd-disabled,
+.abcd-btn:disabled,
+.abcd-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.abcd-disabled *,
+:disabled * {
+    pointer-events: none;
+}
+
+.abcd-dropdown-hover:hover>.abcd-button:first-child,
+.abcd-dropdown-click:hover>.abcd-button:first-child {
+    background-color: #ccc;
+    color: #000;
+}
+
+.abcd-dropdown-hover.abcd-mobile,
+.abcd-dropdown-hover.abcd-mobile .abcd-btn,
+.abcd-dropdown-hover.abcd-mobile .abcd-button,
+.abcd-dropdown-click.abcd-mobile,
+.abcd-dropdown-click.abcd-mobile .abcd-btn,
+.abcd-dropdown-click.abcd-mobile .abcd-button {
+    width: 100%;
+}
+
+.abcd-button:hover {
+    color: #000 !important;
+    background-color: #ccc !important;
+}
+
+.abcd-bar-block .abcd-dropdown-hover .abcd-button,
+.abcd-bar-block .abcd-dropdown-click .abcd-button {
+    width: 100%;
+    text-align: left;
+    padding: 8px 16px;
+}
+
+.abcd-bar .abcd-button {
+    white-space: normal;
+}
+
+/* ==========================================================================
+   6. Buttons with icons (specific modules)
+   ========================================================================== */
+
+/* --- 6.1. General and Catalog icons --- */
+a.DataEntry {
+    background: url('../svg/main/main_form_new_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.CatstatButton {
+    background: url('../svg/main/main_data_usage_32_regular_cat.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.reportButton {
+    background: url('../svg/main/main_print_32_regular_cat.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.utilsButton {
+    background: url('../svg/main/main_toolbox_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.moduleButton {
+    background: url('../svg/main/main_module_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.z3950Button {
+    background: url('../svg/main/main_arrow_download_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.update_databaseButton {
+    background: url('../svg/main/main_content_settings_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.databaseButton {
+    background: url('../svg/main/main_database_plus_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.CataluserButton {
+    background: url('../svg/main/main_people_settings_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.resetButton {
+    background: url('../svg/main/main_arrow_reset_32_regular_cat.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.translateButton {
+    background: url('../svg/main/main_globe_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.CatexploreButton {
+    background: url('../svg/main/main_folder_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.origendatabaseButton {
+    background: url('../images/icon/basededatosorigen.png') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+/* --- 6.2. Ícones de Circulação --- */
+a.exploreButton {
+    background: url('../svg/main/main_key_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.toolsButton {
+    background: url('../svg/main/main_settings_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.userButton {
+    background: url('../svg/main/main_people_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.statButton,
+a.receivingButton {
+    background: url('../svg/main/main_book_pulse_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.loanButton {
+    background: url('../svg/main/main_arrow_routing_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.returnButton {
+    background: url('../svg/main/main_arrow_wrap_32_filled.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.renewButton {
+    background: url('../svg/main/main_arrow_sync_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.sanctionsButton {
+    background: url('../svg/main/main_person_money_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.statusitemButton {
+    background: url('../svg/main/main_book_question_mark_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.userstatmentButton {
+    background: url('../svg/main/main_person_accounts_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.userhistoryButton {
+    background: url('../svg/main/main_person_info_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.transactionsButton {
+    background: url('../svg/main/main_arrow_swap_32_filled.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.statisticsusersButton {
+    background: url('../svg/main/main_people_list_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.statisticsanctionsButton {
+    background: url('../svg/main/main_money_calculator_32_regular_circ.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.reportsButton {
+    background: url('../svg/main/main_data_usage_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.reserveButton {
+    background: url('../svg/main/main_book_clock_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.usersconfigureButton {
+    background: url('../images/icon/usersconfigure.png') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.userstypeButton {
+    background: url('../images/icon/userstype.png') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.itemstypeButton {
+    background: url('../images/icon/itemstype.png') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.currency_daysButton {
+    background: url('../images/icon/currency_days.png') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.calendarButton {
+    background: url('../images/icon/calendar.png') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.loanpolicyButton {
+    background: url('../images/icon/loanpolicy.png') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+/* --- 6.3. Acquisition icons --- */
+a.resumeButton {
+    background: url('../svg/main/main_document_landscape_data_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.newsuggestionButton {
+    background: url('../svg/main/main_person_chat_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.approvedsuggestionsButton {
+    background: url('../svg/main/main_document_checkmark_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.biddingButton {
+    background: url('../svg/main/main_money_calculator_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.decisionButton {
+    background: url('../svg/main/main_cart_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.createpurchaseorderButton {
+    background: url('../svg/main/main_table_add_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.requisitionButton {
+    background: url('../svg/main/main_print_add_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.pendingButton {
+    background: url('../svg/main/main_document_bullet_list_clock_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.ACQreceivingButton {
+    background: url('../svg/main/main_receipt_add_32_regular.svg') no-repeat left;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.suggestButton {
+    background: url('../svg/main/main_person_feedback_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.providersButton {
+    background: url('../svg/main/main_building_shop_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.copiesdbButton {
+    background: url('../svg/main/main_table_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+a.ACQresetButton {
+    background: url('../svg/main/main_arrow_reset_32_regular.svg') no-repeat center;
+    background-size: 44px;
+    background-position: 10px;
+    background-color: var(--abcd-white);
+}
+
+/* --- 6.4. Action icons (IMG Tag based) --- */
+a.listButton img {
+    background: url('../images/icon/defaultButton_list.png') no-repeat center;
+}
+
+a.newButton img {
+    background: url('../images/icon/ascii.png') no-repeat center;
+}
+
+a.importButton img {
+    background: url('../images/icon/defaultButton_import.png') no-repeat center;
+}
+
+a.pdfButton img {
+    background: url('../images/icon/defaultButton_pdf.png') no-repeat center;
+}
+
+a.cancelButton img {
+    background: url('../images/icon/defaultButton_cancel.png') no-repeat center;
+}
+
+a.saveButton img {
+    background: url('../images/icon/defaultButton_save.png') no-repeat center;
+}
+
+a.nextButton img {
+    background: url('../images/icon/defaultButton_next.png') no-repeat center;
+}
+
+a.backButton img {
+    background: url('../images/icon/defaultButton_back.png') no-repeat center;
+}
+
+a.eraseButton img {
+    background: url('../images/icon/singleButton_erase.png') no-repeat center;
+}
+
+a.indexButton img {
+    background: url('../images/icon/singleButton_e.png') no-repeat center;
+}
+
+a.checkButton img {
+    background: url('../images/icon/clean.png') no-repeat center;
+}
+
+a.discardButton img {
+    background: url('../images/icon/trashcan_full.png') no-repeat center;
+}
+
+a.copiesdbaddButton img {
+    background: url('../images/icon/db_update.png') no-repeat center;
+}
+
+a.purchaseorderButton img {
+    background: url('../images/icon/purchaseorder.png') no-repeat center;
+}
+
+a.receiptsButton img {
+    background: url('../images/icon/receipts.png') no-repeat center;
+}
+
+a.homeButton img {
+    background: url('../../images/icon/home.png') no-repeat center;
+}
+
+
+/* ==========================================================================
+   7. TABLES AND LISTS
+   ========================================================================== */
+
+/* --- 7.1. Base Table Styles --- */
+table {
+    border-collapse: separate;
+    border-spacing: 3px;
+   /* width: 100%;*/
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px 5px;
+}
+
+.striped {
+    border-spacing: 0px;
+}
+
+.striped tr:nth-child(even) {
+    background-color: var(--abcd-gray-200);
+}
+
+.striped tr td {
+    padding: .5rem;
+}
+
+/* --- 7.2. Navigation Table/Results(.listTable) --- */
+.listTable {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    margin: 25px 0;
+    background: var(--abcd-white);
+}
+
+.listTable td {
+    vertical-align: middle;
+    text-align: left;
+    border-bottom: 1px solid #e7e7e7;
+    background: var(--abcd-white);
+}
+
+.listTable th {
+    text-align: left;
+    background: var(--abcd-white);
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.listTable th.asc,
+.listTable th.desc {
+    padding-right: 22px;
+}
+
+.listTable th.checkboxes,
+.listTable th.action {
+    cursor: default;
+}
+
+.listTable .checkboxes {
+    padding-left: 15px;
+}
+
+.listTable .action {
+    padding-right: 15px;
+    white-space: nowrap;
+    width: 100px;
+}
+
+.listTable .action a img {
+    margin-right: 5px;
+}
+
+.listTable td a {
+    white-space: nowrap;
+}
+
+.listTable.browse tr:first-child {
+    border-bottom: 2px solid #c9c9c9;
+}
+
+.listTable.browse tr:last-child {
+    border-top: 2px solid #c9c9c9;
+}
+
+.listTable .rowOver td {
+    background: #f4f4f4;
+    border-bottom-color: #ddd;
+}
+
+.listTable .tButton {
+    display: -moz-inline-box;
+    display: inline-block;
+    padding: 1px 3px;
+    white-space: nowrap;
+    background: #bdced3;
+    color: #000;
+    text-decoration: none;
+}
+
+.listTable .tErase {
+    background: #dfbfbf;
+}
+
+.listTable .rowOver .tButton:hover {
+    background: #88a6d3;
+    color: var(--abcd-white);
+}
+
+.listTable .rowOver .tErase:hover {
+    background: #d36666;
+}
+
+/* --- 7.3. Statistics Table (.statTable) --- */
+.statTable {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+.statTable th {
+    border-right: 1px solid #9d9d9d;
+    background: #848484;
+    border-bottom: 3px solid #848484;
+    color: var(--abcd-white);
+    cursor: pointer;
+    border: 1px solid #9d9d9d;
+}
+
+/* --- 7.4. Data input Table(.table-fdt) --- */
+.table-fdt {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    background: var(--abcd-white);
+}
+
+.table-fdt th {
+    background: var(--abcd-white);
+    color: #000;
+    cursor: pointer;
+    padding: 8px;
+    font-weight: bold;
+}
+
+.table-fdt.browse tr:first-child {
+    border-bottom: 2px solid var(--abcd-light);
+}
+
+.table-fdt.browse tr:last-child {
+    border-top: 2px solid var(--abcd-light);
+}
+
+.table-fdt th.checkboxes,
+.table-fdt th.action {
+    cursor: default;
+}
+
+.table-fdt td,
+.table-fdt tbody tr td {
+    border-bottom: 1px solid var(--abcd-light);
+    vertical-align: middle;
+    padding: 0.3rem;
+}
+
+.table-fdt>tbody>tr>td>input[type=text],
+.table-fdt>tbody>tr>td>input[type=password],
+.table-fdt>tbody>tr>td>input[type=radio],
+.table-fdt>tbody>tr>td>textarea,
+.table-fdt>tbody>tr>td>select {
+    margin: 0.2rem 0.1rem;
+    color: var(--abcd-gray-900);
+    padding: 8px;
+    box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+    -webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+}
+
+td.input-fdt {
+    align-content: center;
+    vertical-align: middle;
+    margin: auto;
+}
+
+/* Colunas da tabela FDT */
+td.table-fdt-one {
+    /* TAG */
+    min-width: 50px;
+}
+
+.table-fdt-two {
+    /* BUTTONS */
+    min-width: 130px;
+}
+
+.table-fdt-three {
+    /* NAME OF FIELD */
+    min-width: 150px;
+}
+
+.table-fdt-four {
+    /* INPUT FORM */
+    min-width: 55rem;
+    max-width: 60rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* --- 7.5. Mass actions for tables(.tMacroActions) --- */
+.tMacroActions .checkboxAction {
+    float: left;
+    margin-top: 10px;
+    margin-left: 25px;
+    padding: 0px 0px 10px 20px;
+    width: 30%;
+    background: url('../images/checkboxAction_bg.gif') no-repeat top left;
+}
+
+.tMacroActions .pagination {
+    float: right;
+    width: 30%;
+    margin: 10px 15px 0px 0px;
+}
+
+.tMacroActions.Browser {
+    margin-bottom: 30px;
+}
+
+/* ==========================================================================
+   8. SPECIFIC STYLES OF PAGES AND COMPONENTS
+   ========================================================================== */
+
+/* --- 8.1. Home (Homepage) --- */
+.homepage {
+    padding: 15px 15px 1px 15px;
+}
+
+.homepage .mainBox {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.homepage .mainBox .boxTop,
+.homepage .mainBox .boxBottom {
+    height: 2px;
+    clear: both;
+}
+
+.homepage .mainBox .boxTop .btLeft,
+.homepage .mainBox .boxTop .btRight,
+.homepage .mainBox .boxBottom .bbLeft,
+.homepage .mainBox .boxBottom .bbRight {
+    width: 2px;
+    height: 2px;
+    background: red;
+    /* Placeholder, likely overridden by images */
+}
+
+.homepage .mainBox .boxTop .btLeft,
+.homepage .mainBox .boxBottom .bbLeft {
+    float: left;
+}
+
+.homepage .mainBox .boxTop .btRight,
+.homepage .mainBox .boxBottom .bbRight {
+    float: right;
+}
+
+.homepage .mainBox .boxContent {
+    min-height: 101px;
+    padding: 30px 10px;
+    background-color: var(--abcd-white);
+    border: 1px solid var(--abcd-gray-200);
+    box-sizing: border-box;
+    border-radius: 0.3rem;
+}
+
+.homepage .mainBox .boxTop {
+    background: url('../images/mainBox_boxTop_bg.gif') repeat-x top left;
+}
+
+.homepage .mainBox .boxTop .btLeft {
+    background: url('../images/mainBox_btLeft.gif') no-repeat bottom left;
+}
+
+.homepage .mainBox .boxTop .btRight {
+    background: url('../images/mainBox_btRight.gif') no-repeat bottom left;
+}
+
+.homepage .mainBox .boxBottom {
+    background: url('../images/mainBox_boxTop_bg.gif') repeat-x bottom left;
+}
+
+.homepage .mainBox .boxBottom .bbLeft {
+    background: url('../images/mainBox_bbLeft.gif') no-repeat bottom left;
+}
+
+.homepage .mainBox .boxBottom .bbRight {
+    background: url('../images/mainBox_bbRight.gif') no-repeat bottom left;
+}
+
+/* Homepage - Highlighted box */
+.homepage .mainBoxHighlighted .boxContent {
+    background: var(--abcd-white) url('../images/mainBox_boxContent_bg.gif') repeat-x bottom left;
+    border-color: #b2c2d4;
+}
+
+.homepage .mainBoxHighlighted .boxTop {
+    background: url('../images/mainBoxHighlighted_boxTop_bg.gif') repeat-x top left;
+}
+
+.homepage .mainBoxHighlighted .boxBottom {
+    background: #eff3f8 url('../images/mainBoxHighlighted_boxTop_bg.gif') repeat-x bottom left;
+}
+
+.homepage .mainBoxHighlighted .boxTop .btLeft {
+    background: url('../images/mainBoxHighlighted_btLeft.gif') no-repeat bottom left;
+}
+
+.homepage .mainBoxHighlighted .boxTop .btRight {
+    background: url('../images/mainBoxHighlighted_btRight.gif') no-repeat bottom left;
+}
+
+.homepage .mainBoxHighlighted .boxBottom .bbLeft {
+    background: url('../images/mainBoxHighlighted_bbLeft.gif') no-repeat bottom left;
+}
+
+.homepage .mainBoxHighlighted .boxBottom .bbRight {
+    background: url('../images/mainBoxHighlighted_bbRight.gif') no-repeat bottom left;
+}
+
+/* HomePage - Box Content */
+.homepage .mainBox .boxContent .sectionTitle {
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    top: 0;
+    position: absolute;
+}
+
+.homepage .mainBox .boxContent .sectionTitle h1 {
+    margin-left: 35px;
+    font-size: 1.5rem;
+    width: 90%;
+    color: var(--abcd-steel-blue);
+}
+
+.homepage .mainBox .boxContent .sectionTitle img {
+    height: 50px;
+    float: left;
+    padding: 10px 0;
+    vertical-align: middle;
+}
+
+.homepage .mainBox .loanSection {
+    background: url('../svg/circ/bg_loan.svg') no-repeat left top;
+    background-size: 150px;
+    background-color: var(--abcd-white);
+}
+
+.homepage .mainBox .catalogSection {
+    background: url('../svg/catalog/bg_catalog.svg') no-repeat left top;
+    background-size: 150px;
+    background-color: var(--abcd-white);
+}
+
+.homepage .mainBox .acqSection {
+    background: url('../svg/acq/bg_acq.svg') no-repeat left top;
+    background-size: 150px;
+    background-color: var(--abcd-white);
+}
+
+.homepage .mainBox .boxContent .sectionButtons {
+    margin: 40px auto;
+    width: 60%;
+}
+
+.homepage .mainBox .boxContent .sectionButtons a.defaultButton {
+    margin-top: 3px;
+}
+
+.homepage .mainBox .boxContent .searchTitles .stInput {
+    width: auto;
+    display: inline-block;
+    float: left;
+    padding: 16px 0;
+}
+
+.homepage .mainBox .boxContent .searchTitles .stInput label {
+    color: #4c4c4c;
+}
+
+.homepage .mainBox .boxContent .searchTitles .stInput input.textEntry {
+    width: 269px;
+    padding: 6px;
+    vertical-align: top;
+    background: url('../images/searchTitles_textEntry_bg.gif') no-repeat top left;
+    border: 0px none;
+}
+
+body:first-of-type .homepage .mainBox .boxContent .searchTitles .stInput input.textEntry {
+    margin-top: 5px;
+    width: 269px;
+    padding: 8px 6px;
+}
+
+.homepage .mainBox .boxContent .searchTitles a.defaultButton {
+    margin-top: 4px;
+}
+
+.homepage .mainBox a.defaultButton:hover img {
+    background-color: var(--abcd-white);
+}
+
+/* Homepage - Ícones das seções (Legado) */
+.homepage .mainBox .titleSection .sectionIcon {
+    background: url('../images/database.png') no-repeat center;
+}
+
+.homepage .mainBox .dbSection .sectionIcon {
+    background: url('../images/database.png') no-repeat center;
+}
+
+.homepage .mainBox .searchSection .sectionIcon {
+    background: url('../images/search.png') no-repeat center;
+}
+
+.homepage .mainBox .orderSection .sectionIcon {
+    background: url('../images/icon/mainBox_titleSection.png') no-repeat center;
+}
+
+.homepage .mainBox .fascicleSection .sectionIcon {
+    background: url('../images/icon/mainBox_fascicleSection.png') no-repeat center;
+}
+
+.homepage .mainBox .maskSection .sectionIcon {
+    background: url('../images/icon/mainBox_maskSection.png') no-repeat center;
+}
+
+.homepage .mainBox .helpSection .sectionIcon {
+    background: url('../images/icon/mainBox_helpSection.png') no-repeat center;
+}
+
+/* --- 8.2. Login Page --- */
+.login {
+    padding: 2.6% 0px;
+}
+
+.login .loginForm {
+    margin: 0px auto;
+    width: 450px;
+    position: relative;
+}
+
+.login .loginForm .boxContent {
+    padding: 20px;
+    background-color: var(--abcd-white);
+    border: 1px solid var(--abcd-gray-200);
+    border-radius: 0.3rem;
+}
+
+.login .loginForm .formRow {
+    width: 100%;
+}
+
+.login .loginForm .formRow label {
+    margin-bottom: 3px;
+}
+
+.login .loginForm .textEntry {
+    width: 100%;
+    font-size: 16px;
+}
+
+.login .loginForm .alert {
+    margin-bottom: 10px;
+}
+
+/* Legacy - Login box structure (can be simplified) */
+.login .loginForm .boxTop,
+.login .loginForm .boxBottom {
+    height: 2px;
+    clear: both;
+}
+
+.login .loginForm .boxTop .btLeft,
+.login .loginForm .boxTop .btRight,
+.login .loginForm .boxBottom .bbLeft,
+.login .loginForm .boxBottom .bbRight {
+    width: 2px;
+    height: 2px;
+    background: red;
+}
+
+.login .loginForm .boxTop .btLeft,
+.login .loginForm .boxBottom .bbLeft {
+    float: left;
+}
+
+.login .loginForm .boxTop .btRight,
+.login .loginForm .boxBottom .bbRight {
+    float: right;
+}
+
+/* --- 8.3. Data input (Toolbar and FDT) --- */
+/* IFRAMEs */
+iframe.dataentry-header {
+    z-index: 999999999;
+    position: relative;
+    height: 45px;
+    width: 100%;
+    border: none;
+}
+
+iframe.dataentry-menu {
+    position: relative;
+    resize: vertical;
+    overflow: auto;
+    height: 77px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--abcd-gray-300);
+}
+
+iframe.dataentry-main {
+    position: relative;
+    width: 100%;
+    border: none;
+}
+
+/* Toolbar Principal */
+table.toolbarTable,
+table.toolbar-edit-dataentry {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.toolbarTable {
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    table-layout: fixed;
+}
+
+body.toolbar-dataentry {
+    background: var(--abcd-light);
+    margin: 0px;
+    color: var(--abcd-steel-blue);
+}
+
+div.toolbar-dataentry {
+    color: var(--abcd-steel-blue);
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    border-bottom: 1px solid var(--abcd-cyan);
+}
+
+div.toolbar-dataentry form {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.GenerarWks {
+    float: right;
+}
+
+#toolbarBox {
+    float: left;
+}
+
+table.toolbar-dataentry {
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    padding: 8px;
+}
+
+.toolbar-dataentry td {
+    vertical-align: middle;
+}
+
+table.toolbar-dataentry input,
+table.toolbar-dataentry select {
+    font-size: 0.8rem;
+}
+
+table.toolbar-dataentry input {
+    width: 6rem;
+}
+
+table.toolbar-dataentry a {
+    color: var(--abcd-steel-blue);
+    padding: 8px;
+    text-decoration: none;
+}
+
+.toolbar-dataentry .bt-tool {
+    height: 24px;
+    width: 32px;
+    padding: 4px 0;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.toolbar-dataentry .bt-tool img {
+    padding: 5px;
+    margin-top: -5px;
+}
+
+.defaultButtonText {
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.buttonTextDisabled {
+    color: gray;
+}
+
+.defaultButton {
+    fill: var(--abcd-white);
+    height: 24px;
+    width: 32px;
+    padding: 4px 0;
+    text-align-last: center;
+}
+
+.defaultButtonOver,
+.toolbar-dataentry .bt-tool:hover {
+    border-radius: 3px;
+    height: 24px;
+    width: 32px;
+    padding: 4px 0;
+    background-color: var(--abcd-blue);
+    cursor: pointer;
+    text-align-last: center;
+}
+
+.defaultButtonOver img,
+.toolbar-dataentry .bt-tool img:hover {
+    filter: invert(100%) sepia(96%) saturate(4522%) hue-rotate(348deg) brightness(97%) contrast(109%);
+}
+
+.defaultButtonDown {
+    background-color: var(--abcd-white);
+    cursor: pointer;
+    height: 24px;
+    width: 32px;
+    padding: 4px 0;
+    fill: var(--abcd-blue);
+    vertical-align: middle;
+}
+
+.icongray {
+    cursor: default;
+}
+
+/* Toolbar Secundária (Ações do Fmt) */
+#myDiv {
+    margin-right: 5px;
+    height: 48px;
+    vertical-align: middle;
+    border-bottom-right-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+}
+
+#myDiv a img {
+    margin: 0 2px;
+    padding: 4px;
+    filter: invert(99%) sepia(100%) saturate(4%) hue-rotate(61deg) brightness(105%) contrast(100%);
+}
+
+#myDiv img:hover {
+    background: var(--abcd-light);
+}
+
+/* Custom checkbox (Toolbar) */
+.check_sec {
+    vertical-align: top;
+    top: 5px;
+    width: 22px;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.check_sec input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: #eee;
+}
+
+.check_sec:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+.check_sec input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.check_sec input:checked~.checkmark:after {
+    display: block;
+}
+
+.check_sec .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+/* --- 8.4. Recorder(Browser) --- */
+.searchBoxBrowser,
+.SubsearchBoxBrowser {
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+
+.searchBoxBrowser form,
+.SubsearchBoxBrowser form {
+    display: inline-flex;
+    margin: 5px 5px;
+    vertical-align: middle;
+}
+
+.searchBoxBrowser .f_right,
+.SubsearchBoxBrowser .f_right {
+    float: right;
+    position: relative;
+    text-align: right;
+}
+
+.SubsearchBoxBrowser {
+    vertical-align: baseline;
+}
+
+.SubsearchBoxBrowser .f_right {
+    width: 45%;
+    float: right;
+}
+
+.SubsearchBoxBrowser .f_left {
+    width: 45%;
+    float: left;
+}
+
+.searchBoxBrowser .f_left {
+    float: left;
+    position: relative;
+}
+
+.searchBoxBrowser label,
+.SubsearchBoxBrowser label {
+    margin: 10px 4px 0 10px;
+}
+
+.searchBoxBrowser input.textEntry,
+.SubsearchBoxBrowser input.textEntry {
+    padding: 6px;
+    margin: 4px;
+}
+
+.searchBoxBrowser input.textEntry.b_search {
+    width: 300px;
+}
+
+input.textEntry.textEntryFocus.b_search {
+    width: 400px;
+    transition: width 0.5s;
+}
+
+.searchBoxBrowser select.textEntry,
+.SubsearchBoxBrowser select.textEntry {
+    width: auto;
+    padding: 6px;
+}
+
+.searchBoxBrowser button,
+.SubsearchBoxBrowser button {
+    padding: 6px;
+    margin: 4px;
+    width: 180px;
+}
+
+.searchBoxBrowser button.showdeleted {
+    padding: 6px;
+    width: auto;
+}
+
+.searchBoxBrowser input.submitAdvanced {
+    width: 126px;
+    height: 26px;
+    position: absolute;
+    top: 7px;
+    padding-left: 6px;
+}
+
+.searchBoxBrowser input.submitButton {
+    width: 81px;
+    height: 26px;
+    padding-left: 6px;
+}
+
+.searchBoxBrowser .helper {
+    position: absolute;
+    top: 11px;
+    right: 15px;
+}
+
+/* --- 8.5. Database Maintenance Structure --- */
+div.log_base {
+    width: 100%;
+    color: var(--abcd-gray);
+    margin-bottom: 16px;
+}
+
+div.log_base span {
+    margin: 0 12px 0px 0;
+}
+
+iframe.menumantenimento {
+    width: 95%;
+    height: 100%;
+    border: 0.1rem var(--abcd-light) solid;
+    overflow: scroll;
+}
+
+html.menumantenimento .heading,
+html.menumantenimento .center,
+html.menumantenimento #wpadminbar {
+    display: none !important;
+}
+
+/* ==========================================================================
+   9. VARIOUS STYLES AND SPECIFIC COMPONENTS
+   ========================================================================== */
+
+/* --- 9.1. Caixa de Busca da Homepage (stInput) --- */
+div.stInput select {
+    width: 60%;
+    margin: 4px;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+div.stInput a.bt-blue {
+    margin: 4px;
+    line-height: 2rem;
+    vertical-align: middle;
+    padding: 0.06rem 8px;
+    display: inline-block;
+}
+
+div.stInput a.bt-blue i.fas {
+    padding-left: 8px;
+}
+
+/* --- 9.2. Expansion/collection of collections (in lists) --- */
+td.hideSTitle,
+td.showSTitle {
+    width: 40%;
+}
+
+td.hideSTitle .showContent {
+    display: none;
+}
+
+td.showSTitle {
+    padding: 0px;
+    background: #f4f4f4 !important;
+}
+
+.rowOver td.showSTitle {
+    background: #eaeaea !important;
+}
+
+td.showSTitle .showContent {
+    padding: 5px 5px 0px 5px;
+}
+
+td.showSTitle .hideContent {
+    display: none;
+}
+
+td.showSTitle .singleLoading {
+    padding: 30px 0px;
+    text-align: center;
+    margin-top: 8px;
+    border-top: 1px solid #dadfe7;
+    color: #7a7a7a;
+}
+
+td.showSTitle .singleLoading img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    background: url('../images/singleLoading.gif') no-repeat top left;
+}
+
+td.showSTitle .collectionInfo {
+    margin-top: 8px;
+    padding: 8px 3px 3px 3px;
+    border-top: 1px solid #dadfe7;
+}
+
+td.showSTitle .collectionMode {
+    text-align: right;
+    margin: 0px -5px;
+    background: var(--abcd-white);
+}
+
+.rowOver td.showSTitle .collectionMode {
+    background: #f4f4f4;
+}
+
+td.showSTitle .collectionMode span,
+td.showSTitle .collectionMode a {
+    display: -moz-inline-box;
+    display: inline-block;
+    padding: 3px 5px;
+}
+
+td.showSTitle .collectionMode a {
+    color: #708bb1;
+}
+
+td.showSTitle .collectionMode a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+td.showSTitle .collectionMode a.selected {
+    background: #f4f4f4;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.rowOver td.showSTitle .collectionMode a.selected {
+    background: #eaeaea;
+}
+
+td.showSTitle .collectionMode a.selected:hover {
+    text-decoration: none;
+}
+
+/* --- 9.3. Wrapper for repeatable fields (FDT) --- */
+#wrapper {
+    text-align: left;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 10px;
+    border: 1px solid var(--abcd-light);
+    padding: 8px;
+}
+
+#wrapper a.header-fdt {
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#myvar {
+    border: 1px solid #ccc;
+    padding: 2px;
+}
+
+/* --- 9.4. Z-INDEX Styles (Legacy/Specific) --- */
+div.ABCD_menu {
+    z-index: 99999999;
+    background: yellow;
+}
+
+div.ABCD_menu:hover {
+    z-index: 99999999;
+    background: yellow;
+    height: 50px;
+}
+
+.ABCD_main {
+    z-index: 11;
+}
+
+.ABCD_menubases {
+    height: 200px;
+}
+
+.ABCD_menubases iframe {
+    height: 50px;
+    overflow: visible;
+    z-index: 99999999;
+    pointer-events: initial;
+}
+
+/* --- 9.5. Classes Utilitárias --- */
+.ph-10 {
+    padding: 2px 10px;
+}
+
+
+/* ==========================================================================
+   10.MEDIA QUERIES AND RESPONSIVENESS
+   ========================================================================== */
+
+/* Para telas muito pequenas */
+@media screen and (max-width: 300px) {
+    .btn_ok {
+        width: 100%;
+    }
+}
+
+/* Para telas grandes (Desktop) */
+@media (min-width: 993px) {
+    .abcd-modal-content {
+        width: 900px;
+    }
+
+    .abcd-hide-large {
+        display: none !important;
+    }
+
+    .abcd-sidebar.abcd-collapse {
+        display: block !important;
+    }
+}
+
+/* For medium and small screens (tablets and cell phones)*/
+@media (max-width: 992px) {
+    .abcd-sidebar.abcd-collapse {
+        display: none;
+    }
+
+    .abcd-main {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .abcd-auto {
+        max-width: 100%;
+    }
+}
