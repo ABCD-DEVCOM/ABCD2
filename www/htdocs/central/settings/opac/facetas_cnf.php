@@ -46,9 +46,12 @@ include "../../common/inc_div-helper.php";
 				}
 			}
 			foreach ($linea as $value) {
-				ksort($value);
-				$salida = $value[0] . '|' . $value[1];
-				fwrite($fout, $salida . "\n");
+				// Correção: Verifica se a chave do array existe antes de acessá-la
+				if (isset($value[0]) && trim($value[0]) != "") {
+					ksort($value);
+					$salida = implode('|', $value);
+					fwrite($fout, $salida . "\n");
+				}
 			}
 
 			fclose($fout);
@@ -138,24 +141,35 @@ include "../../common/inc_div-helper.php";
 			$file_av = $db_path . "/opac_conf/$lang/$file";
 		}
 
-
 		if (!file_exists($file_av)) {
 			$fp = array();
-			for ($i = 0; $i < 10; $i++) {
-				$fp[] = "|";
-			}
 		} else {
 			$fp = file($file_av);
-			$fp[] = '|';
-			$fp[] = '|';
-			$fp[] = '|';
-			$fp[] = '|';
 		}
-		echo "<table >\n";
-		echo "<tr><td colspan=2>";
+
+		echo "<table id='facets_table' class='table striped'>\n";
+		echo "<tr><td colspan=5>";
 		echo "<code>$file_av</code><br>";
 		echo "</td></tr>";
-		echo "<tr><th>" . $msgstr["nombre"] . "</th><th>" . $msgstr["expr_b"] . "</th></tr>\n";
+		echo "<tr><th>" . $msgstr["nombre"] . "</th><th>" . $msgstr["expr_b"] . "</th><th>Prefix</th><th>Order</th><th>Ação</th></tr>\n";
+
+		// Linha modelo oculta para inserção dinâmica
+		echo "<tr id='facet_template_row' style='display: none;'>";
+		for ($ix = 0; $ix < 4; $ix++) {
+			echo "<td>";
+			if ($ix < 3) {
+				echo "<input type=text name=conf_base_ROW_PLACEHOLDER_" . $ix . " value=\"\" size=20>";
+			} else {
+				echo "<select name=conf_base_ROW_PLACEHOLDER_" . $ix . ">\n";
+				echo "<option value=\"Q\">Quantidade (Q)</option>\n";
+				echo "<option value=\"A\">Alfabético (A)</option>\n";
+				echo "</select>";
+			}
+			echo "</td>\n";
+		}
+		echo "<td><button type='button' class='bt bt-red' onclick='removeFacetRow(this)'><i class='fas fa-trash'></i></button></td></tr>";
+
+
 		$row = 0;
 		foreach ($fp as $value) {
 			$value = trim($value);
@@ -168,23 +182,48 @@ include "../../common/inc_div-helper.php";
 					$ix = $ix + 1;
 					if ($ix > 3) break;
 					echo "<td>";
-					if ($ix == 0)
+					if ($ix < 3) {
 						$size = 20;
-					else
-						$size = 20;
-					echo "<input type=text name=conf_base_" . $row . "_" . $ix . " value=\"$var\" size=$size>";
+						echo "<input type=text name=conf_base_" . $row . "_" . $ix . " value=\"$var\" size=$size>";
+					} else {
+						echo "<select name=conf_base_" . $row . "_" . $ix . ">\n";
+						echo "<option value=\"Q\"" . ($var == 'Q' ? ' selected' : '') . ">Quantidade (Q)</option>\n";
+						echo "<option value=\"A\"" . ($var == 'A' ? ' selected' : '') . ">Alfabético (A)</option>\n";
+						echo "</select>";
+					}
 					echo "</td>\n";
 				}
+				echo "<td><button type='button' class='bt bt-red' onclick='removeFacetRow(this)'><i class='fas fa-trash'></i></button></td>";
 				echo "</tr>\n";
 			}
 		}
 	?>
-		<tr>
-			<td colspan=2 align=center>
-				<button type="submit" class="bt-green m-2"><?php echo $msgstr["save"]; ?></button>
-			</td>
-		</tr>
 		</table>
+		<div style="margin-top: 10px;">
+			<button type="button" class="bt-gray" onclick="addFacetRow()">Adicionar linha</button>
+		</div>
+
+		<script>
+			function addFacetRow() {
+				var table = document.getElementById('facets_table');
+				var newRow = table.querySelector('#facet_template_row').cloneNode(true);
+				newRow.style.display = 'table-row';
+				var rowCount = table.rows.length - 1; // -1 para cabeçalho
+
+				var inputs = newRow.querySelectorAll('input, select');
+				inputs.forEach(function(input) {
+					input.name = input.name.replace('ROW_PLACEHOLDER', rowCount);
+				});
+
+				table.appendChild(newRow);
+			}
+
+			function removeFacetRow(element) {
+				var row = element.parentNode.parentNode;
+				row.parentNode.removeChild(row);
+			}
+		</script>
+		<p><button type="submit" class="bt-green m-2"><?php echo $msgstr["save"]; ?></button></p>
 </div>
 </div>
 

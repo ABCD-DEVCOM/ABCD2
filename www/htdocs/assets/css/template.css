@@ -11,14 +11,14 @@
 /* Button library */
 @import url(./buttons.css);
 
-/* System structure */
-@import url(./layout.css);
-
 /* Paddings */
 @import url(./spaces.css);
 
-/* Visual styles: borders, fonts, application of colours, shadows and animations */
-@import url(./styles.css);
+/* Columns */
+@import url(./columns.css);
+
+/* Main CSS - Unified style of the old style.css and layout.css */
+@import url(./main.css);
 
 /* style rule: para correção de erros para float */
 DIV.spacer {

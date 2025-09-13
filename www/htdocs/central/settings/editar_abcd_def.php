@@ -576,6 +576,7 @@ switch ($set_mod){
 				"LOGIN_ERROR_PAGE" => array("it"=>"text","size"=>"50","placeholder"=>$msgstr["set_LOGIN_ERROR_PAGE"],"Tip"=>$msgstr["set_TIP_LOGIN_ERROR_PAGE"]),
 				"DEFAULT_LANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_LANG"]),
 				"NEW_WINDOW" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_NEW_WINDOW"]),
+				"CHECK_VERSION" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CHECK_VERSION"]),
 					
 				//Circulation module settings
 				"CIRCULATION"=>array("it"=>"title","Label"=>$msgstr["loantit"]),
