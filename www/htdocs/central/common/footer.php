@@ -103,6 +103,9 @@ $update_info = checkForABCDUpdate(ABCD_VERSION);
 
 </footer>
 <?php
+
+if ((!isset($def["CHECK_VERSION"])) || ($def["CHECK_VERSION"] != "N")) {
+
 if (isset($_SESSION["permiso"])) { // Verifica se está logado
 
 if ($update_info['update_available']): ?>
@@ -112,7 +115,11 @@ if ($update_info['update_available']): ?>
         <a href="/update_manager.php" style="color: #0056b3; text-decoration: underline; font-weight: bold;">Update now</a>.
     </div>
 
-<?php  endif; } ?>
+<?php  endif; } 
+
+}
+
+?>
 
 
 </body>

@@ -460,6 +460,7 @@ set_MAIN_DATABASE=Main database (collection)
 set_MODULES=MODULES
 set_MULTIPLE_DB_FORMATS =Databases of various formats
 set_NEW_WINDOW=When connecting, do you want to open the ABCD in a new window?
+set_CHECK_VERSION=Check version of ABCD?
 set_notsentfile=No file sent.
 set_other=Other
 set_PROFILES_PATH=Profiles Path
@@ -498,6 +499,7 @@ set_TIP_DEFAULT_LANG =Select the main language for your system.
 set_TIP_DEFAULT_DBLANG=Select the main language for the databases. If it is the same as the system language, leave it blank.
 set_TIP_DATE_FORMAT=Set the date format. See PHP documentation.<br><b>Y</b> = year, four digits, <b>m</b> = month of year, 2-digits with leading zero, <b>d</b> = day of month, 2-digits with leading zero
 set_TIP_NEW_WINDOW=Check you want ABCD to open in a new window after logging in.
+set_TIP_CHECK_VERSION=Authorizes the verification of new versions of ABCD?Disable in restricted networks to improve performance.
 set_TIP_LOGO_DEFAULT=Check to display the standard ABCD logo.
 set_TIP_LOGO=Top left-hand corner logo.<br>Select is only shown if uploads directory is set
 set_TIP_RESPONSIBLE_LOGO_DEFAULT=Check to display the standard ABCD logo.
