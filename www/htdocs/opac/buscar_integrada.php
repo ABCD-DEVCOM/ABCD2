@@ -35,7 +35,7 @@ function SelectFormato($base,$db_path,$msgstr){
 	if (file_exists($db_path.$base."/opac/".$lang."/".$archivo)){
 		$fp=file($db_path.$base."/opac/".$lang."/".$archivo);
 	}else{
-		echo "<h4><font color=red>".$msgstr["front_no_format"]."</h4>";
+		echo "<h4><font color=red>".$msgstr["no_format"]."</h4>";
 		die;
 	}
 

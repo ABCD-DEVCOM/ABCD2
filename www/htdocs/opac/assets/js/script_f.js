@@ -82,21 +82,23 @@ function scrollToTop() {
 	jQuery('html, body').animate({ scrollTop: offsetTop }, 600, 'linear').animate({ scrollTop: 25 }, 200).animate({ scrollTop: 0 }, 150).animate({ scrollTop: 0 }, 50);
 }
 
-document.getElementById('enviarDetalhes').addEventListener('click', function () {
-	document.detailed.submit();
-});
+// Adiciona o evento de clique APENAS se o elemento 'enviarDetalhes' existir na página
+const enviarDetalhesButton = document.getElementById('enviarDetalhes');
+if (enviarDetalhesButton) {
+	enviarDetalhesButton.addEventListener('click', function () {
+		document.detailed.submit();
+	});
+}
 
 
 function handleCookieVisibility() {
 	const cookie = getCookie('ABCD');
 	const cookieDiv = document.getElementById('cookie_div');
+	if (!cookieDiv) return; // evita erro se não existir
+
 	if (cookie && cookie.trim() !== "") {
 		cookieDiv.style.display = 'inline-block';
 	} else {
 		cookieDiv.style.display = 'none';
 	}
 }
-
-window.onload = handleCookieVisibility;
-
-

@@ -22,7 +22,7 @@
 	</script>
 
 <div class="py-3 my-3">
-	<h3><?php echo $msgstr["front_reserve"]?></h3>
+	<h3><?php echo $msgstr["reserve"]?></h3>
 </div>
 
 <form name=enviarreserva action=opac_statment_ex.php method=post onSubmit='EnviarReserva();return false' target=_top>

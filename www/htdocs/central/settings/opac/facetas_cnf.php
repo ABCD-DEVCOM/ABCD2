@@ -151,7 +151,7 @@ include "../../common/inc_div-helper.php";
 		echo "<tr><td colspan=5>";
 		echo "<code>$file_av</code><br>";
 		echo "</td></tr>";
-		echo "<tr><th>" . $msgstr["nombre"] . "</th><th>" . $msgstr["expr_b"] . "</th><th>Prefix</th><th>Order</th><th>Ação</th></tr>\n";
+		echo "<tr><th>" . $msgstr["nombre"] . "</th><th>" . $msgstr["expr_b"] . "</th><th>" . $msgstr["ix_pref"] . "</th><th>" . $msgstr["cfg_sortby"] . "</th><th>Ação</th></tr>\n";
 
 		// Linha modelo oculta para inserção dinâmica
 		echo "<tr id='facet_template_row' style='display: none;'>";
@@ -161,8 +161,8 @@ include "../../common/inc_div-helper.php";
 				echo "<input type=text name=conf_base_ROW_PLACEHOLDER_" . $ix . " value=\"\" size=20>";
 			} else {
 				echo "<select name=conf_base_ROW_PLACEHOLDER_" . $ix . ">\n";
-				echo "<option value=\"Q\">Quantidade (Q)</option>\n";
-				echo "<option value=\"A\">Alfabético (A)</option>\n";
+				echo "<option value=\"Q\">" . $msgstr["cfg_quantity"] . " (Q)</option>\n";
+				echo "<option value=\"A\">" . $msgstr["cfg_alphabetically"] . " (A)</option>\n";
 				echo "</select>";
 			}
 			echo "</td>\n";
@@ -187,8 +187,8 @@ include "../../common/inc_div-helper.php";
 						echo "<input type=text name=conf_base_" . $row . "_" . $ix . " value=\"$var\" size=$size>";
 					} else {
 						echo "<select name=conf_base_" . $row . "_" . $ix . ">\n";
-						echo "<option value=\"Q\"" . ($var == 'Q' ? ' selected' : '') . ">Quantidade (Q)</option>\n";
-						echo "<option value=\"A\"" . ($var == 'A' ? ' selected' : '') . ">Alfabético (A)</option>\n";
+						echo "<option value=\"Q\"" . ($var == 'Q' ? ' selected' : '') . ">" . $msgstr["cfg_quantity"] . " (Q)</option>\n";
+						echo "<option value=\"A\"" . ($var == 'A' ? ' selected' : '') . ">" . $msgstr["cfg_alphabetically"] . " (A)</option>\n";
 						echo "</select>";
 					}
 					echo "</td>\n";
@@ -200,7 +200,7 @@ include "../../common/inc_div-helper.php";
 	?>
 		</table>
 		<div style="margin-top: 10px;">
-			<button type="button" class="bt-gray" onclick="addFacetRow()">Adicionar linha</button>
+			<button type="button" class="bt-gray" onclick="addFacetRow()"><?php echo $msgstr["cfg_add_line"];?></button>
 		</div>
 
 		<script>
@@ -227,7 +227,7 @@ include "../../common/inc_div-helper.php";
 </div>
 </div>
 
-<div style="display:table-cell;width:42% ;">
+<div style="display:table-cell;width:42% ;"><hr>
 	<?php
 		if ($cuenta > 0) {
 	?>

@@ -172,9 +172,9 @@ $ff_pft="'
   </div>
 </div>'";
 
-$ff_pft.="'<script>
-    cookie=getCookie(\"ABCD\");
-
+$ff_pft.= "'<script>
+     var cookie = getCookie(\"ABCD\");
+	if (cookie) {
     console.log(cookie.indexOf(\"c_',mstname,'_'f(mfn,1,0),'|\"));
 
     if (cookie.indexOf(\"c_',mstname,'_'f(mfn,1,0),'|\")!=-1){
@@ -182,6 +182,7 @@ $ff_pft.="'<script>
     } else {
         document.getElementById(\"c_'mstname'_'f(mfn,1,0)'\").removeAttribute(\"checked\", \"\");
     }
+}
 </script>'";
 
 	$query = "&base=$base&cipar=$db_path"."par/$cipar.par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$_REQUEST["lang"];
