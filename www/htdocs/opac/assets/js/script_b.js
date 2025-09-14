@@ -738,10 +738,14 @@ function clearAndRedirect(link) {
 
 // MODAL PERMALINK
 
-	document.addEventListener('DOMContentLoaded', function () {
-        var modal = new bootstrap.Modal(document.getElementById('registroModal'));
-	modal.show();
-    });
+document.addEventListener('DOMContentLoaded', function () {
+	var modalElement = document.getElementById('registroModal');
+	if (modalElement) {
+		var modal = new bootstrap.Modal(modalElement);
+		modal.show();
+	}
+});
+
 
 	function copiarLink() {
         const url = window.location.href;
