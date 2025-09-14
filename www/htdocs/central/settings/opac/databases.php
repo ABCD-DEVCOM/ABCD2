@@ -1,9 +1,17 @@
 <?php
 
-/**
- * 20230305 rogercgui Adds the variable $actparfolder;
- * 20230914 Fixes bugs related to file overwriting, incorrect format, and .lang file logic.
- */
+<?php
+/*
+* @file        head.php
+* @author      Roger Craveiro Guilherme
+* @date        2023-03-28
+* @description Includes the initial configuration, defines the security headers and starts the session.
+*
+* CHANGE LOG:
+* 2023-03-05 rogercgui Adds the variable $actparfolder;
+* 2023-09-14 Fixes bugs related to file overwriting, incorrect format, and .lang file logic.
+* 2025-09-14 rogercgui Added functionality to update .par files when configuring a database for the first time.
+*/
 
 
 include("conf_opac_top.php");
@@ -28,7 +36,7 @@ include "../../common/inc_div-helper.php";
 
 
         <?php
-        // Função para verificar se um valor está presente em bases.dat do OPAC
+        // Function to verify that a value is present in bases.dat of the OPAC
         function isInDbopac($valor, $dbopacData)
         {
             foreach ($dbopacData as $dbopacLinha) {
@@ -40,15 +48,15 @@ include "../../common/inc_div-helper.php";
             return false;
         }
 
-        // Ler o conteúdo de bases.dat (master) e bases.dat (OPAC)
+        // Read the base content.dat (master) and bases.dat (OPAC)
         $file_conf_opac = $db_path . 'opac_conf/' . $lang . '/bases.dat';
         $masterData = file($db_path . 'bases.dat', FILE_IGNORE_NEW_LINES);
         $dbopacData = file_exists($file_conf_opac) ? file($file_conf_opac, FILE_IGNORE_NEW_LINES) : [];
 
 
-        // Processar o envio do formulário
+        // Process the sending of the form
         if (isset($_POST['submit'])) {
-            // Inicializar um array para armazenar os dados atualizados de bases.dat do OPAC
+            // Initialize an array to store updated bases.dat OPAC data
             $updatedDbopacData = array();
             $uniqueLangValues = array();
 
@@ -60,32 +68,31 @@ include "../../common/inc_div-helper.php";
                 $textInputName = 'text_' . $dbName;
                 $textInputDescName = 'text_desc_' . $dbName;
 
-                // Verificar se o checkbox foi marcado
+                // Check if checkbox was marked
                 if (isset($_POST[$checkboxName])) {
                     $textInputValue = $_POST[$textInputName] ?? '';
                     $updatedDbopacData[] = "$dbName|$textInputValue";
 
-                    // Criar o diretório opac/$lang se não existir
+                    // Create the Opac/$ Lang Directory if it doesn't exist
                     $opacDir = $db_path . $dbName . '/opac/' . $lang . '/';
                     if (!is_dir($opacDir)) {
                         mkdir($opacDir, 0777, true);
                     }
 
-                    // Salvar a descrição completa em um arquivo de texto
+                    // Save the full description in a text file
                     $defFile = $opacDir . $dbName . '.def';
                     if (!file_exists($defFile)) {
                         file_put_contents($defFile, $_POST[$textInputDescName] ?? '');
 
-                        // --- LÓGICA PARA CRIAR ARQUIVOS ADICIONAIS SOMENTE SE NÃO EXISTIREM ---
 
-                        // Cria o arquivo base_de_dados_formatos.dat
+                        // Create the base_de_dados_formatos.dat file
                         $formato_file_opac = $opacDir . $dbName . "_formatos.dat";
                         if (!file_exists($formato_file_opac)) {
                             $formato_file_original = $db_path . $dbName . "/pfts/$lang/formatos.dat";
                             $fp_opac_formatos = fopen($formato_file_opac, "w");
                             if (file_exists($formato_file_original)) {
                                 $fp_formatos = file($formato_file_original);
-                                $first_line = true; // Flag para garantir que o primeiro formato seja Y
+                                $first_line = true; // Flag to ensure that the first format is y
                                 foreach ($fp_formatos as $linha_formato) {
                                     $l = explode('|', trim($linha_formato));
                                     $output_line = trim($l[0]) . "|" . trim($l[1]);
@@ -104,7 +111,7 @@ include "../../common/inc_div-helper.php";
                             fclose($fp_opac_formatos);
                         }
 
-                        // Cria o arquivo base_de_dados_libre.tab
+                        // creates the dbn_libre.tab file
                         $libre_file = $opacDir . $dbName . "_libre.tab";
                         if (!file_exists($libre_file)) {
                             $fp_libre = fopen($libre_file, "w");
@@ -113,8 +120,8 @@ include "../../common/inc_div-helper.php";
                         }
 
                         // =================================================================================
-                        // INÍCIO DA FUNCIONALIDADE ADICIONADA (NO LOCAL CORRETO)
-                        // ATUALIZA O .PAR APENAS QUANDO A BASE É CONFIGURADA PELA PRIMEIRA VEZ
+                        // Start of functionality added (in the correct location)
+                        // Updates .Par only when the base is first configured
                         // =================================================================================
                         $par_file = $db_path . "par/" . $dbName . ".par";
                         if (file_exists($formato_file_opac)) {
@@ -131,7 +138,7 @@ include "../../common/inc_div-helper.php";
                                 }
                             }
 
-                            // Adiciona as novas entradas de formato PFT
+                            // Add the new PFT format inputs
                             foreach ($formatos as $formato_linha) {
                                 $formato_parts = explode('|', $formato_linha);
                                 $pft_name = trim($formato_parts[0]);
@@ -151,17 +158,15 @@ include "../../common/inc_div-helper.php";
 
                             file_put_contents($par_file, $new_par_file_content);
                         }
-                        // =================================================================================
-                        // FIM DA FUNCIONALIDADE ADICIONADA
-                        // =================================================================================
+==============================================================================
                     }
                 }
             }
 
-            // Gravar os dados atualizados no arquivo bases.dat do OPAC
+            // Record the updated data in the Opac Bases.dat file
             file_put_contents($file_conf_opac, implode(PHP_EOL, $updatedDbopacData));
 
-            // Lógica original para salvar arquivos .lang
+            // Original logic to save .lang files
             $uniqueLangValues = array();
             $uniqueSuffixes = array();
             foreach ($_POST as $postField => $postValue) {
@@ -190,7 +195,7 @@ include "../../common/inc_div-helper.php";
 
             echo '<div class="alert success">' . $msgstr["updated"] . '<pre>' . $file_conf_opac . '</pre></div>';
 
-            // Recarregar os dados de dbopac.dat após a atualização
+            // Recharge the data from dbopac.dat after updating
             $dbopacData = file_exists($file_conf_opac) ? file($file_conf_opac, FILE_IGNORE_NEW_LINES) : [];
         }
 
@@ -203,7 +208,7 @@ include "../../common/inc_div-helper.php";
             }
         }
 
-        // Exibir o formulário
+        // Display the form
         ?>
 
         <form method="POST">
