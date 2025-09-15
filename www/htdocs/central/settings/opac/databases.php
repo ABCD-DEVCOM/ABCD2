@@ -1,6 +1,4 @@
 <?php
-
-<?php
 /*
 * @file        head.php
 * @author      Roger Craveiro Guilherme
@@ -10,7 +8,7 @@
 * CHANGE LOG:
 * 2023-03-05 rogercgui Adds the variable $actparfolder;
 * 2023-09-14 Fixes bugs related to file overwriting, incorrect format, and .lang file logic.
-* 2025-09-14 rogercgui Added functionality to update .par files when configuring a database for the first time.
+* 2025-09-01 rogercgui Added functionality to update .par files when configuring a database for the first time.
 */
 
 
@@ -158,7 +156,6 @@ include "../../common/inc_div-helper.php";
 
                             file_put_contents($par_file, $new_par_file_content);
                         }
-==============================================================================
                     }
                 }
             }
