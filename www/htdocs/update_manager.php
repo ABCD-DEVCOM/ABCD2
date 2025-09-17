@@ -1,10 +1,13 @@
 <?php
 // Increases the maximum execution time to 10 minutes (600 seconds).
-set_time_limit(600);
+set_time_limit(2600);
+
+// Memory adjustment for large packages
+ini_set('memory_limit', '512M');
 
 /**
  * ==============================================================================
- * ABCD - V3.0 Software Update Manager (Interactive)
+ * ABCD - V3.0.1 ABCD Update Manager (Interactive)
  * ==============================================================================
  *
  * DESCRIPTION:
@@ -13,7 +16,7 @@ set_time_limit(600);
  * partial (default, secure) or complete update (surpasses everything except
  * the config.php).
  *
- * @version 3.0.0
+ * @version 3.0.1
  * @author Roger Craveiro Guilherme
  */
 
@@ -22,14 +25,53 @@ set_time_limit(600);
 define('GITHUB_REPOSITORY', 'ABCD-DEVCOM/ABCD');
 require_once(__DIR__ . '/version.php');
 define('LOCAL_VERSION', ABCD_VERSION);
-define('USER_CONFIG_FILE', 'htdocs/central/config.php');
 
-const UPDATE_MAP = [
-    'www/htdocs/central'              => 'htdocs',
-    'www/htdocs/assets'               => 'htdocs',
-    'www/htdocs/opac'                 => 'htdocs',
-    'www/bases-examples_Windows/lang' => 'bases'
+//List of files to be protected (backup and restoration)
+// Paths related to the root of the installation (where Update_Manager.php is)
+const PROTECTED_FILES = [
+    'central/config.php',
+    'site/ABCD-site-win.conf',
+    'site/ABCD-site-lin.conf',
+    'site/bvs-site-conf.php'
 ];
+
+// List of Origin Files/Folders (in ZIP) for partial update.
+const PARTIAL_UPDATE_SOURCES = [
+    'www/htdocs/version.php',
+    'www/htdocs/update_manager.php',
+    'www/htdocs/central',
+    'www/htdocs/assets',
+    'www/htdocs/opac',
+    'www/htdocs/site',
+    'www/bases-examples_Windows/lang'
+];
+
+
+// ABCD installation root directory (HTDOCS)
+$root_dir = __DIR__;
+
+
+// Temporary directory
+$temp_dir = $root_dir . "/upgrade/temp/";
+if (!is_dir($temp_dir)) {
+    if (!mkdir($temp_dir, 0775, true)) {
+        die("Critical error: Could not create temporary directory '$temp_dir'. Please check permissions.");
+    }
+}
+if (!is_writable($temp_dir)) {
+    die("Critical error: Temporary directory '$temp_dir' is not writable. Please adjust permissions.");
+}
+
+// Backup directory
+$backup_dir = $root_dir . "/upgrade/backup/";
+if (!is_dir($backup_dir)) {
+    if (!mkdir($backup_dir, 0775, true)) {
+        die("Critical error: Could not create backup directory '$backup_dir'. Please check permissions.");
+    }
+}
+if (!is_writable($backup_dir)) {
+    die("Critical error: Backup directory '$backup_dir' is not writable. Please adjust permissions.");
+}
 
 
 // --- SECURITY ---
@@ -38,7 +80,6 @@ function isAdmin()
     // Exemplo: session_start(); if(isset($_SESSION['profile']) && $_SESSION['profile']=='ADMIN') return true;
     return true;
 }
-
 
 // --- Main logic ---
 if (ob_get_level() == 0) ob_start();
@@ -127,55 +168,75 @@ function cleanup($dir)
  */
 function runUpdateProcess($update_type)
 {
-    $site_root = __DIR__;
-    $temp_dir = sys_get_temp_dir() . '/abcd_update_' . time();
-    $backup_dir = $temp_dir . '/backup';
-    $unzip_dir = $temp_dir . '/unzipped';
+    // A partir da versão 3.0, este script está integrado ao ABCD
+    // então o config.php já foi carregado.
+    global $ABCD_path, $db_path, $ABCD_scripts_path, $temp_dir, $backup_dir;
 
-    mkdir($temp_dir, 0755, true);
-    mkdir($backup_dir, 0755, true);
-    mkdir($unzip_dir, 0755, true);
+    $site_root = __DIR__;
+    $unzip_dir = $temp_dir . '/unzipped';
+    if (!is_dir($unzip_dir)) mkdir($unzip_dir, 0755, true);
 
     try {
         logMessage("Starting Type Update Process: " . ucfirst($update_type));
 
-        // --- 1. Backup and configuration reading ---
-        $user_config_path = $site_root . '/' . USER_CONFIG_FILE;
-        if (file_exists($user_config_path)) {
-            $backup_file = $backup_dir . '/' . basename($user_config_path);
-            if (!copy($user_config_path, $backup_file)) {
-                throw new Exception("Failure to back up '{$user_config_path}'.");
+        // --- 1. BACKUP E LEITURA DA CONFIGURAÇÃO ---
+        logMessage("Starting backup of protected files...");
+
+        foreach (PROTECTED_FILES as $relative_path) {
+            $full_path = $site_root . '/' . $relative_path;
+            if (file_exists($full_path)) {
+                $backup_file = $backup_dir . '/' . basename($full_path);
+                if (!copy($full_path, $backup_file)) {
+                    throw new Exception("Failed to back up '{$relative_path}'.");
+                }
+                logMessage("Backup of '{$relative_path}' created.");
+            } else {
+                logMessage("Protected file '{$relative_path}' not found. Skipping backup.", 'warning');
             }
-            logMessage("Backup of 'config.php' realized.");
-            require_once $user_config_path;
-            logMessage("User Configuration.");
+        }
+
+        $main_config_path = $site_root . '/' . PROTECTED_FILES[0];
+        if (file_exists($main_config_path)) {
+            define('ABCD_UPDATE_MODE', true);
+            require_once $main_config_path;
         } else {
-            throw new Exception("User configuration file not found in '{$user_config_path}'.");
+            throw new Exception("Main configuration file ('" . PROTECTED_FILES[0] . "') not found. Cannot proceed.");
         }
-        if (!isset($ABCD_path) || !isset($db_path)) {
-            throw new Exception("Way Variables'\$ABCD_path' or '\$db_path' not found in config.");
+
+        if (empty($ABCD_scripts_path) || empty($db_path)) {
+            throw new Exception("Path variables '\$ABCD_scripts_path' or '\$db_path' are empty. Check config.php.");
         }
-        $destination_paths = ['htdocs' => rtrim($ABCD_path, '/\\'), 'bases'  => rtrim($db_path, '/\\')];
+        $destination_paths = ['htdocs' => rtrim($ABCD_scripts_path, '/\\'), 'bases'  => rtrim($db_path, '/\\')];
+        logMessage("Destination 'htdocs' defined as: " . $destination_paths['htdocs']);
+        logMessage("Destination 'bases' defined as: " . $destination_paths['bases']);
 
         // --- 2. GITHUB FETCH, DOWNLOAD E UNZIP ---
         $release_data = getLatestReleaseInfo();
         $remote_version = $release_data['tag_name'];
         logMessage("Installing version: {$remote_version}.");
+
         $zip_url = $release_data['zipball_url'];
         $zip_file_path = $temp_dir . '/update.zip';
-        logMessage("Downloading package...");
+        logMessage("Downloading package directly to disk...");
+
+        $file_handle = fopen($zip_file_path, 'w');
+        if (!$file_handle) {
+            throw new Exception('Failed to create file for download: ' . $zip_file_path);
+        }
         $ch_dl = curl_init();
         curl_setopt($ch_dl, CURLOPT_URL, $zip_url);
-        curl_setopt($ch_dl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch_dl, CURLOPT_FILE, $file_handle);
         curl_setopt($ch_dl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch_dl, CURLOPT_USERAGENT, 'ABCD-Update-Manager');
-        $zip_content = curl_exec($ch_dl);
+        curl_exec($ch_dl);
         if (curl_errno($ch_dl)) {
-            throw new Exception('Erro no Download: ' . curl_error($ch_dl));
+            fclose($file_handle);
+            throw new Exception('Download Error: ' . curl_error($ch_dl));
         }
+        fclose($file_handle);
         curl_close($ch_dl);
-        file_put_contents($zip_file_path, $zip_content);
-        logMessage('Download completed.');
+        logMessage('Download completed successfully.');
+
         logMessage('Unzipping files...');
         $zip = new ZipArchive;
         if ($zip->open($zip_file_path) !== TRUE) {
@@ -183,62 +244,87 @@ function runUpdateProcess($update_type)
         }
         $zip->extractTo($unzip_dir);
         $zip->close();
-        $unzipped_folders = glob($unzip_dir . '/*');
+
+        $unzipped_folders = glob($unzip_dir . '/*'); // A variável agora é definida aqui
         if (!isset($unzipped_folders[0])) {
             throw new Exception('No directory found in the ZIP file.');
         }
         $source_code_dir = $unzipped_folders[0];
         logMessage('Files successfully unzipped.');
+        // FIM DO BLOCO RESTAURADO
 
-        // --- 3. Update logic (partial or complete) ---
+        // --- 3. Update logic ---
         if ($update_type === 'parcial') {
             logMessage('Starting partial update (mapped)...');
-            foreach (UPDATE_MAP as $zip_source => $destination_key) {
+            foreach (PARTIAL_UPDATE_SOURCES as $zip_source) {
                 $source_path = $source_code_dir . '/' . $zip_source;
-                if (!isset($destination_paths[$destination_key])) {
-                    logMessage("Destination key '{$destination_key}' not recognized.Jumping.", 'warning');
-                    continue;
+                $source_basename = basename($zip_source);
+                $destination_path = '';
+
+                if ($source_basename === 'update_manager.php' || $source_basename === 'version.php') {
+                    $destination_path = $destination_paths['htdocs'] . '/' . $source_basename;
+                } else if (strpos($zip_source, 'www/htdocs/') === 0) {
+                    $sub_path = str_replace('www/htdocs/', '', $zip_source);
+                    $destination_path = $destination_paths['htdocs'] . '/' . $sub_path;
+                } else if (strpos($zip_source, 'www/bases-examples_Windows/') === 0) {
+                    $sub_path = str_replace('www/bases-examples_Windows/', '', $zip_source);
+                    $destination_path = $destination_paths['bases'] . '/' . $sub_path;
                 }
-                $base_destination_path = $destination_paths[$destination_key];
-                $target_dir_name = basename($zip_source);
-                $destination_path = $base_destination_path . '/' . $target_dir_name;
-                if (file_exists($source_path)) {
-                    logMessage("Updating '{$destination_path}'...");
-                    if (file_exists($destination_path)) recursiveDelete($destination_path);
-                    recursiveCopy($source_path, $destination_path);
+
+                if ($destination_path && file_exists($source_path)) {
+                    if (is_dir($source_path)) {
+                        logMessage("Updating directory '{$destination_path}'...");
+                        if (file_exists($destination_path)) recursiveDelete($destination_path);
+                        recursiveCopy($source_path, $destination_path);
+                    } else {
+                        logMessage("Updating file '{$destination_path}'...");
+                        $parentDir = dirname($destination_path);
+                        if (!is_dir($parentDir)) mkdir($parentDir, 0755, true);
+                        copy($source_path, $destination_path);
+                    }
                 } else {
-                    logMessage("Origin '{$zip_source}'not found in the package.Jumping.", 'warning');
+                    logMessage("Origin '{$zip_source}' not found in the package or no rule defined. Jumping.", 'warning');
                 }
             }
         } elseif ($update_type === 'completa') {
             logMessage('Starting full update ...', 'warning');
-            // ATTENTION: This logic is destructive.
-            // Cleans the destination directories before copying everything.
             logMessage('Cleaning destination directories (HTDOCS and Bases)...', 'warning');
-            recursiveDelete($destination_paths['htdocs']);
-            recursiveDelete($destination_paths['bases']);
+            // Proteção extra: nunca apague a raiz do htdocs se for um caminho muito curto (ex: "/")
+            if (strlen($destination_paths['htdocs']) > 5) recursiveDelete($destination_paths['htdocs']);
+            if (strlen($destination_paths['bases']) > 5) recursiveDelete($destination_paths['bases']);
             logMessage('Copying all files in the new version...');
             recursiveCopy($source_code_dir . '/www/htdocs', $destination_paths['htdocs']);
-            recursiveCopy($source_code_dir . '/www/bases-examples_Windows', $destination_paths['bases']); // Adapt if necessary
+            recursiveCopy($source_code_dir . '/www/bases-examples_Windows', $destination_paths['bases']);
         }
-
         logMessage('Updated core files.');
 
+
         // --- 4. RESTORATION ---
-        logMessage('Restoring configuration file ...');
-        $backup_config_file = $backup_dir . '/' . basename(USER_CONFIG_FILE);
-        if (file_exists($backup_config_file)) {
-            if (copy($backup_config_file, $user_config_path)) {
-                logMessage("'config.php' successfully restored in '{$user_config_path}'.");
-            } else {
-                throw new Exception("Critical failure to restore 'config.php'.");
+        logMessage('Restoring protected files...');
+        foreach (PROTECTED_FILES as $relative_path) {
+            $backup_file = $backup_dir . '/' . basename($relative_path);
+            if (file_exists($backup_file)) {
+                $destination_file = $site_root . '/' . $relative_path;
+                if (copy($backup_file, $destination_file)) {
+                    logMessage("'{$relative_path}' successfully restored.");
+                } else {
+                    logMessage("CRITICAL FAILURE while restoring '{$relative_path}'. Check permissions.", 'error');
+                }
             }
         }
 
-        // --- 5. LIMPEZA ---
+        // --- 5. Cleaning and reloading ---
         logMessage('Finishing and cleaning temporary files ...');
         cleanup($temp_dir);
         logMessage('Update successfully completed! New version: ' . $remote_version, 'success');
+
+        echo <<<HTML
+<script>
+    setTimeout(function() {
+        window.location.href = 'update_manager.php';
+    }, 3000);
+</script>
+HTML;
     } catch (Exception $e) {
         logMessage('Critical error: ' . $e->getMessage(), 'error');
         logMessage('The update process failed.', 'error');
@@ -283,7 +369,7 @@ function displayUpdateInfoPage()
                 </tr>
             </table>
 
-            <form method="POST" action="" onsubmit="return confirm('Você tem certeza que deseja iniciar a atualização?');">
+            <form method="POST" action="" onsubmit="return confirm('Are you sure you want to start the update?');">
                 <input type="hidden" name="action" value="run_update">
                 <h3>Choose the type of update:</h3>
 
@@ -312,10 +398,9 @@ function displayUpdateInfoPage()
         echo '<div class="info-box error"><strong>Error when checking updates:</strong><br>' . htmlspecialchars($e->getMessage()) . '</div>';
     }
 }
-
-
-// --- Main execution router ---
+include("central/config.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -445,7 +530,7 @@ if (!isset($_SESSION["permiso"])) {
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"] = "en";
 $lang = $_SESSION["lang"];
 include("central/common/get_post.php");
-include("central/config.php");
+
 include("central/common/inc_nodb_lang.php");
 
 // ARCHIVOS DE LENGUAJE
@@ -476,7 +561,7 @@ include("central/common/institutional_info.php");
         } else {
             // Router: decides to show the info page or execute the update
             if (isset($_POST['action']) && $_POST['action'] === 'run_update') {
-                echo '<h2>Log de Atualização</h2><div class="log-container">';
+                echo '<h2>Update Log</h2><div class="log-container">';
                 $update_type = isset($_POST['update_type']) ? $_POST['update_type'] : 'parcial';
                 runUpdateProcess($update_type);
                 echo '</div>';
@@ -487,6 +572,6 @@ include("central/common/institutional_info.php");
         ?>
     </div>
 </div>
-<?php include("central/common/footer.php");?>
+<?php include("central/common/footer.php"); ?>
 
 <?php ob_end_flush(); ?>
