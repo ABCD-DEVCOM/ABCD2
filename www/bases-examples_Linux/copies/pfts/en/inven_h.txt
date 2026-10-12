@@ -1,8 +1,8 @@
-No. control
+Control No.
 Database
-Signature
+Call Number
 Inventory
-Location
-Library princ.
-Library sec.
+Status
+Main Library
+Branch Library
 Copy No.

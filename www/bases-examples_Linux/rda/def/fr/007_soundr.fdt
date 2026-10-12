@@ -1,0 +1,15 @@
+M|7|Champ fixe (007)|0|0|||||||||||s|1||0|0|||
+S||00 - Catégorie de matériel|0|0|||S|||P|007_00.tab||||s|0||0|0||s|
+S||01 - Désignation matérielle spécifique|0|0|||X|||||||||0||0|0|||
+S||02 - Non défini|0|0|||X|||||||||0||0|0|||
+S||03 - Vitesse|0|0|||X|||||||||0||0|0|||
+S||04 - Configuration des canaux de lecture|0|0|||X|||||||||0||0|0|||
+S||05 - Largeur de sillon/pas de sillon|0|0|||X|||||||||0||0|0|||
+S||06 - Dimensions|0|0|||X|||||||||0||0|0|||
+S||07 - Largeur de bande|0|0|||X|||||||||0||0|0|||
+S||08 - Configuration de la bande|0|0|||X|||||||||0||0|0|||
+S||09 - Type de disque, de cylindre ou de bande|0|0|||X|||||||||0||0|0|||
+S||10 - Type de matériel|0|0|||X|||||||||0||0|0|||
+S||11 - Type de gravure|0|0|||X|||||||||0||0|0|||
+S||12 - Caractéristiques de lecture particulières|0|0|||X|||||||||0||0|0|||
+S||13 - Technique de captation et de stockage d'origine|0|0|||X|||||||||0||0|0|||

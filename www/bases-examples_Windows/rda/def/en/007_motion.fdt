@@ -1,0 +1,14 @@
+M|7|Fixed Field (007)|0|0|||||||||||m|1||0|0|||
+S||00 - Category of material|0|0|||S|||P|007_00.tab||||m|0||0|0||m|
+S||01 - Specific material designation|0|0|||X|||||||||0||0|0|||
+S||02 - Undefined|0|0|||X|||||||||0||0|0|||
+S||03 - Color|0|0|||X|||||||||0||0|0|||
+S||04 - Motion picture presentation format|0|0|||X|||||||||0||0|0|||
+S||05 - Sound on medium or separate|0|0|||X|||||||||0||0|0|||
+S||06 - Medium for sound|0|0|||X|||||||||0||0|0|||
+S||07 - Dimensions|0|0|||X|||||||||0||0|0|||
+S||08 - Configuration of playback channels|0|0|||X|||||||||0||0|0|||
+S||09 - Production elements|0|0|||X|||||||||0||0|0|||
+S||10 - Positive/negative aspect|0|0|||X|||||||||0||0|0|||
+S||11 - Generation|0|0|||X|||||||||0||0|0|||
+S||12 - Base of film|0|0|||X|||||||||0||0|0|||

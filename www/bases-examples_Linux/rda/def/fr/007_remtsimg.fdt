@@ -1,0 +1,11 @@
+M|7|Champ fixe (007)|0|0|||||||||||r|1||0|0|||
+S||00 - Catégorie de matériel|0|0|||S|||P|007_00.tab||||r|0||0|0||r|
+S||01 - Désignation matérielle spécifique|0|0|||X|||||||||0||0|0|||
+S||02 - Non défini|0|0|||X|||||||||0||0|0|||
+S||03 - Altitude du capteur|0|0|||X|||||||||0||0|0|||
+S||04 - Attitude du capteur|0|0|||X|||||||||0||0|0|||
+S||05 - Couverture nuageuse|0|0|||X|||||||||0||0|0|||
+S||06 - Type de construction de la plate-forme|0|0|||X|||||||||0||0|0|||
+S||07 - Catégorie d'utilisation de la plate-forme|0|0|||X|||||||||0||0|0|||
+S||08 - Type de capteur|0|0|||X|||||||||0||0|0|||
+S||09-10 - Type de données|0|0|||X|||||||||0||0|0|||

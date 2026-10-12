@@ -4,7 +4,8 @@ TAB||0XX|0|0||||||||||||0||0|0|||
 F|1|Número de controle|0|0|||AI||20|||||||1||0|0|||
 F|3|Identificador de número de controle|0|0|||X||20|||||||1||0|0|||
 M5|5|Data da última modificação|0|0|||X||20|||||||1||0|0|||
-M|8|Campo Fixo (08)|0|0|||X|||||||||1||0|0|||
+M|7|007 - Descrição Física Campo Fixo|0|0|||X||||fixed_007.tab|||||0||0|0|||
+M|8|Campo Fixo (08)|0|0|||X|||P|ldr_06.tab|||||1||0|0|||
 H||01X-09X: Campos de números e códigos|0|0||||||||||||0||0|0|||
 T|10|Número de controle da LC|0|0|a||X||20|||||||1||0|0|||
 IND||Indicador 1|0|0|1||S||1|P|Ind-b.tab|||||0||0|0|||

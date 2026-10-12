@@ -1,0 +1,10 @@
+M|7|Fixed Field (007)|0|0|||||||||||v|1||0|0|||
+S||00 - Category of material|0|0|||S|||P|007_00.tab||||v|0||0|0||v|
+S||01 - Specific material designation|0|0|||X|||||||||0||0|0|||
+S||02 - Undefined|0|0|||X|||||||||0||0|0|||
+S||03 - Color|0|0|||X|||||||||0||0|0|||
+S||04 - Videorecording format|0|0|||X|||||||||0||0|0|||
+S||05 - Sound on medium or separate|0|0|||X|||||||||0||0|0|||
+S||06 - Medium for sound|0|0|||X|||||||||0||0|0|||
+S||07 - Dimensions|0|0|||X|||||||||0||0|0|||
+S||08 - Configuration of playback channels|0|0|||X|||||||||0||0|0|||

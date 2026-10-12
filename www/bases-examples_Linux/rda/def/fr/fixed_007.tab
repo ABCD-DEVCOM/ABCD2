@@ -1,0 +1,15 @@
+a|Carte|007_map.fdt
+c|Ressource électronique|007_elect.fdt
+d|Globe|007_globo.fdt
+f|Matériel tactile|007_tacti.fdt
+g|Graphique projeté|007_graphic.fdt
+h|Microforme|007_microf.fdt
+k|Graphique non projeté|007_nprograph.fdt
+m|Film cinématographique|007_motion.fdt
+o|Trousse|007_kit.fdt
+q|Musique notée|007_music.fdt
+r|Image de télédétection|007_remtsimg.fdt
+s|Enregistrement sonore|007_soundr.fdt
+t|Texte|007_text.fdt
+v|Enregistrement vidéo|007_video.fdt
+z|Non spécifié|007_unspec.fdt

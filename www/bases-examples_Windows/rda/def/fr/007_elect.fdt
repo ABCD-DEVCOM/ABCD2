@@ -1,0 +1,13 @@
+M|7|Champ fixe (007)|0|0|||||||||||c|1||0|0|||
+S||00 - Catégorie de matériel|0|0|||S|||P|007_00.tab||||c|0||0|0||c|
+S||01 - Désignation matérielle spécifique|0|0|||X|||||||||0||0|0|||
+S||02 - Non défini|0|0|||X|||||||||0||0|0|||
+S||03 - Couleur|0|0|||X|||||||||0||0|0|||
+S||04 - Dimensions|0|0|||X|||||||||0||0|0|||
+S||05 - Son|0|0|||X|||||||||0||0|0|||
+S||06-08 - Profondeur de bits de l'image|0|0|||X|||||||||0||0|0|||
+S||09 - Formats de fichier|0|0|||X|||||||||0||0|0|||
+S||10 - Cibles d'assurance qualité|0|0|||X|||||||||0||0|0|||
+S||11 - Antécédent/source|0|0|||X|||||||||0||0|0|||
+S||12 - Niveau de compression|0|0|||X|||||||||0||0|0|||
+S||13 - Qualité de reformatage|0|0|||X|||||||||0||0|0|||

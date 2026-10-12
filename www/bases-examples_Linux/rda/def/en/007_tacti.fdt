@@ -1,0 +1,8 @@
+M|7|Fixed Field (007)|0|0|||||||||||f|1||0|0|||
+S||00 - Category of material|0|0|||S|||P|007_00.tab||||f|0||0|0||f|
+S||01 - Specific material designation|0|0|||X|||||||||0||0|0|||
+S||02 - Undefined|0|0|||X|||||||||0||0|0|||
+S||03-04 - Class of braille writing|0|0|||X|||||||||0||0|0|||
+S||05 - Level of contraction|0|0|||X|||||||||0||0|0|||
+S||06-08 - Braille music format|0|0|||X|||||||||0||0|0|||
+S||09 - Special physical characteristics|0|0|||X|||||||||0||0|0|||

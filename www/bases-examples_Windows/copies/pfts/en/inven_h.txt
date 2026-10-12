@@ -1,0 +1,8 @@
+Control No.
+Database
+Call Number
+Inventory
+Status
+Main Library
+Branch Library
+Copy No.

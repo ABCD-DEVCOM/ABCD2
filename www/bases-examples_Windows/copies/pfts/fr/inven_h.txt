@@ -1,8 +1,8 @@
-No. control
-Database
-Signature
-Inventory
-Location
-Library princ.
-Library sec.
-Copy No.
+N° de contrôle
+Base de données
+Abonnement
+Inventaire
+État
+Bibliothèque principale
+Bibliothèque secondaire
+N° d'exemplaire

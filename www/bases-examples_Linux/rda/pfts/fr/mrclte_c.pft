@@ -1,0 +1,164 @@
+'<style>'/
+'.rda-container { font-family: "Noto Sans", Arial, sans-serif; color: #333; line-height: 1.6; padding: 15px; max-width: 950px; }'/
+
+/* GRID PRINCIPAL: CAPA + CABEÇALHO */
+'.rda-header-grid { display: flex; gap: 20px; margin-bottom: 25px; border-bottom: 1px solid #eaeaea; padding-bottom: 20px; }'/
+'.rda-cover-area { flex-shrink: 0; width: 180px; text-align: center; }'/
+'.rda-cover-area img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }'/
+'.rda-info-area { flex-grow: 1; }'/
+
+/* ESTILOS DE TEXTO */
+'.rda-title { font-size: 24px; font-weight: bold; color: #005a8c; margin-bottom: 8px; line-height: 1.2; }'/
+'.rda-author { font-size: 16px; color: #555; }'/
+
+/* TABELA DE METADADOS */
+'.rda-table { border-collapse: collapse; width: 100%; margin-bottom: 30px; }'/
+'.rda-table th { text-align: right; vertical-align: top; font-weight: 600; color: #444; padding: 8px 15px 8px 0; width: 220px; border-bottom: 1px solid #f9f9f9; font-size: 13px; }'/
+'.rda-table td { padding: 8px 0; color: #222; border-bottom: 1px solid #f9f9f9; font-size: 13px; }'/
+
+/* TABELA DE EXEMPLARES */
+'.rda-copies { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }'/
+'.rda-copies th { background: #f4f8fb; padding: 10px; text-align: left; border-bottom: 2px solid #005a8c; color: #333; font-weight: bold; }'/
+'.rda-copies td { padding: 10px; border-bottom: 1px solid #eaeaea; }'/
+'</style>'/
+
+'<div class="rda-container">'/
+
+/* ==========================================
+   CABEÇALHO: CAPA (ESQUERDA) + TÍTULO/AUTOR (DIREITA)
+   ========================================== */
+'<div class="rda-header-grid">'/
+
+  /* 1. ÁREA DA CAPA (Procura no 856 por "cover" ou "image") */
+  if p(v856) then
+    (
+      if p(v856^u) then
+        if v856^3 : 'cover' or v856^3 : 'backcover' or v856^3 : 'image' or v856^q : 'image' then
+          '<div class="rda-cover-area">'
+            '<a href="../common/show_image.php?image='v856^u'&base='v5001'" target="_blank">'
+              '<img src="../common/show_image.php?image='v856^u'&base='v5001'" alt="Couverture du document">'
+            '</a>'
+          '</div>'
+        fi
+      fi
+    )
+  fi,
+
+  /* 2. ÁREA DE INFORMAÇÕES (Título e Autor) */
+  '<div class="rda-info-area">'/
+    /* TÍTULO EM DESTAQUE (245) */
+    if p(v245) then '<div class="rda-title">'v245^a, if p(v245^b) then ' : 'v245^b fi, if p(v245^c) then ' / 'v245^c fi, '</div>' fi/
+
+    /* AUTOR(ES) PRINCIPAL EM DESTAQUE (1XX) */
+    if p(v100) or p(v110) or p(v111) then
+      '<div class="rda-author">Par : '
+      if p(v100) then (v100^a, if p(v100^d) then ', 'v100^d fi, if iocc<>nocc(v100) then '; ' fi) fi,
+      if p(v110) then (v110^a, if p(v110^b) then '. 'v110^b fi, if iocc<>nocc(v110) then '; ' fi) fi,
+      if p(v111) then (v111^a, if p(v111^c) then ' 'v111^c fi, if iocc<>nocc(v111) then '; ' fi) fi,
+      '</div>'
+    fi/
+  '</div>'/
+
+'</div>'/ /* Fim do rda-header-grid */
+
+
+/* ==========================================
+   TABELA DE METADADOS
+   ========================================== */
+'<table class="rda-table">'/
+
+/* NÚMEROS E CÓDIGOS PRINCIPAIS */
+if p(v20) then '<tr><th>ISBN</th><td>'(| |v20^a||, | |v20^c||, | |v20^q||, if iocc<>nocc(v20) and p(v20) then '<br>' fi),'</td></tr>' fi/
+if p(v22) then '<tr><th>ISSN</th><td>'(| |v22^a||, if iocc<>nocc(v22) and p(v22) then '<br>' fi),'</td></tr>' fi/
+if p(v90) then '<tr><th>Cote locale</th><td>'(| |v90^a||,| |v90^b||,| |v90^c||, if iocc<>nocc(v90) and p(v90) then '<br>' fi),'</td></tr>' fi/
+if p(v82) then '<tr><th>Classification CDD</th><td>'(| |v82^a||,| |v82^b||, if iocc<>nocc(v82) and p(v82) then '<br>' fi),'</td></tr>' fi/
+if p(v80) then '<tr><th>Classification CDU</th><td>'(| |v80^a||,| |v80^x||, if iocc<>nocc(v80) and p(v80) then '<br>' fi),'</td></tr>' fi/
+
+/* PUBLICAÇÃO E DESCRIÇÃO */
+if p(v250) then '<tr><th>Édition</th><td>'(| |v250^a||,| |v250^b||, if iocc<>nocc(v250) and p(v250) then '<br>' fi),'</td></tr>' fi/
+if p(v260) then '<tr><th>Publication (Adresse bibliographique)</th><td>'(| |v260^a||,| |v260^b||,| |v260^c||, if iocc<>nocc(v260) and p(v260) then '<br>' fi),'</td></tr>' fi/
+if p(v264) then '<tr><th>Production / Distribution</th><td>'(| |v264^a||,| |v264^b||,| |v264^c||, if iocc<>nocc(v264) and p(v264) then '<br>' fi),'</td></tr>' fi/
+if p(v300) then '<tr><th>Description physique</th><td>'(| |v300^a||,| |v300^b||,| |v300^c||,| |v300^e||, if iocc<>nocc(v300) and p(v300) then '<br>' fi),'</td></tr>' fi/
+if p(v490) then '<tr><th>Collection</th><td>'(| |v490^a||,| |v490^v||, if iocc<>nocc(v490) and p(v490) then '<br>' fi),'</td></tr>' fi/
+
+/* NOTAS BIBLIOGRÁFICAS */
+if p(v500) then '<tr><th>Note générale</th><td>'(| |v500^a||, if iocc<>nocc(v500) and p(v500) then '<br>' fi),'</td></tr>' fi/
+if p(v502) then '<tr><th>Thèse/Mémoire</th><td>'(| |v502^a||,| |v502^c||,| |v502^d||, if iocc<>nocc(v502) and p(v502) then '<br>' fi),'</td></tr>' fi/
+if p(v504) then '<tr><th>Bibliographie</th><td>'(| |v504^a||, if iocc<>nocc(v504) and p(v504) then '<br>' fi),'</td></tr>' fi/
+if p(v505) then '<tr><th>Contenu</th><td>'(| |v505^a||, if iocc<>nocc(v505) and p(v505) then '<br>' fi),'</td></tr>' fi/
+if p(v520) then '<tr><th>Résumé</th><td>'(| |v520^a||, if iocc<>nocc(v520) and p(v520) then '<br>' fi),'</td></tr>' fi/
+if p(v590) then '<tr><th>Notes locales</th><td>'(| |v590^a||, if iocc<>nocc(v590) and p(v590) then '<br>' fi),'</td></tr>' fi/
+
+/* ASSUNTOS */
+if p(v650) then '<tr><th>Sujet(s) thématique(s)</th><td>'(| |v650^a||,| -- |v650^x||,| -- |v650^y||,| -- |v650^z||, if iocc<>nocc(v650) and p(v650) then '<br>' fi),'</td></tr>' fi/
+if p(v600) then '<tr><th>Sujet (Nom)</th><td>'(| |v600^a||,| -- |v600^x||, if iocc<>nocc(v600) and p(v600) then '<br>' fi),'</td></tr>' fi/
+if p(v610) then '<tr><th>Sujet (Collectivité)</th><td>'(| |v610^a||,| -- |v610^x||, if iocc<>nocc(v610) and p(v610) then '<br>' fi),'</td></tr>' fi/
+if p(v651) then '<tr><th>Sujet géographique</th><td>'(| |v651^a||,| -- |v651^x||,| -- |v651^y||,| -- |v651^z||, if iocc<>nocc(v651) and p(v651) then '<br>' fi),'</td></tr>' fi/
+if p(v655) then '<tr><th>Genre/Forme</th><td>'(| |v655^a||,| -- |v655^x||, if iocc<>nocc(v655) and p(v655) then '<br>' fi),'</td></tr>' fi/
+
+/* OUTROS ACESSOS E LINKS */
+if p(v700) then '<tr><th>Co-auteur(s)</th><td>'(| |v700^a||,| |v700^d||, if iocc<>nocc(v700) and p(v700) then '<br>' fi),'</td></tr>' fi/
+if p(v710) then '<tr><th>Co-auteur(s) corporatif(s)</th><td>'(| |v710^a||,| |v710^b||, if iocc<>nocc(v710) and p(v710) then '<br>' fi),'</td></tr>' fi/
+
+/* 856: APENAS LINKS PARA DOCUMENTOS (Imagens foram para o cabeçalho) */
+if p(v856) then 
+  '<tr><th>Accès / Fichiers</th><td>',
+  (
+    if p(v856^u) then
+      /* Ignora cover/image (já exibidos no topo) e ignora video (futuro player) */
+      if (not v856^3 : 'cover') and (not v856^3 : 'backcover') and (not v856^3 : 'image') and (not v856^q : 'image') and (not v856^3 : 'video') and (not v856^q : 'video') then
+        '<a href="../common/show_image.php?image='v856^u'&base=rda" target="_blank" style="display:inline-block; padding:6px 14px; background-color:#005a8c; color:#fff; text-decoration:none; border-radius:4px; font-size:12px; font-weight:bold; margin-bottom:8px;">'
+          
+          if p(v856^3) then "Télécharger "
+            if v856^3='toc' then 'Sommaire' fi,
+            if v856^3='index' then 'Index' fi,
+            if v856^3='abstract' then 'Résumé' fi,
+            if v856^3='intro' then 'Introduction / Préface' fi,
+            if v856^3='chapter' then 'Chapitre de livre' fi,
+            if v856^3='fulltext' then 'Texte intégral' fi,
+            if v856^3='ebook' then 'Livre numérique (E-book)' fi,
+            if v856^3='article' then 'Article' fi,
+            if v856^3='supplement' then 'Matériel supplémentaire' fi,
+            if v856^3='appendix' then 'Annexe / Appendice' fi,
+            if v856^3='dataset' then 'Jeu de données (Dataset)' fi,
+            if v856^3='code' then 'Code source / Scripts' fi,
+            if v856^3='audio' then 'Fichier audio' fi,
+            if v856^3='video' then 'Fichier vidéo' fi,
+            if v856^3='image' then 'Image / Photographie' fi,
+            if v856^3='map' then 'Carte' fi,
+            if v856^3='review' then 'Compte rendu / Critique' fi,
+            if v856^3='publisher' then "Page de l'éditeur" fi,
+            if v856^3='author_bio' then "Biographie de l'auteur" fi,
+           else " Accéder au Document" fi,
+
+        '</a>',
+        if p(v856^z) then ' <span style="font-size:11px; color:#666;">('v856^z')</span>' fi,
+        '<br>'
+      fi
+    fi
+  ),
+  '</td></tr>' 
+fi/
+
+'</table>'/
+
+/* TABELA DE EXEMPLARES (COPIES) */
+if npost(['copies'],'CN_'v5001'_'v1)>0 then
+  '<table class="rda-copies">
+    <tr>
+      <td colspan=5 style="text-align:right; font-size:12px; border:none; padding-bottom:5px; background:none;">'
+        "<b>Nombre total d'exemplaires disponibles :</b> " f(npost(['copies'],'CN_'v5001'_'v1),1,0) '
+      </td>
+    </tr>
+    <tr>
+      <th>Contrôle</th>
+      <th>Inventaire</th>
+      <th>Statut</th>
+      <th>No. copies</th>
+      <th>Disponibilité</th>
+    </tr>'/
+    /'$$REF:copies,inven,CN_'v5001'_'v1/
+  '</table>'
+fi,
+
+'</div>'

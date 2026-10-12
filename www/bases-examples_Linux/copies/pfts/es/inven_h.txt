@@ -1,8 +1,8 @@
-No. control
-Base datos
+N.º de control
+Base de datos
 Signatura
 Inventario
-Situación
-Biblioteca princ.
-Biblioteca sec.
-No. copia
+Estado
+Biblioteca principal
+Biblioteca secundaria
+N.º de copia

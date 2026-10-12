@@ -1,0 +1,13 @@
+M|7|Fixed Field (007)|0|0|||||||||||c|1||0|0|||
+S||00 - Category of material|0|0|||S|||P|007_00.tab||||c|0||0|0||c|
+S||01 - Specific material designation|0|0|||X|||||||||0||0|0|||
+S||02 - Undefined|0|0|||X|||||||||0||0|0|||
+S||03 - Color|0|0|||X|||||||||0||0|0|||
+S||04 - Dimensions|0|0|||X|||||||||0||0|0|||
+S||05 - Sound|0|0|||X|||||||||0||0|0|||
+S||06-08 - Image bit depth|0|0|||X|||||||||0||0|0|||
+S||09 - File formats|0|0|||X|||||||||0||0|0|||
+S||10 - Quality assurance targets|0|0|||X|||||||||0||0|0|||
+S||11 - Antecedent/source|0|0|||X|||||||||0||0|0|||
+S||12 - Level of compression|0|0|||X|||||||||0||0|0|||
+S||13 - Reformatting quality|0|0|||X|||||||||0||0|0|||

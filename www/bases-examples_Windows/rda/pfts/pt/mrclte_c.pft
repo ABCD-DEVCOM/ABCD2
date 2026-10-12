@@ -108,7 +108,29 @@ if p(v856) then
       /* Ignora cover/image (já exibidos no topo) e ignora video (futuro player) */
       if (not v856^3 : 'cover') and (not v856^3 : 'backcover') and (not v856^3 : 'image') and (not v856^q : 'image') and (not v856^3 : 'video') and (not v856^q : 'video') then
         '<a href="../common/show_image.php?image='v856^u'&base=rda" target="_blank" style="display:inline-block; padding:6px 14px; background-color:#005a8c; color:#fff; text-decoration:none; border-radius:4px; font-size:12px; font-weight:bold; margin-bottom:8px;">'
-          if p(v856^3) then 'Baixar 'v856^3 else ' Acessar Documento' fi,
+          
+          if p(v856^3) then 'Baixar '
+            if v856^3='toc' then 'Sumário' fi,
+            if v856^3='index' then 'Índice' fi,
+            if v856^3='abstract' then 'Resumo' fi,
+            if v856^3='intro' then 'Introdução / Prefácio' fi,
+            if v856^3='chapter' then 'Capítulo de livro' fi,
+            if v856^3='fulltext' then 'Texto completo' fi,
+            if v856^3='ebook' then 'Livro eletrônico (E-book)' fi,
+            if v856^3='article' then 'Artigo' fi,
+            if v856^3='supplement' then 'Material suplementar' fi,
+            if v856^3='appendix' then 'Apêndice / Anexo' fi,
+            if v856^3='dataset' then 'Conjunto de dados (Dataset)' fi,
+            if v856^3='code' then 'Código-fonte / Scripts' fi,
+            if v856^3='audio' then 'Arquivo de áudio' fi,
+            if v856^3='video' then 'Arquivo de vídeo' fi,
+            if v856^3='image' then 'Imagem / Fotografia' fi,
+            if v856^3='map' then 'Mapa' fi,
+            if v856^3='review' then 'Resenha / Crítica' fi,
+            if v856^3='publisher' then 'Página da editora' fi,
+            if v856^3='author_bio' then 'Biografia do autor' fi,
+           else ' Acessar Documento' fi,
+
         '</a>',
         if p(v856^z) then ' <span style="font-size:11px; color:#666;">('v856^z')</span>' fi,
         '<br>'
