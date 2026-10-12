@@ -1,0 +1,15 @@
+M|7|Fixed Field (007)|0|0|||||||||||s|1||0|0|||
+S||00 - Category of material|0|0|||S|||P|007_00.tab||||s|0||0|0||s|
+S||01 - Specific material designation|0|0|||X|||||||||0||0|0|||
+S||02 - Undefined|0|0|||X|||||||||0||0|0|||
+S||03 - Speed|0|0|||X|||||||||0||0|0|||
+S||04 - Configuration of playback channels|0|0|||X|||||||||0||0|0|||
+S||05 - Groove width/groove pitch|0|0|||X|||||||||0||0|0|||
+S||06 - Dimensions|0|0|||X|||||||||0||0|0|||
+S||07 - Tape width|0|0|||X|||||||||0||0|0|||
+S||08 - Tape configuration|0|0|||X|||||||||0||0|0|||
+S||09 - Kind of disc, cylinder, or tape|0|0|||X|||||||||0||0|0|||
+S||10 - Kind of material|0|0|||X|||||||||0||0|0|||
+S||11 - Kind of cutting|0|0|||X|||||||||0||0|0|||
+S||12 - Special playback characteristics|0|0|||X|||||||||0||0|0|||
+S||13 - Original capture and storage technique|0|0|||X|||||||||0||0|0|||

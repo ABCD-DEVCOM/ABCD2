@@ -21,17 +21,19 @@ function checkCover(imgElement) {
       '<div class="col-md-3 text-center mb-3">',
         
 
-        if v856^3='cover' then '<img src="viewer/show_image.php?image='v856^u'&base='v5001'" class="img-fluid rounded shadow-sm mb-3" alt="Capa do livro" style="max-height: 300px;" onload="checkCover(this)" onerror="checkCover(this)">' 
+       if v856^3='cover' then '<img src="viewer/show_image.php?image='v856^u'&base='v5001'" class="img-fluid rounded shadow-sm mb-3" alt="Capa do livro" style="max-height: 300px;" onload="checkCover(this)" onerror="checkCover(this)">' 
 
         else
 
-            /* Capa via Google Books (com fallback) */
-            if p(v20^a) then '<img src="https://books.google.com/books/content?vid=isbn:',replace(v20^a,'-',''),'&printsec=frontcover&img=1&zoom=1" class="img-fluid rounded shadow-sm mb-3" alt="Capa do livro" style="max-height: 300px;" onload="checkCover(this)" onerror="checkCover(this)">',
-               /* Placeholder oculto que só aparece se o JS acima ocultar a imagem */
-               '<div class="bg-light align-items-center justify-content-center rounded mb-3" style="height: 200px; color: #ccc; display: none;"><i class="fas fa-book fa-4x"></i></div>'
-            else 
-               '<div class="bg-light d-flex align-items-center justify-content-center rounded mb-3" style="height: 200px; color: #ccc;"><i class="fas fa-book fa-4x"></i></div>'
-            fi,
+            if v856^3<>'cover' then
+                /* Capa via Google Books (com fallback) */
+                if p(v20^a) then '<img src="https://books.google.com/books/content?vid=isbn:',replace(v20^a,'-',''),'&printsec=frontcover&img=1&zoom=1" class="img-fluid rounded shadow-sm mb-3" alt="Capa do livro" style="max-height: 300px;" onload="checkCover(this)" onerror="checkCover(this)">',
+                   /* Placeholder oculto que só aparece se o JS acima ocultar a imagem */
+                   '<div class="bg-light align-items-center justify-content-center rounded mb-3" style="height: 200px; color: #ccc; display: none;"><i class="fas fa-book fa-4x"></i></div>'
+                else 
+                   '<div class="bg-light d-flex align-items-center justify-content-center rounded mb-3" style="height: 200px; color: #ccc;"><i class="fas fa-book fa-4x"></i></div>'
+                fi,
+            fi,    
         fi
 
         /* DESTAQUE DO CAMPO 90 (LOCALIZAÇÃO) */
@@ -120,7 +122,38 @@ function checkCover(imgElement) {
             if p(v700) then '<tr><th class="text-secondary">Outros Autores:</th><td>'(| |v700^a||,| |v700^b||, if iocc<>nocc(v700) then '; ' fi) '</td></tr>' fi,
 
             /* Links Eletrônicos */
-            if p(v856) then '<tr><th class="text-secondary">Acesso Online:</th><td><a href="'v856^u'" target="_blank">'v856^u'</a></td></tr>' fi,
+  (
+    if p(v856^u) then
+      /* Ignora cover/image (já exibidos no topo) e ignora video (futuro player) */
+      if (not v856^3 : 'cover') and (not v856^3 : 'backcover') and (not v856^3 : 'image') and (not v856^q : 'image') and (not v856^3 : 'video') and (not v856^q : 'video') then
+        '<a href="viewer?pdffile=collection/'v856^u'&base=rda" target="_blank" style="display:inline-block; padding:6px 14px; background-color:#005a8c; color:#fff; text-decoration:none; border-radius:4px; font-size:12px; font-weight:bold; margin-bottom:8px;">'
+          if p(v856^3) then 'Baixar '
+            if v856^3='toc' then 'Sumário' fi,
+            if v856^3='index' then 'Índice' fi,
+            if v856^3='abstract' then 'Resumo' fi,
+            if v856^3='intro' then 'Introdução / Prefácio' fi,
+            if v856^3='chapter' then 'Capítulo de livro' fi,
+            if v856^3='fulltext' then 'Texto completo' fi,
+            if v856^3='ebook' then 'Livro eletrônico (E-book)' fi,
+            if v856^3='article' then 'Artigo' fi,
+            if v856^3='supplement' then 'Material suplementar' fi,
+            if v856^3='appendix' then 'Apêndice / Anexo' fi,
+            if v856^3='dataset' then 'Conjunto de dados (Dataset)' fi,
+            if v856^3='code' then 'Código-fonte / Scripts' fi,
+            if v856^3='audio' then 'Arquivo de áudio' fi,
+            if v856^3='video' then 'Arquivo de vídeo' fi,
+            if v856^3='image' then 'Imagem / Fotografia' fi,
+            if v856^3='map' then 'Mapa' fi,
+            if v856^3='review' then 'Resenha / Crítica' fi,
+            if v856^3='publisher' then 'Página da editora' fi,
+            if v856^3='author_bio' then 'Biografia do autor' fi,
+           else ' Acessar Documento' fi,
+        '</a>',
+        if p(v856^z) then ' <span style="font-size:11px; color:#666;">('v856^z')</span>' fi,
+        '<br>'
+      fi
+    fi
+  ),
 
         '</tbody>',
         '</table>',

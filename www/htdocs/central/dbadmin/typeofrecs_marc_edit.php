@@ -83,7 +83,7 @@ if (!empty($file_tor)) {
 			<?php
 			if (isset($arrHttp["encabezado"])) $encabezado = "&encabezado=s";
 			else $encabezado = "";
-			$backtoscript = "menu_modificardb.php?base=" . $arrHttp["base"] . $encabezado;
+			$backtocancelscript = "menu_modificardb.php?base=" . $arrHttp["base"] . $encabezado;
 			include "../common/inc_cancel.php";
 			?>
 		</div>

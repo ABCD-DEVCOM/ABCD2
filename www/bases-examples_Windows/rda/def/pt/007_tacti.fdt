@@ -1,0 +1,8 @@
+M|7|Campo Fixo (007)|0|0|||||||||||f|1||0|0|||
+S||00 - Categoria do material|0|0|||S|||P|007_00.tab||||f|0||0|0||f|
+S||01 - Designação específica do material|0|0|||X|||||||||0||0|0|||
+S||02 - Indefinido|0|0|||X|||||||||0||0|0|||
+S||03-04 - Classe de escrita braille|0|0|||X|||||||||0||0|0|||
+S||05 - Nível de contração|0|0|||X|||||||||0||0|0|||
+S||06-08 - Formato da música em braille|0|0|||X|||||||||0||0|0|||
+S||09 - Características físicas especiais|0|0|||X|||||||||0||0|0|||

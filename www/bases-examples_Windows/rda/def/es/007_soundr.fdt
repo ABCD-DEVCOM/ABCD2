@@ -1,0 +1,15 @@
+M|7|Campo fijo (007)|0|0|||||||||||s|1||0|0|||
+S||00 - Categoría de material|0|0|||S|||P|007_00.tab||||s|0||0|0||s|
+S||01 - Designación específica de material|0|0|||X|||||||||0||0|0|||
+S||02 - Indefinido|0|0|||X|||||||||0||0|0|||
+S||03 - Velocidad de reproducción|0|0|||X|||||||||0||0|0|||
+S||04 - Configuración de los canales de reproducción|0|0|||X|||||||||0||0|0|||
+S||05 - Ancho del surco/paso del surco|0|0|||X|||||||||0||0|0|||
+S||06 - Dimensiones|0|0|||X|||||||||0||0|0|||
+S||07 - Ancho de la cinta|0|0|||X|||||||||0||0|0|||
+S||08 - Configuración de la cinta|0|0|||X|||||||||0||0|0|||
+S||09 - Tipo de disco, cilindro o cinta|0|0|||X|||||||||0||0|0|||
+S||10 - Tipo de material|0|0|||X|||||||||0||0|0|||
+S||11 - Tipo de corte|0|0|||X|||||||||0||0|0|||
+S||12 - Características especiales de reproducción|0|0|||X|||||||||0||0|0|||
+S||13 - Técnica de captura y almacenamiento original|0|0|||X|||||||||0||0|0|||

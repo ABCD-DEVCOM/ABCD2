@@ -1,0 +1,11 @@
+M|7|Campo Fixo (007)|0|0|||||||||||r|1||0|0|||
+S||00 - Categoria do material|0|0|||S|||P|007_00.tab||||r|0||0|0||r|
+S||01 - Designação específica do material|0|0|||X|||||||||0||0|0|||
+S||02 - Indefinido|0|0|||X|||||||||0||0|0|||
+S||03 - Altitude do sensor|0|0|||X|||||||||0||0|0|||
+S||04 - Atitude do sensor|0|0|||X|||||||||0||0|0|||
+S||05 - Cobertura de nuvens|0|0|||X|||||||||0||0|0|||
+S||06 - Construção da plataforma|0|0|||X|||||||||0||0|0|||
+S||07 - Uso da plataforma|0|0|||X|||||||||0||0|0|||
+S||08 - Tipo de sensor|0|0|||X|||||||||0||0|0|||
+S||09-10 - Tipo de dados|0|0|||X|||||||||0||0|0|||

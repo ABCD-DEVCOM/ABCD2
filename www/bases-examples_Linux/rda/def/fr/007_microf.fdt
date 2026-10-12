@@ -1,0 +1,12 @@
+M|7|Champ fixe (007)|0|0|||||||||||h|1||0|0|||
+S||00 - Catégorie de matériel|0|0|||S|||P|007_00.tab||||h|0||0|0||h|
+S||01 - Désignation matérielle spécifique|0|0|||X|||||||||0||0|0|||
+S||02 - Non défini|0|0|||X|||||||||0||0|0|||
+S||03 - Aspect positif/négatif|0|0|||X|||||||||0||0|0|||
+S||04 - Dimensions|0|0|||X|||||||||0||0|0|||
+S||05 - Gamme d'échelle de réduction|0|0|||X|||||||||0||0|0|||
+S||06-08 - Échelle de réduction|0|0|||X|||||||||0||0|0|||
+S||09 - Couleur|0|0|||X|||||||||0||0|0|||
+S||10 - Émulsion sur le film|0|0|||X|||||||||0||0|0|||
+S||11 - Génération|0|0|||X|||||||||0||0|0|||
+S||12 - Support de film|0|0|||X|||||||||0||0|0|||

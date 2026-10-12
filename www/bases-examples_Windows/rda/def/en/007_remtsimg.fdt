@@ -1,0 +1,11 @@
+M|7|Fixed Field (007)|0|0|||||||||||r|1||0|0|||
+S||00 - Category of material|0|0|||S|||P|007_00.tab||||r|0||0|0||r|
+S||01 - Specific material designation|0|0|||X|||||||||0||0|0|||
+S||02 - Undefined|0|0|||X|||||||||0||0|0|||
+S||03 - Altitude of sensor|0|0|||X|||||||||0||0|0|||
+S||04 - Attitude of sensor|0|0|||X|||||||||0||0|0|||
+S||05 - Cloud cover|0|0|||X|||||||||0||0|0|||
+S||06 - Platform construction type|0|0|||X|||||||||0||0|0|||
+S||07 - Platform use category|0|0|||X|||||||||0||0|0|||
+S||08 - Sensor type|0|0|||X|||||||||0||0|0|||
+S||09-10 - Data type|0|0|||X|||||||||0||0|0|||
