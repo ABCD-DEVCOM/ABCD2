@@ -19,6 +19,7 @@ RewriteRule ^ - [L]
 # 2. Directions to ABCD Services
 # Captura o service id e o restante da path (para assets, etc)
 RewriteRule ^service/([a-zA-Z0-9_\-]+)/?(.*)$ plugin.php?id=$1&path=$2 [QSA,L]
+RewriteRule \.(ico|png|jpe?g|gif|svg|webp|css|js|map|woff2?|ttf)$ - [R=404,L]
 
 # Path to OPAC or default index
 RewriteRule ^index\.php$ - [L]
