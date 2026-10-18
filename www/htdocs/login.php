@@ -19,8 +19,11 @@
 
 */
 session_start();
-$_SESSION = array();
-unset($_SESSION["db_path"]);
+if (!isset($_SESSION["permiso"])) { 
+	$_SESSION = array();
+	unset($_SESSION["db_path"]);
+}
+
 include("central/config_inc_check.php");
 include("central/config.php");
 include("$app_path/common/get_post.php");
