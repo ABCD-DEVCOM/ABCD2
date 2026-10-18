@@ -18,6 +18,7 @@
 2026-03-12 fho4abcd Improved ip check
 2026-03-17 fho4abcd IP check shows message (was in function)
 2026-10-06 rogercgui Add check session status before starting a new session to avoid warnings in the log file. Fixes a bug where the script was trying to start a new session even if one was already active, causing a warning message to be logged.
+2026-10-18 rogercgui Added a check for the existence of the 'permiso' session variable before proceeding with the script. If the variable is not set, the user is redirected to an error page. This prevents potential errors when trying to access session variables that may not exist.
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -305,8 +306,23 @@ if (isset($arrHttp["login"])) {
 		VerificarUsuario();
 	}
 
-	// Refreshes only at the exact moment of a successful login
-	session_regenerate_id(true);
+if (!isset($_SESSION['OBSOLETE'])) {
+    $old_session_data = $_SESSION;
+    
+    // Mark the current session as obsolete NOW
+    $_SESSION['OBSOLETE'] = time();
+    
+    // Force the recording and close the old session (it is saved with the OBSOLETE label)
+    session_write_close();
+    
+    // Start a new, clean session
+    session_start();
+    session_regenerate_id(false); // Creates a new, clean ID for the user.
+    
+    // Restores the data for the new session
+    $_SESSION = $old_session_data;
+    unset($_SESSION['OBSOLETE']); 
+}
 
 	if (isset($arrHttp["lang"]) && $arrHttp["lang"] != "") {
 		$_SESSION["lang"] = $arrHttp["lang"];
