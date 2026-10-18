@@ -12,7 +12,7 @@
  */
 
 
-    global $arrHttp, $def, $msgstr, $db_path, $charset, $meta_encoding, $name, $profile, $login, $verify_selbase, $module_odds, $link_logo;
+global $arrHttp, $def, $msgstr, $db_path, $charset, $meta_encoding, $name, $profile, $login, $verify_selbase, $module_odds, $link_logo;
 
 $sys_charset = !empty($charset) ? $charset : (!empty($meta_encoding) ? $meta_encoding : 'UTF-8');
 
@@ -142,7 +142,7 @@ foreach (array_keys($module_registry) as $registered_slug) {
                 </li>
                 <li><a href="/central/common/change_password.php" class="bt-dropdown-item"><i class="fas fa-key dropdown-icon"></i> <?php echo htmlspecialchars($msgstr["change_password"] ?? 'Change Password', ENT_QUOTES, $sys_charset); ?></a></li>
                 <li class="dropdown-divider"></li>
-                <a href="/central/common/logout.php" class="bt-dropdown-item" title="<?php echo htmlspecialchars($msgstr["logout"] ?? 'Logout', ENT_QUOTES, $sys_charset); ?>">
+                <a href="#" onclick="window.location.href='/central/common/logout.php'; return false;" class="bt-dropdown-item" title="<?php echo htmlspecialchars($msgstr["logout"] ?? 'Logout', ENT_QUOTES, $sys_charset); ?>">
                     <i class="fas fa-sign-out-alt"></i> <?php echo htmlspecialchars($msgstr["logout"] ?? 'Logout', ENT_QUOTES, $sys_charset); ?>
                 </a>
         </li>

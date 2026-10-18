@@ -296,29 +296,26 @@ if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="chgpsw" ){
 
 if (!isset($_SESSION["Expresion"])) $_SESSION["Expresion"]="";
 
-if (isset($arrHttp["login"])){
+if (isset($arrHttp["login"])) {
 	VerificarCaptcha();
 	global $use_ldap;
-	if($use_ldap){
+	if ($use_ldap) {
 		VerificarUsuarioLDAP();
 	} else {
 		VerificarUsuario();
 	}
-	// Regenerate the session ID to cope session fixation attacks
-	// More info https://owasp.org/www-community/attacks/Session_fixation
-	// This is only one step in increasing security. More actions have to be added (sometime)
-	if (!isset($_SESSION['login'])) {
-		session_regenerate_id(true);
-	}
 
-	if (isset($arrHttp["lang"]) && $arrHttp["lang"]!="") {
-		$_SESSION["lang"]=$arrHttp["lang"];
+	// Refreshes only at the exact moment of a successful login
+	session_regenerate_id(true);
+
+	if (isset($arrHttp["lang"]) && $arrHttp["lang"] != "") {
+		$_SESSION["lang"] = $arrHttp["lang"];
 	} else {
-		$_SESSION["lang"]=$lang;
+		$_SESSION["lang"] = $lang;
 	}
 
-	$_SESSION["login"]=$arrHttp["login"];
-	$_SESSION["nombre"]=$nombre;
+	$_SESSION["login"] = $arrHttp["login"];
+	$_SESSION["nombre"] = $nombre;
 }
 
 if (!isset($_SESSION["permiso"])){
