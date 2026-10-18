@@ -39,8 +39,9 @@
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 set_time_limit(0);
 session_start();
-if (!isset($_SESSION["permiso"])){
-	header("Location: ../common/error_page.php") ;
+if (!isset($_SESSION["permiso"])) {
+	header("Location: ../common/error_page.php");
+	exit;
 }
 include("../common/get_post.php");
 include("../config.php");
