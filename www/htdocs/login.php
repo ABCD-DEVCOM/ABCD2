@@ -1,5 +1,5 @@
 <?php
-/* Modifications
+	/* Modifications
 2021-01-04 fho4abcd Removed login encryption
 2021-01-04 fh04abcd Corrected "languaje" --> language
 2021-02-07 fho4abcd Configured Logo url now used without prefix and strip. Works now according to wiki
@@ -16,36 +16,15 @@
 20250801 fho4abcd Do not rely on existence HTTP_ACCEPT_LANGUAGE: some browsers do not send it
 20251124 fho4abcd Add button To OPAC
 20260701 rogercgui Added support for cascading translation system using LanguageManager.
-20261018 rogercgui Change session regeneration logic to avoid race conditions and ensure proper session handling. Redirect already authenticated users to their intended destination. Clean up session for unauthenticated users.
+20261018 rogercgui Redirect already authenticated users to the system (inicio.php) instead of showing the login form. The session is only cleaned for unauthenticated users.
 */
 
 session_start();
 
-	// --- RACE CONDITION PROTECTION (Session Regeneration) ---
-	if (isset($_SESSION['OBSOLETE'])) {
-	// If the session is marked as obsolete but the grace period (e.g., 10 seconds) has expired
-	if ($_SESSION['OBSOLETE'] < (time() - 10)) {
-		// Now, go ahead and delete the old session and clear everything. Old requests will end up here.
-		$_SESSION = array();
-        session_destroy();
-        session_start();
-        session_regenerate_id(); // Creates a new, clean ID for the user.
-	}
-}
-
 // --- REDIRECTING AN ALREADY AUTHENTICATED USER ---
-if (isset($_SESSION["permiso"])) { 
-    // The user is already logged in and has active permissions.
-    // Instead of showing the form, we will take them directly to the system.
-    
-    // We can check if they tried to access a specific script before being redirected to login
-    $redirect_url = "/central/common/inicio.php";
-    if (isset($_SESSION['HOME'])) {
-        $redirect_url = $_SESSION['HOME'];
-    }
-    
-    header("Location: " . $redirect_url);
-    exit();
+if (isset($_SESSION["permiso"])) {
+	header("Location: /central/common/inicio.php");
+	exit();
 }
 
 // --- CLEANUP FOR USERS (Not logged in) ---
