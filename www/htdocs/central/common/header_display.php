@@ -1,6 +1,7 @@
 <?php
 /* modifications
 2024-01-02 fho4abcd simplified DOCTYPE and html tag
+2026-10-18 rogercgui Declare favicon links so the browser does not request /favicon.ico (it fell through to login.php, which wiped the session).
 */
 ?>
 <!DOCTYPE html>
