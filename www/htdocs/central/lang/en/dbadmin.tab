@@ -847,3 +847,5 @@ mig_config_warn_setting=Setting '$%s' not found in the old config.php. Template 
 mig_config_err_regex_var=Failed to inject user settings ('%s') into config.php.template.
 mig_config_err_syntax=The merged config.php has a syntax error: %s
 mig_config_err_write=FAILED to write the new config.php. Merge it manually from config.php.template.
+mig_config_v4=config.php is already v4: kept as is.
+mig_config_not_applied=config.php v4 NOT applied: the update did not complete. The previous config.php was kept.

@@ -816,3 +816,5 @@ mig_config_warn_setting=Configura??o '$%s' n?o encontrada no config.php antigo. 
 mig_config_err_regex_var=Falha ao injetar as configura??es do usu?rio ('%s') no config.php.template.
 mig_config_err_syntax=O config.php mesclado possui um erro de sintaxe: %s
 mig_config_err_write=FALHA ao gravar o novo config.php. Mescle-o manualmente a partir do config.php.template.
+mig_config_v4=O config.php j? est? na v4: mantido como est?.
+mig_config_not_applied=config.php v4 N?O aplicado: a atualiza??o n?o foi conclu?da. O config.php anterior foi mantido.

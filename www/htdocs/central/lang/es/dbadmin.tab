@@ -502,3 +502,5 @@ mig_config_warn_setting=Configuración '$%s' no encontrada en el antiguo config.p
 mig_config_err_regex_var=Error al inyectar la configuración del usuario ('%s') en config.php.template.
 mig_config_err_syntax=El config.php fusionado tiene un error de sintaxis: %s
 mig_config_err_write=ERROR al escribir el nuevo config.php. Fusiónelo manualmente desde config.php.template.
+mig_config_v4=config.php ya está en la v4: se mantiene sin cambios.
+mig_config_not_applied=config.php v4 NO aplicado: la actualización no se completó. Se mantuvo el config.php anterior.

@@ -422,3 +422,5 @@ mig_config_warn_setting=Paramètre '$%s' introuvable dans l'ancien config.php. Va
 mig_config_err_regex_var=Échec de l'injection des paramètres utilisateur ('%s') dans config.php.template.
 mig_config_err_syntax=Le fichier config.php fusionné contient une erreur de syntaxe : %s
 mig_config_err_write=ÉCHEC de l'écriture du nouveau config.php. Fusionnez-le manuellement à partir de config.php.template.
+mig_config_v4=config.php est déjà en v4 : conservé tel quel.
+mig_config_not_applied=config.php v4 NON appliqué : la mise à jour ne s'est pas terminée. L'ancien config.php a été conservé.
