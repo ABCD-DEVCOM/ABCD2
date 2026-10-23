@@ -44,8 +44,13 @@
  * -- If a resource for an update is missing: Show only a warning and continue
  * 20260321 rogercgui Protection for the OPAC’s ‘uploads’ folder. The aim is to preserve the institution’s logos and icons.
  * 20260419 fho4abcd Removed call to non-existing function logMessage
- * 20261022 rogercgui Fixes for batched installation lifecycle (v4.0.2):
- * -- Fixed infinite loop in 'extract' phase by returning explicit 'step_done' status.
+ * 20261007 rogercgui Refactored 'install' step to use batched AJAX processing for real-time progress logging
+ * -- Replaced hardcoded UI and log strings with $msgstr localization variables and English fallbacks.
+ * -- Added cache-busting parameter to the page reload action.
+ * -- Fixed migration script path to look inside 'www/htdocs/upgrade/update_actions.php'.
+ * 20261022 rogercgui Fixes for batched installation lifecycle and pre-download self-update (v4.0.2):
+ * -- Added pre-download 'self_update' step: fetches remote update_manager.php from release tag/assets, validates syntax with token_get_all(), performs atomic replacement with .bak backup, invalidates OPcache, and reloads UI when updated.
+ * -- Standardized explicit JSON protocol statuses ('continue', 'step_done', 'done', 'reload_required', 'error').
  * -- Fixed 'Main config not found' error across AJAX batches by immediately calling restoreConfigs() after the 'central' folder is replaced.
  * -- Added fallback check to restore 'central/config.php' from backup at the start of each AJAX request if missing.
  */
@@ -253,6 +258,97 @@ function getLatestReleaseInfo(): array
     return $data[0];
 }
 
+/**
+ * Fetches the raw update_manager.php from the target release (checks release assets first,
+ * then falls back to the raw tag URL). Returns null if unreachable so the update can still proceed.
+ */
+function fetchRemoteUpdateManager(array $release): ?string
+{
+    $candidate_urls = [];
+
+    if (!empty($release['assets']) && is_array($release['assets'])) {
+        foreach ($release['assets'] as $asset) {
+            if (($asset['name'] ?? '') === 'update_manager.php' && !empty($asset['browser_download_url'])) {
+                $candidate_urls[] = $asset['browser_download_url'];
+            }
+        }
+    }
+
+    if (!empty($release['tag_name'])) {
+        $tag = rawurlencode((string)$release['tag_name']);
+        $candidate_urls[] = 'https://raw.githubusercontent.com/' . GITHUB_REPOSITORY . '/' . $tag . '/www/htdocs/update_manager.php';
+    }
+
+    foreach ($candidate_urls as $url) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'ABCD-Update-Manager');
+        $content = curl_exec($ch);
+        $http_code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if (!curl_errno($ch) && $http_code === 200 && is_string($content) && str_contains($content, 'ABCD Update Manager')) {
+            return $content;
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Atomically replaces a target PHP file after validating its syntax with token_get_all(),
+ * keeping a .bak copy and invalidating OPcache.
+ */
+function atomicReplacePhpFile(string $target_file, string $new_code, string $backup_file): void
+{
+    global $msgstr;
+
+    // 1. Validate PHP syntax before writing
+    try {
+        token_get_all($new_code, TOKEN_PARSE);
+    } catch (\Throwable $e) {
+        throw new Exception(sprintf($msgstr["upd_self_err_syntax"] ?? "Self-update aborted: remote update_manager.php has a syntax error (%s).", $e->getMessage()));
+    }
+
+    $tmp_file = $target_file . '.tmp';
+    if (@file_put_contents($tmp_file, $new_code, LOCK_EX) === false) {
+        throw new Exception(sprintf($msgstr["upd_self_err_write"] ?? "Self-update failed: cannot write temporary file (%s).", basename($tmp_file)));
+    }
+
+    $written_code = @file_get_contents($tmp_file);
+    if ($written_code === false || hash('sha256', $written_code) !== hash('sha256', $new_code)) {
+        @unlink($tmp_file);
+        throw new Exception(sprintf($msgstr["upd_self_err_write"] ?? "Self-update failed: cannot write temporary file (%s).", basename($tmp_file)));
+    }
+
+    // 2. Create backup of the current file
+    if (file_exists($target_file)) {
+        if (!@copy($target_file, $backup_file)) {
+            @unlink($tmp_file);
+            throw new Exception(sprintf($msgstr["upd_self_err_backup"] ?? "Self-update failed: could not create backup (%s).", basename($backup_file)));
+        }
+    }
+
+    // 3. Atomic rename over the target file (with Windows copy fallback)
+    if (!@rename($tmp_file, $target_file)) {
+        if (!@copy($tmp_file, $target_file)) {
+            @unlink($tmp_file);
+            if (file_exists($backup_file)) {
+                @copy($backup_file, $target_file);
+            }
+            throw new Exception(sprintf($msgstr["upd_self_err_rename"] ?? "Self-update failed: could not replace %s.", basename($target_file)));
+        }
+        @unlink($tmp_file);
+    }
+
+    // 4. Invalidate OPcache and file stat cache immediately
+    clearstatcache(true, $target_file);
+    if (function_exists('opcache_invalidate')) {
+        @opcache_invalidate($target_file, true);
+    }
+}
+
 function checkLastError(): void
 {
     global $msgstr;
@@ -275,6 +371,9 @@ function restoreConfigs(): void
                 mkdir(dirname($dest_file), 0755, true);
             }
             copy($bkp, $dest_file);
+            if (function_exists('opcache_invalidate')) {
+                @opcache_invalidate($dest_file, true);
+            }
             $logs[] = writeLog(sprintf($msgstr["upd_restored"] ?? "Restored: %s", $rel_path));
         }
     }
@@ -321,6 +420,37 @@ if (isset($_POST['ajax_action'])) {
     error_clear_last();
 
     try {
+        // === STEP 0: PRE-DOWNLOAD SELF-UPDATE ===
+        if ($action === 'self_update') {
+            secureUpgradeFolder($upgrade_dir);
+            $logs[] = writeLog($msgstr["upd_self_checking"] ?? "Checking if Update Manager requires a self-update before starting...");
+
+            $zip_path = rtrim($temp_dir, '/\\') . '/update.zip';
+            if (file_exists($zip_path) && filesize($zip_path) > 1000000) {
+                $logs[] = writeLog($msgstr["upd_self_skip_manual"] ?? "Manual update.zip detected. Skipping remote self-update check.");
+                sendJsonResponse('step_done', 2, implode("<br>", $logs));
+            }
+
+            $release = getLatestReleaseInfo();
+            $remote_manager_code = fetchRemoteUpdateManager($release);
+
+            if ($remote_manager_code === null) {
+                $logs[] = writeLog($msgstr["upd_self_skip_unavail"] ?? "Remote update_manager.php not fetched separately. Proceeding with standard package flow.", "warning");
+                sendJsonResponse('step_done', 2, implode("<br>", $logs));
+            }
+
+            $local_manager_code = @file_get_contents(__FILE__);
+            if ($local_manager_code !== false && hash('sha256', $local_manager_code) !== hash('sha256', $remote_manager_code)) {
+                $backup_manager = rtrim($backup_dir, '/\\') . '/update_manager.php.bak';
+                atomicReplacePhpFile(__FILE__, $remote_manager_code, $backup_manager);
+                $logs[] = writeLog($msgstr["upd_self_updated_reload"] ?? "Update Manager has been updated to the latest release version. Reloading interface to apply changes...");
+                sendJsonResponse('reload_required', 3, implode("<br>", $logs));
+            }
+
+            $logs[] = writeLog($msgstr["upd_self_up_to_date"] ?? "Update Manager is already up to date.");
+            sendJsonResponse('step_done', 2, implode("<br>", $logs));
+        }
+
         // === STEP 1: INITIALIZATION & BACKUP ===
         if ($action === 'init') {
             recursiveDelete($temp_dir);
@@ -355,7 +485,7 @@ if (isset($_POST['ajax_action'])) {
             $_SESSION['install_index'] = 0;
             $_SESSION['update_type'] = $_POST['update_type'];
 
-            sendJsonResponse('continue', 5, implode("<br>", $logs));
+            sendJsonResponse('step_done', 5, implode("<br>", $logs));
         }
 
         // === STEP 2: DOWNLOAD ===
@@ -363,7 +493,7 @@ if (isset($_POST['ajax_action'])) {
             $zip_path = rtrim($temp_dir, '/\\') . '/update.zip';
 
             if (file_exists($zip_path) && filesize($zip_path) > 1000000) {
-                sendJsonResponse('continue', 20, writeLog($msgstr["upd_manual_zip"] ?? "Existing local update.zip found (Manual Upload). Skipping download."));
+                sendJsonResponse('step_done', 20, writeLog($msgstr["upd_manual_zip"] ?? "Existing local update.zip found (Manual Upload). Skipping download."));
             }
 
             $release = getLatestReleaseInfo();
@@ -383,7 +513,7 @@ if (isset($_POST['ajax_action'])) {
             fclose($fp);
 
             $logs[] = writeLog($msgstr["upd_download_ok"] ?? "Download completed successfully.");
-            sendJsonResponse('continue', 20, implode("<br>", $logs));
+            sendJsonResponse('step_done', 20, implode("<br>", $logs));
         }
 
         // === STEP 3: EXTRACT (BATCHED) ===
@@ -413,7 +543,6 @@ if (isset($_POST['ajax_action'])) {
 
             $zip->close();
             $_SESSION['zip_extract_index'] = 0;
-            // Returns 'step_done' and includes 'completed successfully' in the default message for v4.0.0 JS compatibility
             sendJsonResponse('step_done', 80, writeLog(sprintf($msgstr["upd_extract_ok"] ?? "Extraction completed successfully. Total files: %d", $totalFiles)));
         }
 
@@ -450,11 +579,15 @@ if (isset($_POST['ajax_action'])) {
             if ($startIndex === 0) {
                 $logs[] = writeLog($msgstr["upd_mig_tasks"] ?? "Check for migration tasks...");
                 $migration_script_zip   = $source_root . '/www/htdocs/upgrade/update_actions.php';
+                $migration_script_root  = $source_root . '/upgrade/update_actions.php';
                 $migration_script_local = $upgrade_dir . '/update_actions.php';
                 $script_to_run = '';
 
                 if (file_exists($migration_script_zip)) {
                     $script_to_run = $migration_script_zip;
+                    $logs[] = writeLog($msgstr["upd_mig_src_zip"] ?? "Migration Source: From ZIP Package (Standard)");
+                } elseif (file_exists($migration_script_root)) {
+                    $script_to_run = $migration_script_root;
                     $logs[] = writeLog($msgstr["upd_mig_src_zip"] ?? "Migration Source: From ZIP Package (Standard)");
                 } elseif (file_exists($migration_script_local)) {
                     $script_to_run = $migration_script_local;
@@ -565,16 +698,25 @@ if (isset($_POST['ajax_action'])) {
                             recursiveCopy($s_path, $d_path);
                             checkLastError();
 
-                            // CRITICAL FIX: Immediately restore central/config.php after replacing 'central'
-                            // so that the next AJAX batch does not fail with "Main config not found".
+                            // Immediately restore central/config.php after replacing 'central'
                             if ($source_basename === 'central') {
                                 restoreConfigs();
                             }
                         } else {
                             $parent = dirname($d_path);
                             if (!is_dir($parent)) mkdir($parent, 0755, true);
-                            copy($s_path, $d_path);
-                            checkLastError();
+                            if ($source_basename === 'update_manager.php') {
+                                $new_mgr_code = @file_get_contents($s_path);
+                                if ($new_mgr_code !== false) {
+                                    atomicReplacePhpFile($d_path, $new_mgr_code, rtrim($backup_dir, '/\\') . '/update_manager.php.bak');
+                                }
+                            } else {
+                                copy($s_path, $d_path);
+                                checkLastError();
+                                if (function_exists('opcache_invalidate') && pathinfo($d_path, PATHINFO_EXTENSION) === 'php') {
+                                    @opcache_invalidate($d_path, true);
+                                }
+                            }
                             if ($os_in_gitname == "Linux" && pathinfo($d_path, PATHINFO_EXTENSION) == "") chmod($d_path, 0755);
                         }
                     } elseif (!file_exists($s_path)) {
@@ -735,7 +877,7 @@ include("central/common/institutional_info.php");
 
 <div class="all">
     <div class="update-container">
-        <h1><?php echo ($msgstr["upd_title"] ?? "ABCD Update Manager") . " (v4.4)"; ?></h1>
+        <h1><?php echo ($msgstr["upd_title"] ?? "ABCD Update Manager") . " (v4.5)"; ?></h1>
 
         <?php if (!isAdmin()): ?>
             <div class="info-box error"><?php echo $msgstr["upd_access_denied"] ?? "Denied access: You are not allowed to run this script."; ?></div>
@@ -773,7 +915,7 @@ include("central/common/institutional_info.php");
                     </label>
                 </div>
 
-                <button class="btn-action" onclick="startUpdate()" id="btnStart"><?php echo $msgstr["upd_btn_start"] ?? "START UPDATE PROCESS"; ?></button>
+                <button class="btn-action" onclick="startUpdate(false)" id="btnStart"><?php echo $msgstr["upd_btn_start"] ?? "START UPDATE PROCESS"; ?></button>
             </div>
 
             <div class="progress-wrapper" id="progressBox">
@@ -795,15 +937,24 @@ include("central/common/institutional_info.php");
 <?php include("central/common/footer.php"); ?>
 
 <script>
-    async function startUpdate() {
+    async function startUpdate(skipConfirm = false) {
         let conf_msg = "<?php echo $msgstr['upd_confirm'] ?? 'Are you sure you want to proceed?'; ?>";
-        if (!confirm(conf_msg)) return;
+        if (!skipConfirm && !confirm(conf_msg)) return;
         document.getElementById('setup-panel').style.display = 'none';
         document.getElementById('progressBox').style.display = 'block';
         document.getElementById('logBox').style.display = 'block';
 
         const type = document.querySelector('input[name="u_type"]:checked').value;
         try {
+            if (!skipConfirm) {
+                const selfRes = await runStep('self_update', type);
+                if (selfRes && selfRes.status === 'reload_required') {
+                    setTimeout(() => {
+                        window.location.href = 'update_manager.php?nocache=' + new Date().getTime() + '&autorun=' + encodeURIComponent(type);
+                    }, 1200);
+                    return;
+                }
+            }
             await runStep('init', type);
             await runStep('download', type);
             await runLoop('extract', type);
@@ -839,6 +990,7 @@ include("central/common/institutional_info.php");
 
         handleResponse(res);
         if (res.status === 'error') throw new Error(res.message);
+        return res;
     }
 
     async function runLoop(action, type) {
@@ -866,7 +1018,6 @@ include("central/common/institutional_info.php");
             if (res.status === 'error') throw new Error(res.message);
             handleResponse(res);
 
-            // Language-independent status check ('step_done' or 'done')
             if (res.status === 'step_done' || res.status === 'done' || (res.message && res.message.toLowerCase().includes("completed successfully"))) {
                 finished = true;
             }
@@ -892,4 +1043,16 @@ include("central/common/institutional_info.php");
     function reloadCleanCache() {
         window.location.href = 'update_manager.php?nocache=' + new Date().getTime();
     }
+
+    // Automatically resume update after a self-update reload
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const autorun = params.get('autorun');
+        if (autorun === 'partial' || autorun === 'completa') {
+            const radio = document.querySelector(`input[name="u_type"][value="${autorun}"]`);
+            if (radio) radio.checked = true;
+            window.history.replaceState({}, document.title, 'update_manager.php');
+            startUpdate(true);
+        }
+    });
 </script>
