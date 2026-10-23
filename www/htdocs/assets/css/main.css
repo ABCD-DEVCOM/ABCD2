@@ -848,6 +848,10 @@ select.heading-database option {
     color: var(--abcd-steel-blue, #333333);
 }
 
+select.heading-database {
+    max-width: 350px;
+}
+
 /* ==========================================================================
    5.1. Main header navigation (Priority+ Pattern)
    ========================================================================== */
