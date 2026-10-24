@@ -28,6 +28,7 @@ include("../lang/soporte.php");
 $backtoscript = "../dataentry/administrar.php";
 $inframe = 1;
 if (isset($arrHttp["backtoscript"])) $backtoscript = $arrHttp["backtoscript"];
+
 if (isset($arrHttp["inframe"]))      $inframe = $arrHttp["inframe"];
 if (!isset($arrHttp["tipo"]))        $arrHttp["tipo"] = "json";
 if (!isset($arrHttp["archivo"]))     $arrHttp["archivo"] = "export";
@@ -432,7 +433,7 @@ include("../common/inc_wait.php");
     }
     echo "</form>\n";
     ?>
-
+    <input type="hidden" name="backtoscript" value="<?php echo $backtoscript ?>">
     <div id="preloader" style="visibility:hidden; text-align:center; margin-top:20px;">
         <i class="fas fa-circle-notch fa-spin fa-3x color-blue"></i>
         <h4 class="mt-2 color-blue"><?php echo $msgstr["export_json_wait"] ?? ''; ?></h4>
